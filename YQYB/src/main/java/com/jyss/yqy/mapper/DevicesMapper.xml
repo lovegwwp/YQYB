@@ -1,0 +1,125 @@
+
+<!--  <?xml version="1.0" encoding="UTF-8" ?>-->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jyss.yqy.mapper.DevicesMapper" > 
+
+    <resultMap type="com.jyss.yqy.entity.Devices" id="devResultMap">   
+        <id property="id" column="id"  />
+        <result property="macId" column="mac_id"  />
+        <result property="type" column="type"  />      
+        <result property="patId" column="pat_id"  />
+        <result property="status" column="status"  />
+        <result property="dlIp" column="dl_ip"  />
+        <result property="dlAddr" column="dl_addr"  />
+        <result property="createdAt" column="created_at"  />
+        <result property="lastModifyTime" column="last_modify_time"  />
+        <result property="lastLoginTime" column="last_login_time"  />
+        <result property="lastLocateTime" column="last_locate_time"  />
+        <result property="age" column="age"  />
+        <result property="sex" column="sex"  />
+        <result property="uname" column="uname"  />
+        <result property="bdTime" column="bd_time"  />
+        <result property="cjsj" column="cjsj"  />
+        <result property="xgsj" column="xgsj"  />
+        <result property="bdsj" column="bdsj"  />
+        <result property="dlsj" column="dlsj"  />
+
+    </resultMap>   
+     
+    
+    <select id="getDev" resultMap="devResultMap" >  
+      select v.*,DATE_FORMAT(v.created_at, '%Y-%m-%d %H:%i:%s' ) cjsj,DATE_FORMAT(v.last_modify_time, '%Y-%m-%d %H:%i:%s' ) xgsj,DATE_FORMAT(v.bd_time, '%Y-%m-%d %H:%i:%s' ) bdsj,DATE_FORMAT(v.last_login_time, '%Y-%m-%d %H:%i:%s' ) dlsj  
+        from v_dev_pat  v 
+	        where v.type in(0,1)  
+	        order by v.type  desc  , v.last_modify_time  desc   
+    </select> 
+    
+     <select id="getDevErr" resultMap="devResultMap" >  
+       select v.*,DATE_FORMAT(v.created_at, '%Y-%m-%d %H:%i:%s' ) cjsj,DATE_FORMAT(v.last_modify_time, '%Y-%m-%d %H:%i:%s' ) xgsj,DATE_FORMAT(v.bd_time, '%Y-%m-%d %H:%i:%s' ) bdsj,DATE_FORMAT(v.last_login_time, '%Y-%m-%d %H:%i:%s' ) dlsj  
+        from v_dev_pat  v 
+	        where v.type not in(0,1)  
+	        order by v.type   , v.last_modify_time  desc   
+    </select>
+    
+    <select id="getDevCl" resultMap="devResultMap" >  
+         select id,mac_id from p_devices where type =0        
+    </select>    
+    
+    <select id="getDevErrBy" resultMap="devResultMap">  
+        select v.*,DATE_FORMAT(v.created_at, '%Y-%m-%d %H:%i:%s' ) cjsj,DATE_FORMAT(v.last_modify_time, '%Y-%m-%d %H:%i:%s' ) xgsj,DATE_FORMAT(v.bd_time, '%Y-%m-%d %H:%i:%s' ) bdsj ,DATE_FORMAT(v.last_login_time, '%Y-%m-%d %H:%i:%s' ) dlsj
+        from v_dev_pat v
+         <where> 
+              v.type not in(0,1)  
+			  <if test="macId != null and macId !=''"> and v.mac_id  LIKE CONCAT('%',#{macId},'%') </if> 
+		 </where> 		
+		 order by v.type  ,v.last_modify_time  desc 
+    </select>   
+    
+    <select id="getDevBy" resultMap="devResultMap">  
+        select v.*,DATE_FORMAT(v.created_at, '%Y-%m-%d %H:%i:%s' ) cjsj,DATE_FORMAT(v.last_modify_time, '%Y-%m-%d %H:%i:%s' ) xgsj,DATE_FORMAT(v.bd_time, '%Y-%m-%d %H:%i:%s' ) bdsj ,DATE_FORMAT(v.last_login_time, '%Y-%m-%d %H:%i:%s' ) dlsj
+        from v_dev_pat v
+         <where> 
+              v.type in(0,1)  
+			  <if test="macId != null and macId !=''"> and v.mac_id  LIKE CONCAT('%',#{macId},'%') </if> 
+		 </where> 		
+		 order by v.type  desc  ,v.last_modify_time  desc 
+    </select>   
+    
+     <select id="getMac" resultType="String" parameterType="int">  
+        select mac_id from p_devices 
+         <where>
+              type in(0,1)   
+			  <if test="patId != null and patId !=''"> and pat_id = #{patId} </if> 
+		 </where> 
+    </select>   
+    
+     <insert id="addDev" parameterType="com.jyss.yqy.entity.Devices" 
+        useGeneratedKeys="true" keyProperty="id"> 
+        insert into p_devices values(null,#{macId},#{type},#{status},null,#{createdAt},null,null,null,null,null)             
+    </insert>
+    
+    <update id="updateDev" parameterType="com.jyss.yqy.entity.Devices" >
+        update p_devices
+           set mac_id = #{macId},last_modify_time = #{lastModifyTime}
+        where id=#{id}
+    </update>
+    
+    <update id="upDevIp" parameterType="com.jyss.yqy.entity.Devices" >
+        update p_devices
+           set dl_ip = #{dlIp},dl_addr = #{dlAddr},last_login_time = #{lastLoginTime}
+        where mac_id=#{macId}
+    </update>
+    
+    <update id="updateDevZt" parameterType="com.jyss.yqy.entity.Devices" >
+        update p_devices
+           set type = #{type},last_modify_time = #{lastModifyTime}
+        where mac_id =#{macId}
+    </update>
+    
+    
+    <update id="setBd" parameterType="String" >
+        update p_devices
+           set type = #{type},pat_id =#{patId}
+        where mac_id =#{macId}
+    </update>
+    
+    <!-- 批量删除之前批量解绑 -->
+    <update id="batchJb" parameterType="java.util.List">
+        update p_devices set type = 0 ,pat_id = 0 where pat_id in 
+        <foreach collection="ids" item="id" open="(" separator="," close=")">   
+	        #{id}   
+	    </foreach>  
+    </update>
+    
+    
+    
+    <delete id="deleteDev" parameterType="java.util.List">
+        delete from p_devices where id in 
+	    <foreach collection="ids" item="id" open="(" separator="," close=")">   
+	        #{id}   
+	    </foreach>  
+    </delete>
+
+</mapper>

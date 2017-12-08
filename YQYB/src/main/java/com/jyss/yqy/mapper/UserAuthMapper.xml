@@ -1,0 +1,56 @@
+
+<!--  <?xml version="1.0" encoding="UTF-8" ?>-->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jyss.yqy.mapper.UserAuthMapper" > 
+    
+    <resultMap type="com.jyss.yqy.entity.UserAuth" id="uaResultMap">   
+        <id property="id" column="id" jdbcType="INTEGER" /> 
+        <result property="uUuid" column="u_uuid" jdbcType="VARCHAR" />     
+        <result property="realName" column="real_name" jdbcType="VARCHAR" />             
+        <result property="email" column="email" jdbcType="VARCHAR" />
+        <result property="idCard" column="id_card" jdbcType="VARCHAR" />        
+        <result property="status" column="status" jdbcType="INTEGER" />
+        <result property="cardPicture1" column="card_picture_1"  jdbcType="VARCHAR"/> 
+        <result property="cardPicture2" column="card_picture_2" jdbcType="VARCHAR" />
+        <result property="cardPicture3" column="card_picture_3" jdbcType="VARCHAR" />
+        <result property="validityDate" column="validity_date"  jdbcType="TIMESTAMP"/>
+        <result property="createdAt" column="created_at" jdbcType="TIMESTAMP" />
+        <result property="isChuangke" column="is_chuangke" jdbcType="VARCHAR" />     
+        <result property="account" column="account" jdbcType="VARCHAR" />     
+        <result property="cjsj" column="cjsj"  />     
+    </resultMap>       
+    
+    <!-- 添加实名用户信息 -->
+    <insert id="insertUserAuth" parameterType="com.jyss.yqy.entity.UserAuth" useGeneratedKeys="true" keyProperty="id">
+    	<selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+			select LAST_INSERT_ID()
+		</selectKey>
+    	insert into u_user_auth (id,u_uuid,real_name,email,id_card,status,card_picture_1,card_picture_2,card_picture_3,validity_date,created_at) 
+    	values(null,#{uUuid},#{realName},#{email},#{idCard},#{status},#{cardPicture1},#{cardPicture2},
+    	#{cardPicture3},#{validityDate},#{createdAt})
+    </insert>       
+   
+   
+   <!-- 用户审核 -->
+   <select id="getUserAuth" resultMap="uaResultMap">           
+	    select a.*,DATE_FORMAT(a.created_at, '%Y-%m-%d %H:%i:%s' ) as cjsj ,DATE_FORMAT(a.validity_date, '%Y-%m-%d ' ) as yxsj ,u.account,u.is_chuangke  from u_user_auth a 
+	     left join u_user u
+	      on  u.uuid = a.u_uuid
+         <where> 
+              1 = 1
+              <if test="uUuid != null and uUuid !=''"> and a.u_uuid = #{uUuid} </if> 	
+              <if test="status != null and status !=''"> and a.status = #{status} </if> 		
+              <if test="account != null and account !=''"> and u.account like concat('%', #{account},'%') </if> 				  			
+		 </where> 
+		 order by a.status,a.created_at desc
+    </select>  
+    
+    <!--修改审核状态 --> 
+    <update id="upUserSh" parameterType="String" >
+        update u_user_auth  set status = #{status}  where status = #{statusBefore} and  u_uuid = #{uuid}
+    </update>
+    
+
+</mapper>

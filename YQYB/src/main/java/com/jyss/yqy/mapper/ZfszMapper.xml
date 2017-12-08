@@ -1,0 +1,56 @@
+
+<!--  <?xml version="1.0" encoding="UTF-8" ?>-->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jyss.yqy.mapper.ZfszMapper" > 
+
+    <resultMap type="com.jyss.yqy.entity.Zfsz" id="zfResultMap">   
+        <id property="id" column="id"  />
+        <result property="modelTime" column="model_time"  />
+        <result property="modelMoney" column="model_money"  />
+        <result property="type" column="type"  />
+        <result property="status" column="status"  />
+        <result property="createdAt" column="created_at"  />
+        <result property="lastModifyTime" column="last_modify_time"  />
+        <result property="cjsj" column="cjsj"  />
+        <result property="xgsj" column="xgsj"  />
+
+    </resultMap>   
+     
+    <!-- 查询对应常量-->  
+    <select id="getZfsz" resultMap="zfResultMap" >  
+        select z.*,DATE_FORMAT(z.created_at, '%Y-%m-%d %H:%i:%s' ) cjsj,DATE_FORMAT(z.last_modify_time, '%Y-%m-%d %H:%i:%s' ) xgsj
+ 		 from p_zfsz z        
+    </select> 
+    
+     <!-- 查询对应支付套餐 2视频套餐设置 3通话套餐设置',--> 
+    <select id="getZfszBy" resultMap="zfResultMap">  
+         select z.*,DATE_FORMAT(z.created_at, '%Y-%m-%d %H:%i:%s' ) cjsj,DATE_FORMAT(z.last_modify_time, '%Y-%m-%d %H:%i:%s' ) xgsj
+ 		 from p_zfsz z  
+         <where> 
+			  <if test="type != null and type !=''"> z.type = #{type} </if> 			  
+		 </where> 
+		 order by z.model_money
+    </select>
+    
+     <insert id="addZfsz" parameterType="com.jyss.yqy.entity.Zfsz" 
+        useGeneratedKeys="true" keyProperty="id"> 
+        insert into p_zfsz values(null,#{modelTime},#{modelMoney},#{type},#{status},#{createdAt},null)  
+            
+    </insert>
+    
+    <update id="updateZfsz" parameterType="com.jyss.yqy.entity.Zfsz" >
+        update p_zfsz
+           set type = #{type},last_modify_time = #{lastModifyTime}, model_time = #{modelTime},model_money = #{modelMoney}
+        where id=#{id}
+    </update>
+    
+    <delete id="deleteZfsz" parameterType="java.util.List">
+        delete from p_zfsz  where id in 
+	    <foreach collection="ids" item="id" open="(" separator="," close=")">   
+	        #{id}   
+	    </foreach>  
+    </delete>
+
+</mapper>

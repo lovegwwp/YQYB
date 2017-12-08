@@ -1,0 +1,85 @@
+
+<!--  <?xml version="1.0" encoding="UTF-8" ?>-->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jyss.yqy.mapper.UserMapper" > 
+    
+             
+    <resultMap type="com.jyss.yqy.entity.jsonEntity.UserBean" id="ubResultMap">   
+        <id property="id" column="id"  /> 
+        <result property="uuid" column="uuid"  />  
+        <result property="salt" column="salt"  />  
+        <result property="pwd" column="pwd"  />     
+        <result property="account" column="account"  />             
+        <result property="nick" column="nick"  />
+        <result property="status" column="status"  /><!--status1删除 1=正常2=禁用  -->        
+        <result property="avatar" column="avatar"  />
+        <result property="sex" column="sex"  /> 
+        <result property="age" column="age"  />
+        <result property="idCard" column="id_card"  />
+        <result property="realName" column="real_name"  />
+        <result property="provinceId" column="province_id"  />
+        <result property="province" column="province"/>
+        <result property="cityId" column="city_id"  />
+        <result property="city" column="city"/>
+        <result property="areaId" column="area_id"  />
+        <result property="area" column="area"/>
+        <result property="isChuangke" column="is_chuangke"  /><!--is_chuangke0普通会员1代言人2初级代理人 3中级代理人4高级代理人  -->
+        <result property="isAuth" column="is_auth"  /><!--isAuth 1=已提交 2=审核通过3=审核不通过  -->
+        <result property="bCode" column="b_code"  /> 
+        <result property="token" column="token"  />
+        <result property="payPwd" column="pay_pwd"  /> 
+        <result property="cashScore" column="cash_score"  /> 
+        <result property="shoppingScore" column="shopping_score"  /> 
+        <result property="createdAt" column="created_at"  /> 
+        <result property="lastAccessTime" column="last_access_time"  />     
+    </resultMap>              
+             
+     <!-- B端 -->        
+     <!-- 登录查询相关用户 -->   
+     <!-- status  -1删除 1=正常2=禁用 isAuth 1=已提交 2=审核通过3=审核不通过  statusAuth 0=审核中 1=通过 2=未通过 -->
+    <select id="getUserCount" resultMap="ubResultMap">           
+	    select is_chuangke,count(id) as id ,sum(cash_score) as cash_score ,sum(shopping_score)  as shopping_score
+	     from u_user <!--  where is_chuangke =3  and status =1 and is_auth =2;	 -->		
+         <where> 
+              1 = 1
+              <if test="isChuangke != null and isChuangke !=''"> and is_chuangke in (#{isChuangke}) </if> 	
+              <if test="status != null and status !=''"> and status = #{status} </if> 				  
+			  <if test="isAuth != null and isAuth !=''"> and is_auth = #{isAuth} </if> 				
+		 </where> 
+    </select>  
+       
+    
+   <!--修改个人。。。等等。。状态 -->
+   <!--is_chuangke=0普通会员1代言人2初级代理人 3中级代理人4高级代理人  -->
+   <!--status=1删除 1=正常2=禁用  -->  <!--isAuth= 1=已提交 2=审核通过3=审核不通过  -->
+   <!--bCode=====个人推广码  -->  <!--bIsPay===0=未 1=付款  -->
+    <update id="upUserAllStatus"  >
+        update u_user  set last_modify_time =now()
+          <if test="status != null and status !=''"> ,status = #{status} </if>
+          <if test="bCode != null and bCode !=''"> ,b_code = #{bCode} </if> 
+          <if test="bIsPay != null and bIsPay !=''"> ,b_is_pay = #{bIsPay} </if> 
+          <if test="isChuangke != null and isChuangke !=''"> ,is_chuangke = #{isChuangke} </if> 
+          <if test="isAuth != null and isAuth !=''"> ,is_auth = #{isAuth} </if> 
+         where uuid =#{uuid} 
+    </update>
+     
+
+    <select id="getUserById" resultMap="ubResultMap">           
+	      select u.id,u.uuid,u.nick,u.salt,u.pwd,u.account,u.status,u.avatar,u.sex,u.age,u.is_chuangke,u.pay_pwd,u.is_auth,u.cash_score,u.b_code,a.real_name,a.id_card  
+	           from u_user u   left join u_user_auth a on u.uuid = a.u_uuid							
+         <where> 
+              1 = 1
+              <if test="id != null and id !=''"> and u.id = #{id} </if> 	
+              <if test="status != null and status !=''"> and u.status = #{status} </if> 				  
+			  <if test="isAuth != null and isAuth !=''"> and u.is_auth = #{isAuth} </if> 				  
+		 </where> 
+    </select>  
+    
+
+    
+    
+    
+
+</mapper>
