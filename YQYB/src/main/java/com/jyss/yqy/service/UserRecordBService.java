@@ -4,9 +4,11 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.jyss.yqy.entity.ResponseEntity;
+
 
 public interface UserRecordBService {
 
-	Map<String,String> insertJBonusGlj(@Param("uuid") String uuid);
+	ResponseEntity insertJBonusGlj(@Param("uuid") String uuid);
 
 }

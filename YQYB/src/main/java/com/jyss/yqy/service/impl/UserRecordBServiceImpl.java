@@ -2,15 +2,13 @@ package com.jyss.yqy.service.impl;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.jyss.yqy.entity.JBonusGlj;
+import com.jyss.yqy.entity.ResponseEntity;
 import com.jyss.yqy.entity.UUserRRecordB;
 import com.jyss.yqy.entity.UUserRRecordBExample;
 import com.jyss.yqy.entity.UUserRRecordBExample.Criteria;
@@ -37,8 +35,7 @@ public class UserRecordBServiceImpl implements UserRecordBService {
 	 * 管理奖
 	 */
 	@Override
-	public Map<String,String>  insertJBonusGlj(String uuid){      
-		Map<String, String> map = new HashMap<String, String>();
+	public ResponseEntity insertJBonusGlj(String uuid){      
 		List<UserBean> userList = userMapper.getUserByUuid(uuid);
 		UserBean userBean = userList.get(0); // 获取被推荐人信息
 		int isAuth = userBean.getIsAuth();
@@ -152,13 +149,11 @@ public class UserRecordBServiceImpl implements UserRecordBService {
 							}
 						}
 					}
-					map.put("messgae", "管理奖计算成功！");
-					return map;
+					return new ResponseEntity("true", "市场奖计算成功！");
 				}
 			}
 		}
-		map.put("messgae", "用户还不是代理人！");
-		return map;
+		return new ResponseEntity("false", "操作失败！");
 		
 		
 	}

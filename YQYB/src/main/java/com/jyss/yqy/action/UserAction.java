@@ -15,12 +15,15 @@ import com.jyss.yqy.entity.Page;
 import com.jyss.yqy.entity.ResponseEntity;
 import com.jyss.yqy.entity.UserAuth;
 import com.jyss.yqy.entity.jsonEntity.UserBean;
+import com.jyss.yqy.service.UserRecordBService;
 import com.jyss.yqy.service.UserService;
 
 @Controller
 public class UserAction {
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private UserRecordBService userRecordBService;
 
 	@RequestMapping("/dlrType")
 	public String DlrTypeTz() {
@@ -122,7 +125,10 @@ public class UserAction {
 			count = userService.upUserAllStatus("", "", "", "", "2", uuid);
 		}
 		if (count == 1) {
-			return new ResponseEntity("true", "操作成功！");
+			//计算管理奖
+			ResponseEntity entity = userRecordBService.insertJBonusGlj(uuid);
+			return entity;
+			//return new ResponseEntity("true", "操作成功！");
 		}
 		return new ResponseEntity("false", "操作失败！");
 	}
