@@ -11,9 +11,11 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import com.jyss.yqy.entity.JRecord;
+import com.jyss.yqy.entity.ResponseEntity;
 import com.jyss.yqy.entity.jsonEntity.UserBean;
 import com.jyss.yqy.mapper.JRecordMapper;
 import com.jyss.yqy.mapper.UserMapper;
+import com.jyss.yqy.mapper.XtclMapper;
 import com.jyss.yqy.service.JRecordService;
 
 @Service
@@ -26,29 +28,23 @@ public class JRecordServiceImpl implements JRecordService{
 	private UserMapper userMapper;
 
 	
-
-	
 	/**
 	 * 添加市场用户
 	 */
 	@Override
-	public Map<String,String> insertJRecord(String uAccount,String pAccount,int depart) {
-		Map<String, String> map = new HashMap<String,String>();
+	public ResponseEntity insertJRecord(String uAccount,String pAccount,int depart) {
 		if(StringUtils.isEmpty(uAccount)){
-			map.put("message", "账号不能为空！");
-			return map;
+			return new ResponseEntity("false", "账号不能为空！");
 		}
 		List<JRecord> recordList = recordMapper.selectAllJRecord(uAccount);
 		if(recordList != null && recordList.size()>0){
-			map.put("message", "账号已被分配，不可重复分配！");
-			return map;
+			return new ResponseEntity("false", "账号已被分配，不可重复分配！");
 		}
 		JRecord jRecord = new JRecord();
 		if(depart == 0){
 			List<JRecord> list = recordMapper.selectJRecordByPid(0);
 			if(list != null && list.size()>0){
-				map.put("message", "最上级已存在，不可再添加！");
-				return map;
+				return new ResponseEntity("false", "最上级已存在，不可再添加！");
 			}
 			List<UserBean> uList = userMapper.getUserIdByAccount(uAccount);
 			if(uList != null && uList.size()>0){
@@ -62,14 +58,11 @@ public class JRecordServiceImpl implements JRecordService{
 				jRecord.setStatus(1);
 				int count = recordMapper.insertJRecord(jRecord);
 				if(count == 1){
-					map.put("message", "添加成功！");
-					return map;
+					return new ResponseEntity("true", "添加成功！");
 				}
-				map.put("message", "添加失败！");
-				return map;
+				return new ResponseEntity("false", "添加失败！");
 			}
-			map.put("message", "用户不可用！");
-			return map;
+			return new ResponseEntity("false", "用户不可用！");
 		}else if(depart == 1 || depart == 2){
 			List<UserBean> uList = userMapper.getUserIdByAccount(uAccount);
 			if(uList != null && uList.size()>0){
@@ -98,14 +91,11 @@ public class JRecordServiceImpl implements JRecordService{
 								jRecord.setStatus(1);
 								int count = recordMapper.insertJRecord(jRecord);
 								if(count == 1){
-									map.put("message", ""+uAccount+"分配市场成功！");
-									return map;
+									return new ResponseEntity("true", ""+uAccount+"分配市场成功！");
 								}
-								map.put("message", "添加失败！");
-								return map;
+								return new ResponseEntity("false", "添加失败！");
 							}
-							map.put("message", "该市场已存在用户！");
-							return map;
+							return new ResponseEntity("false", "该市场已存在用户！");
 							
 						}else if(pJRecordList == null || pJRecordList.size() == 0){
 							jRecord.setuId(uUserBean.getId());
@@ -117,26 +107,19 @@ public class JRecordServiceImpl implements JRecordService{
 							jRecord.setStatus(1);
 							int count = recordMapper.insertJRecord(jRecord);
 							if(count == 1){
-								map.put("message", ""+uAccount+"分配市场成功！");
-								return map;
+								return new ResponseEntity("true", ""+uAccount+"分配市场成功！");
 							}
-							map.put("message", "添加失败！");
-							return map;
+							return new ResponseEntity("false", "添加失败！");
 						}
-						map.put("message", "上级用户已有两个市场，请选择其他上级！");
-						return map;
+						return new ResponseEntity("false", "上级用户已有两个市场，请选择其他上级！");
 					}
-					map.put("message", "上级用户还没被分配市场！");
-					return map;
+					return new ResponseEntity("false", "上级用户还没被分配市场！");
 				}
-				map.put("message", "上级账号不可用！");
-				return map;
+				return new ResponseEntity("false", "上级账号不可用！");
 			}
-			map.put("message", "账号不可用！");
-			return map;
+			return new ResponseEntity("false", "账号不可用！");
 		}
-		map.put("message", "请确认分配市场！");
-		return map;
+		return new ResponseEntity("false", "请确认分配市场！");
 	}
 	
 	/**
@@ -152,11 +135,9 @@ public class JRecordServiceImpl implements JRecordService{
 	 * 修改市场用户
 	 */
 	@Override
-	public  Map<String,String> updateJRecord(int id,String account){
-		Map<String,String> map = new HashMap<String,String>();
+	public  ResponseEntity updateJRecord(int id,String account){
 		if(StringUtils.isEmpty(account)){
-			map.put("message", "账号不能为空！");
-			return map;
+			return new ResponseEntity("false", "账号不能为空！");
 		}
 		List<JRecord> list = recordMapper.selectJRecordById(id);
 		if(list != null && list.size()>0){
@@ -177,21 +158,16 @@ public class JRecordServiceImpl implements JRecordService{
 						for (JRecord pRecord : pRecordList) {
 							recordMapper.upJRecordById(userBean.getId(), pRecord.getId());
 						}
-						map.put("message", "修改成功！");
-						return map;
+						return new ResponseEntity("true", "修改成功！");
 						
 					}
-					map.put("message", "修改失败！");
-					return map;
+					return new ResponseEntity("false", "修改失败！");
 				}
-				map.put("message", "用户已被分配，修改失败！");
-				return map;
+				return new ResponseEntity("false", "用户已被分配，修改失败！");
 			}
-			map.put("message", "账号不可用！");
-			return map;
+			return new ResponseEntity("false", "账号不可用！");
 		}
-		map.put("message", "请重新修改！");
-		return map;
+		return new ResponseEntity("false", "请重新修改！");
 	}
 	
 	
@@ -199,8 +175,7 @@ public class JRecordServiceImpl implements JRecordService{
 	 * 删除市场用户
 	 */
 	@Override
-	public Map<String,String> deleteJRecord(int id){
-		Map<String,String> map = new HashMap<String,String>();
+	public ResponseEntity deleteJRecord(int id){
 		List<JRecord> list = recordMapper.selectJRecordById(id);
 		if(list != null && list.size()>0){
 			JRecord record = list.get(0);
@@ -212,14 +187,11 @@ public class JRecordServiceImpl implements JRecordService{
 			}
 			int count = recordMapper.deleteJRecordById(id);
 			if(count > 0){
-				map.put("message", "删除成功！");
-				return map;
+				return new ResponseEntity("true", "删除成功！");
 			}
-			map.put("message", "删除失败！");
-			return map;
+			return new ResponseEntity("false", "删除失败！");
 		}
-		map.put("message", "删除失败！");
-		return map;
+		return new ResponseEntity("false", "删除失败！");
 	}
 
 }

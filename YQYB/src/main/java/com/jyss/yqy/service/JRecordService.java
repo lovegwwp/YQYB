@@ -6,20 +6,21 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Param;
 
 import com.jyss.yqy.entity.JRecord;
+import com.jyss.yqy.entity.ResponseEntity;
 
 public interface JRecordService {
 	
 	//添加市场用户
-	Map<String,String> insertJRecord(@Param("uAccount")String uAccount,@Param("pAccount")String pAccount,@Param("depart")int depart);
+	ResponseEntity insertJRecord(@Param("uAccount")String uAccount,@Param("pAccount")String pAccount,@Param("depart")int depart);
 	
 	//展示市场用户
 	List<JRecord> getJRecordList();
 	
 	//修改市场用户
-	Map<String,String> updateJRecord(@Param("id")int id,@Param("account")String account);
+	ResponseEntity updateJRecord(@Param("id")int id,@Param("account")String account);
 	
 	//删除市场用户
-	Map<String,String> deleteJRecord(@Param("id")int id);
+	ResponseEntity deleteJRecord(@Param("id")int id);
 	
 
 }

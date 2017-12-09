@@ -3,6 +3,7 @@ package com.jyss.yqy.service.impl;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,10 +13,12 @@ import com.jyss.yqy.entity.ResponseEntity;
 import com.jyss.yqy.entity.UUserRRecordB;
 import com.jyss.yqy.entity.UUserRRecordBExample;
 import com.jyss.yqy.entity.UUserRRecordBExample.Criteria;
+import com.jyss.yqy.entity.Xtcl;
 import com.jyss.yqy.entity.jsonEntity.UserBean;
 import com.jyss.yqy.mapper.JBonusGljMapper;
 import com.jyss.yqy.mapper.UUserRRecordBMapper;
 import com.jyss.yqy.mapper.UserMapper;
+import com.jyss.yqy.mapper.XtclMapper;
 import com.jyss.yqy.service.UserRecordBService;
 
 @Service
@@ -28,6 +31,8 @@ public class UserRecordBServiceImpl implements UserRecordBService {
 	private UUserRRecordBMapper userRecordMapper;
 	@Autowired
 	private JBonusGljMapper bonusGljMapper;
+	@Autowired
+	private XtclMapper xtclMapper;
 
 	
 	
@@ -57,6 +62,15 @@ public class UserRecordBServiceImpl implements UserRecordBService {
 						UserBean userBean1 = nameById.get(0);
 						int pLevel = userBean1.getIsChuangke();
 						
+						//查询奖励额
+						Xtcl xtcl1 = xtclMapper.getClsValue("glj_type", "1");   //初级获得金额
+						double double1 = Double.parseDouble(xtcl1.getBz_value());    //40.00
+						Xtcl xtcl2 = xtclMapper.getClsValue("glj_type", "2");   //中级获得金额
+						double double2 = Double.parseDouble(xtcl2.getBz_value());    //80.00
+						Xtcl xtcl3 = xtclMapper.getClsValue("glj_type", "3");   //高级获得金额
+						double double3 = Double.parseDouble(xtcl3.getBz_value());    //120.00
+						 
+						
 						JBonusGlj bonusGlj = new JBonusGlj();
 						SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 						bonusGlj.setuId(userBean.getId());
@@ -65,11 +79,11 @@ public class UserRecordBServiceImpl implements UserRecordBService {
 						bonusGlj.setStatus(1);
 						bonusGlj.setCreated(sdf.format(new Date()));
 						if (pLevel == 4) {
-							bonusGlj.setParentMoney(120.00);
+							bonusGlj.setParentMoney(double3);
 							bonusGljMapper.insert(bonusGlj);
 							
 						} else if(pLevel == 3) {
-							bonusGlj.setParentMoney(80.00);
+							bonusGlj.setParentMoney(double2);
 							bonusGljMapper.insert(bonusGlj);
 							
 							UUserRRecordBExample example1 = new UUserRRecordBExample();
@@ -87,14 +101,14 @@ public class UserRecordBServiceImpl implements UserRecordBService {
 								bonusGlj1.setuId(userRecord1.getuId());
 								bonusGlj1.setuName(userBean1.getRealName());
 								bonusGlj1.setParentId(userRecord1.getrId());
-								bonusGlj1.setParentMoney(40.00);
+								bonusGlj1.setParentMoney(double1);
 								bonusGlj1.setStatus(1);
 								bonusGlj1.setCreated(sdf.format(new Date()));
 								bonusGljMapper.insert(bonusGlj1);
 								//}
 							}
 						}else if(pLevel == 2){
-							bonusGlj.setParentMoney(40.00);
+							bonusGlj.setParentMoney(double1);
 							bonusGljMapper.insert(bonusGlj);
 							
 							UUserRRecordBExample example1 = new UUserRRecordBExample();
@@ -113,7 +127,7 @@ public class UserRecordBServiceImpl implements UserRecordBService {
 										bonusGlj1.setuId(userRecord1.getuId());
 										bonusGlj1.setuName(userBean1.getRealName());
 										bonusGlj1.setParentId(userRecord1.getrId());
-										bonusGlj1.setParentMoney(80.00);
+										bonusGlj1.setParentMoney(double2);
 										bonusGlj1.setStatus(1);
 										bonusGlj1.setCreated(sdf.format(new Date()));
 										bonusGljMapper.insert(bonusGlj1);
@@ -122,7 +136,7 @@ public class UserRecordBServiceImpl implements UserRecordBService {
 										bonusGlj1.setuId(userRecord1.getuId());
 										bonusGlj1.setuName(userBean1.getRealName());
 										bonusGlj1.setParentId(userRecord1.getrId());
-										bonusGlj1.setParentMoney(40.00);
+										bonusGlj1.setParentMoney(double1);
 										bonusGlj1.setStatus(1);
 										bonusGlj1.setCreated(sdf.format(new Date()));
 										bonusGljMapper.insert(bonusGlj1);
@@ -138,7 +152,7 @@ public class UserRecordBServiceImpl implements UserRecordBService {
 											bonusGlj2.setuId(userRecord2.getuId());
 											bonusGlj2.setuName(userBean2.getRealName());
 											bonusGlj2.setParentId(userRecord2.getrId());
-											bonusGlj2.setParentMoney(40.00);
+											bonusGlj2.setParentMoney(double1);
 											bonusGlj2.setStatus(1);
 											bonusGlj2.setCreated(sdf.format(new Date()));
 											bonusGljMapper.insert(bonusGlj2);
