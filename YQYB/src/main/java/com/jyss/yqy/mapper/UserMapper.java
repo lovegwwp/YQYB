@@ -38,14 +38,14 @@ public interface UserMapper {
 	List<UserBean> getUserByUuid(@Param("uuid") String uuid);
 
 	/**
-	 * 通过用户的id查询用户
+	 * 通过id查询用户
 	 */
 	List<UserBean> getUserNameById(@Param("id") int id);
-	
 	
 	/**
 	 * 通过account查询用户id
 	 */
 	List<UserBean> getUserIdByAccount(@Param("account") String account);
+	
 
 }

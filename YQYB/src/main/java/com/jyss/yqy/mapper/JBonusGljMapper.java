@@ -30,5 +30,5 @@ public interface JBonusGljMapper {
 
     int updateByPrimaryKey(JBonusGlj record);
     
-   
+    
 }

@@ -10,5 +10,5 @@ import com.jyss.yqy.entity.ResponseEntity;
 public interface UserRecordBService {
 
 	ResponseEntity insertJBonusGlj(@Param("uuid") String uuid);
-
+	
 }
