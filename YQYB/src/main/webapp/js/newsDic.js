@@ -1,14 +1,15 @@
 //////////训练类型////////////////////////
 var newsTypeData;
 $.ajax({
-         url:'http://192.168.0.26:8080/SSM/getClsCo.action?bz_type=send_type',
+         //url:'http://192.168.0.28:8080/SSM/getClsCo.action?bz_type=send_type',
+         url:'http://121.40.29.64:8081/SSM/getClsCo.action?bz_type=send_type',
          data:{            
          },
          async:false,
          type:"POST",
          dataType: "json",
          success:function (data) {
-            console.log(data);
+            //console.log(data);
             newsTypeData = data;
          },
          error:function (err) {

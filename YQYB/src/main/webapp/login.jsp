@@ -22,15 +22,15 @@
 	   <div id="loginWin" title="请先登录" class="easyui-window" data-options="modal:true,closed:true,iconCls:'icon-login',closable:false,minimizable:false" style="width:400px;padding:20px 70px 20px 70px;">
          <form id="logFm" action="${pageContext.request.contextPath}/shiro-getLogin.action" method="post">
 	        <div style="margin-bottom:10px">
-	             <span>登录账号：<input class="easyui-textbox" id="logName" name="logName" style="width:68%;height:20px;padding:2px" data-options="prompt:'登录账号',iconCls:'icon-users2',iconWidth:28 "></span>
+	             <span>登录账号：<input class="easyui-textbox" id="logName" name="logName" style="width:73%;height:25px;padding:2px" data-options="prompt:'登录账号',iconCls:'icon-users2',iconWidth:28 "></span>
 	        </div>
 	        <div style="margin-bottom:20px">
-	             <span>登录密码：</span><input class="easyui-textbox" id="logPass" name="logPass" type="password" style="width:68%;height:20px;padding:2px" data-options="prompt:'登录密码',iconCls:'icon-pass',iconWidth:28 ">
+	             <span>登录密码：</span><input class="easyui-textbox" id="logPass" name="logPass" type="password" style="width:68%;height:25px;padding:2px" data-options="prompt:'登录密码',iconCls:'icon-pass',iconWidth:28 ">
 	        </div>
 	        <div style="margin-bottom:20px">
-	              <span>验证码 ：</span><input class="easyui-textbox" type="text" id="logYzm" name="logYzm" style="width:30%;height:20px;padding:2px" data-options="prompt:'验证码'"> 
+	              <span>验证码 ：</span><input class="easyui-textbox" type="text" id="logYzm" name="logYzm" style="width:30%;height:26px;padding:2px" data-options="prompt:'验证码'"> 
 	            <a href="javascript:;" class="showcode" onclick="changImg()">
-	            	<img id ="servletImg" src="${pageContext.request.contextPath}/code/shiro-getCode.action" style=" margin:0 0 0 3px ; vertical-align:middle; height:26px;width:100px;" >
+	            	<img id ="servletImg" src="${pageContext.request.contextPath}/code/shiro-getCode.action" style=" margin:0 0 0 3px ; border-radius:5px;vertical-align:middle; height:26px;width:100px;" >
 	            </a>
 	        </div>   
 	        <div>

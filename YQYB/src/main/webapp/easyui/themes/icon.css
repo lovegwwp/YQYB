@@ -7,6 +7,9 @@
 .icon-edit{
 	background:url('icons/pencil.png') no-repeat center center;
 }
+.icon-clear{
+	background:url('icons/clear.png') no-repeat center center;
+}
 .icon-remove{
 	background:url('icons/edit_remove.png') no-repeat center center;
 }
@@ -55,6 +58,15 @@
 .icon-filter{
 	background:url('icons/filter.png') no-repeat center center;
 }
+.icon-man{
+	background:url('icons/man.png') no-repeat center center;
+}
+.icon-lock{
+	background:url('icons/lock.png') no-repeat center center;
+}
+.icon-more{
+	background:url('icons/more.png') no-repeat center center;
+}
 
 
 .icon-mini-add{
@@ -82,22 +94,6 @@
 .icon-large-chart{
 	background:url('icons/large_chart.png') no-repeat center center;
 }
-/**分割线**/
-.icon-client_account_template{
-background:url('icons/client_account_template.png') no-repeat center center;
-}
-.icon-group_green_edit{
-background:url('icons/group_green_edit.png') no-repeat center center;
-}
-.icon-my-account{
-background:url('icons/my-account.png') no-repeat center center;
-}
-.icon-business-contact{
-background:url('icons/business-contact.png') no-repeat center center;
-}
-.icon-brainstorming-contact{
-background:url('icons/brainstorming.png') no-repeat center center;
-}
 
 /**自定义图标**/
 .icon-login{
@@ -108,4 +104,7 @@ background:url('icons/brainstorming.png') no-repeat center center;
 }
 .icon-pass{
 	background:url('icons/pass.png') no-repeat center center;
+}
+.icon-my-account{
+	background:url('icons/my-account.png') no-repeat center center;
 }

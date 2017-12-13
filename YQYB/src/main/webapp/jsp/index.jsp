@@ -94,13 +94,13 @@
 					                    </li>  
 									</ul>  
 							    </div>						      
-							    <div title="首次代言管理" style="padding:10px;">  
+							 <!--    <div title="首次代言管理" style="padding:10px;">  
 							        <ul id="tree_dlf" class="easyui-tree" >  
 									    <li  data-options="iconCls:'icon-client_account_template'">  
 					                        <span>代言费设置</span>  
 					                    </li> 					                     
 									</ul>  
-							    </div>   
+							    </div>    -->
 							    <div title="返还周期管理" style="padding:10px;">  
 							        <ul id="tree_fhzq" class="easyui-tree" >  
 									    <li  data-options="iconCls:'icon-client_account_template'">  

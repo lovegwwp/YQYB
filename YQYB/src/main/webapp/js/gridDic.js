@@ -1,14 +1,15 @@
 //////////训练类型////////////////////////
 var xlTypeData;
 $.ajax({
-         url:'http://192.168.0.26:8080/SSM/getClsCo.action?bz_type=xlxm_type',
+        // url:'http://192.168.0.28:8080/SSM/getClsCo.action?bz_type=xlxm_type',
+         url:'http://121.40.29.64:8081/SSM/getClsCo.action?bz_type=xlxm_type',
          data:{            
          },
          async:false,
          type:"POST",
          dataType: "json",
          success:function (data) {
-            console.log(data);
+            //console.log(data);
             xlTypeData = data;
          },
          error:function (err) {
@@ -33,7 +34,8 @@ function formatXlType(value,row,index){
 //////////视频类型////////////////////////
 var vedioTypeData;
 $.ajax({
-    url:'http://192.168.0.26:8080/SSM/getClsCo.action?bz_type=vedio_type',
+    //url:'http://192.168.0.26:8080/SSM/getClsCo.action?bz_type=vedio_type',
+    url:'http://121.40.29.64:8081/SSM/getClsCo.action?bz_type=vedio_type',
     data:{            
     },
     async:false,
