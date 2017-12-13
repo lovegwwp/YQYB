@@ -32,7 +32,7 @@
     </select> 
     
      <select id="getClsValue" resultType="com.jyss.yqy.entity.Xtcl">  
-        select * from p_xt_area 
+        select * from p_xt_cl 
          <where> 
               status = 1
 			  <if test="bz_type != null and bz_type !=''">and bz_type  LIKE CONCAT('%',#{bz_type},'%') </if> 

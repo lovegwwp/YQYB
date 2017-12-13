@@ -163,7 +163,7 @@ public class UserRecordBServiceImpl implements UserRecordBService {
 							}
 						}
 					}
-					return new ResponseEntity("true", "市场奖计算成功！");
+					return new ResponseEntity("true", "操作成功！");
 				}
 			}
 		}

@@ -123,12 +123,12 @@ public class UserAction {
 		if (count == 1) {
 			count = 0;
 			count = userService.upUserAllStatus("", "", "", "", "2", uuid);
-		}
-		if (count == 1) {
-			//计算管理奖
-			ResponseEntity entity = userRecordBService.insertJBonusGlj(uuid);
-			return entity;
-			//return new ResponseEntity("true", "操作成功！");
+			if (count == 1) {
+				//计算管理奖
+				ResponseEntity entity = userRecordBService.insertJBonusGlj(uuid);
+				return entity;
+				//return new ResponseEntity("true", "操作成功！");
+			}
 		}
 		return new ResponseEntity("false", "操作失败！");
 	}
