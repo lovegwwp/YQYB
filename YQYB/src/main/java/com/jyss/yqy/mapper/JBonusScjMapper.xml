@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jyss.yqy.mapper.JBonusScjMapper" >
+  <resultMap id="BaseResultMap" type="com.jyss.yqy.entity.JBonusScj" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="u_id" property="uId" jdbcType="INTEGER" />
+    <result column="a_id" property="aId" jdbcType="INTEGER" />
+    <result column="a_pv" property="aPv" jdbcType="FLOAT" />
+    <result column="b_id" property="bId" jdbcType="INTEGER" />
+    <result column="b_pv" property="bPv" jdbcType="FLOAT" />
+    <result column="pv" property="pv" jdbcType="FLOAT" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+  </resultMap>
+  
+	<!-- 查询昨日列表详情 -->
+	<select id="selectJBonusScj" resultMap="BaseResultMap">
+		select id,u_id,a_id,a_pv,b_id,b_pv,pv,DATE_FORMAT(created, '%Y-%m-%d') created
+		from j_bonus_scj 
+		where status = 1 and to_days(now()) - to_days(created) = 1 
+	</select>
+
+	<!-- 查询本周列表详情 -->
+	<select id="selectJBonusScjWek" resultMap="BaseResultMap">
+		select id,u_id,a_id,a_pv,b_id,b_pv,pv,DATE_FORMAT(created, '%Y-%m-%d') created
+		from j_bonus_scj 
+		where status = 1 and YEARWEEK(date_format(created,'%Y-%m-%d')) = YEARWEEK(now())
+		ORDER BY created DESC
+	</select>
+	
+	<!-- 按两个日期查询个人列表详情 -->
+	<select id="selectJBonusScjByUidAndDay" parameterType="com.jyss.yqy.entity.JBonusScj" resultMap="BaseResultMap">
+		select id,u_id,a_id,a_pv,b_id,b_pv,pv,DATE_FORMAT(created, '%Y-%m-%d') created
+		from j_bonus_scj
+		<where>
+			<if test="uId != null and uId != ''">
+				and u_id = #{uId,jdbcType=INTEGER}
+			</if>
+			<if test="beginTime != null and beginTime != ''">
+				and date_format(created, '%Y-%m-%d') &gt;= #{beginTime}
+			</if>
+			<if test="endTime != null and endTime != ''">
+				and date_format(created, '%Y-%m-%d') &lt;= #{endTime}
+			</if>
+			and status = 1
+		</where>
+		ORDER BY created DESC
+	</select>
+	
+	<!-- 按两个日期查询个人列表总值 -->
+	<select id="selectJBonusScjByDay" parameterType="com.jyss.yqy.entity.JBonusScj" resultMap="BaseResultMap">
+		select u_id,a_id,IFNULL(SUM(a_pv),0.00) as a_pv,b_id,IFNULL(SUM(b_pv),0.00) as b_pv,IFNULL(SUM(pv),0.00) as pv
+		from j_bonus_scj
+		<where>
+			<if test="beginTime != null and beginTime != ''">
+				and date_format(created, '%Y-%m-%d') &gt;= #{beginTime}
+			</if>
+			<if test="endTime != null and endTime != ''">
+				and date_format(created, '%Y-%m-%d') &lt;= #{endTime}
+			</if>
+			and status = 1
+		</where>
+		group by u_id
+	</select>
+	
+	<!-- 按两个日期查询总pv -->
+	<select id="selectScjTotalByDay" parameterType="com.jyss.yqy.entity.JBonusScj" resultMap="float">
+		select IFNULL(SUM(pv),0.00) as pv
+		from j_bonus_scj
+		<where>
+			<if test="beginTime != null and beginTime != ''">
+				and date_format(created, '%Y-%m-%d') &gt;= #{beginTime}
+			</if>
+			<if test="endTime != null and endTime != ''">
+				and date_format(created, '%Y-%m-%d') &lt;= #{endTime}
+			</if>
+			and status = 1
+		</where>
+	</select>
+	
+	<!-- 按月查询查询个人列表详情 -->
+	<select id="selectJBonusScjByUidAndMonth" parameterType="com.jyss.yqy.entity.JBonusScj"  resultMap="BaseResultMap">
+		select id,u_id,a_id,a_pv,b_id,b_pv,pv,DATE_FORMAT(created, '%Y-%m-%d') created
+		from j_bonus_scj
+		<where> 
+			<if test="uId != null and uId != ''">
+				and u_id = #{uId,jdbcType=INTEGER}
+			</if>
+			<if test="month != null and month != ''">
+				and date_format(created, '%Y-%m') = #{month}
+			</if>
+			and status = 1
+		</where>
+		ORDER BY  created DESC 
+	</select>
+	
+	<!-- 按月查询查询个人列表总值 -->
+	<select id="selectJBonusScjByMonth" parameterType="com.jyss.yqy.entity.JBonusScj"  resultMap="BaseResultMap">
+		select u_id,a_id,IFNULL(SUM(a_pv),0.00) as a_pv,b_id,IFNULL(SUM(b_pv),0.00) as b_pv,IFNULL(SUM(pv),0.00) as pv
+		from j_bonus_scj
+		<where>
+			<if test="month != null and month != ''">
+				and date_format(created, '%Y-%m') = #{month}
+			</if>
+			and status = 1
+		</where>
+		group by u_id
+	</select>
+	
+	<!-- 按月查询查询总pv -->
+	<select id="selectScjTotalByMonth" parameterType="com.jyss.yqy.entity.JBonusScj"  resultMap="float">
+		select IFNULL(SUM(pv),0.00) as pv
+		from j_bonus_scj
+		<where>
+			<if test="month != null and month != ''">
+				and date_format(created, '%Y-%m') = #{month}
+			</if>
+			and status = 1 
+		</where>
+	</select>
+  
+	
+ 
+</mapper>
