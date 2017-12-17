@@ -7,15 +7,24 @@ public class JBonusScj implements Serializable{
 	
     private Integer id;     
     private Integer uId;      //用户的id
+    private String uName;     //用户的名字
     private Integer aId;      //市场A的用户id
     private Float aPv;        //市场A的总PV值
+    private String aName;     //市场A的名字
     private Integer bId;      //市场B的用户id
+    private String bName;     //市场B的名字
     private Float bPv;        //市场A的总PV值
     private Float pv;         //用户可得pv值
     private Integer status;        //状态   0禁用 1正常
     private String created;        //时间
     
     
+	public String getuName() {
+		return uName;
+	}
+	public void setuName(String uName) {
+		this.uName = uName;
+	}
 	public Integer getId() {
 		return id;
 	}
@@ -69,6 +78,18 @@ public class JBonusScj implements Serializable{
 	}
 	public void setCreated(String created) {
 		this.created = created;
+	}
+	public String getaName() {
+		return aName;
+	}
+	public void setaName(String aName) {
+		this.aName = aName;
+	}
+	public String getbName() {
+		return bName;
+	}
+	public void setbName(String bName) {
+		this.bName = bName;
 	}
  
     

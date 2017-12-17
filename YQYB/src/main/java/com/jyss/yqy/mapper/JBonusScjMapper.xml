@@ -4,9 +4,12 @@
   <resultMap id="BaseResultMap" type="com.jyss.yqy.entity.JBonusScj" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="u_id" property="uId" jdbcType="INTEGER" />
+    <result column="u_name" property="uName" jdbcType="VARCHAR" />
     <result column="a_id" property="aId" jdbcType="INTEGER" />
+    <result column="a_name" property="aName" jdbcType="VARCHAR" />
     <result column="a_pv" property="aPv" jdbcType="FLOAT" />
     <result column="b_id" property="bId" jdbcType="INTEGER" />
+    <result column="b_name" property="bName" jdbcType="VARCHAR" />
     <result column="b_pv" property="bPv" jdbcType="FLOAT" />
     <result column="pv" property="pv" jdbcType="FLOAT" />
     <result column="status" property="status" jdbcType="TINYINT" />
@@ -15,52 +18,68 @@
   
 	<!-- 查询昨日列表详情 -->
 	<select id="selectJBonusScj" resultMap="BaseResultMap">
-		select id,u_id,a_id,a_pv,b_id,b_pv,pv,DATE_FORMAT(created, '%Y-%m-%d') created
-		from j_bonus_scj 
-		where status = 1 and to_days(now()) - to_days(created) = 1 
+		select a.id,a.u_id,e.real_name u_name,a.a_id,d.real_name a_name,a.a_pv,a.b_id,f.real_name b_name,a.b_pv,a.pv,
+		DATE_FORMAT(a.created, '%Y-%m-%d') created
+		from j_bonus_scj a 
+		left join (select b.id,c.real_name from u_user b,u_user_auth c where b.uuid = c.u_uuid ) d on a.a_id  = d.id
+		left join (select b.id,c.real_name from u_user b,u_user_auth c where b.uuid = c.u_uuid ) e on a.u_id  = e.id
+		left join (select b.id,c.real_name from u_user b,u_user_auth c where b.uuid = c.u_uuid ) f on a.b_id  = f.id
+		where a.status = 1 and to_days(now()) - to_days(a.created) = 1 
 	</select>
 
 	<!-- 查询本周列表详情 -->
 	<select id="selectJBonusScjWek" resultMap="BaseResultMap">
-		select id,u_id,a_id,a_pv,b_id,b_pv,pv,DATE_FORMAT(created, '%Y-%m-%d') created
-		from j_bonus_scj 
-		where status = 1 and YEARWEEK(date_format(created,'%Y-%m-%d')) = YEARWEEK(now())
-		ORDER BY created DESC
+		select a.id,a.u_id,e.real_name u_name,a.a_id,d.real_name a_name,a.a_pv,a.b_id,f.real_name b_name,a.b_pv,a.pv,
+		DATE_FORMAT(a.created, '%Y-%m-%d') created
+		from j_bonus_scj a 
+		left join (select b.id,c.real_name from u_user b,u_user_auth c where b.uuid = c.u_uuid ) d on a.a_id  = d.id
+		left join (select b.id,c.real_name from u_user b,u_user_auth c where b.uuid = c.u_uuid ) e on a.u_id  = e.id
+		left join (select b.id,c.real_name from u_user b,u_user_auth c where b.uuid = c.u_uuid ) f on a.b_id  = f.id
+		where a.status = 1 and YEARWEEK(date_format(a.created,'%Y-%m-%d')) = YEARWEEK(now())
+		ORDER BY a.created DESC
 	</select>
 	
 	<!-- 按两个日期查询个人列表详情 -->
 	<select id="selectJBonusScjByUidAndDay" parameterType="com.jyss.yqy.entity.JBonusScj" resultMap="BaseResultMap">
-		select id,u_id,a_id,a_pv,b_id,b_pv,pv,DATE_FORMAT(created, '%Y-%m-%d') created
-		from j_bonus_scj
+		select a.id,a.u_id,e.real_name u_name,a.a_id,d.real_name a_name,a.a_pv,a.b_id,f.real_name b_name,a.b_pv,a.pv,
+		DATE_FORMAT(a.created, '%Y-%m-%d') created
+		from j_bonus_scj a 
+		left join (select b.id,c.real_name from u_user b,u_user_auth c where b.uuid = c.u_uuid ) d on a.a_id  = d.id
+		left join (select b.id,c.real_name from u_user b,u_user_auth c where b.uuid = c.u_uuid ) e on a.u_id  = e.id
+		left join (select b.id,c.real_name from u_user b,u_user_auth c where b.uuid = c.u_uuid ) f on a.b_id  = f.id
 		<where>
 			<if test="uId != null and uId != ''">
-				and u_id = #{uId,jdbcType=INTEGER}
+				and a.u_id = #{uId,jdbcType=INTEGER}
 			</if>
 			<if test="beginTime != null and beginTime != ''">
-				and date_format(created, '%Y-%m-%d') &gt;= #{beginTime}
+				and date_format(a.created, '%Y-%m-%d') &gt;= #{beginTime}
 			</if>
 			<if test="endTime != null and endTime != ''">
-				and date_format(created, '%Y-%m-%d') &lt;= #{endTime}
+				and date_format(a.created, '%Y-%m-%d') &lt;= #{endTime}
 			</if>
-			and status = 1
+			and a.status = 1
 		</where>
-		ORDER BY created DESC
+		ORDER BY a.created DESC
 	</select>
 	
 	<!-- 按两个日期查询个人列表总值 -->
 	<select id="selectJBonusScjByDay" parameterType="com.jyss.yqy.entity.JBonusScj" resultMap="BaseResultMap">
-		select u_id,a_id,IFNULL(SUM(a_pv),0.00) as a_pv,b_id,IFNULL(SUM(b_pv),0.00) as b_pv,IFNULL(SUM(pv),0.00) as pv
-		from j_bonus_scj
+		select a.u_id,e.real_name u_name,a.a_id,d.real_name a_name,IFNULL(SUM(a.a_pv),0.00) as a_pv,a.b_id,
+		f.real_name b_name,IFNULL(SUM(a.b_pv),0.00) as b_pv,IFNULL(SUM(a.pv),0.00) as pv
+		from j_bonus_scj a 
+		left join (select b.id,c.real_name from u_user b,u_user_auth c where b.uuid = c.u_uuid ) d on a.a_id  = d.id
+		left join (select b.id,c.real_name from u_user b,u_user_auth c where b.uuid = c.u_uuid ) e on a.u_id  = e.id
+		left join (select b.id,c.real_name from u_user b,u_user_auth c where b.uuid = c.u_uuid ) f on a.b_id  = f.id
 		<where>
 			<if test="beginTime != null and beginTime != ''">
-				and date_format(created, '%Y-%m-%d') &gt;= #{beginTime}
+				and date_format(a.created, '%Y-%m-%d') &gt;= #{beginTime}
 			</if>
 			<if test="endTime != null and endTime != ''">
-				and date_format(created, '%Y-%m-%d') &lt;= #{endTime}
+				and date_format(a.created, '%Y-%m-%d') &lt;= #{endTime}
 			</if>
-			and status = 1
+			and a.status = 1
 		</where>
-		group by u_id
+		group by a.u_id
 	</select>
 	
 	<!-- 按两个日期查询总pv -->
@@ -80,31 +99,39 @@
 	
 	<!-- 按月查询查询个人列表详情 -->
 	<select id="selectJBonusScjByUidAndMonth" parameterType="com.jyss.yqy.entity.JBonusScj"  resultMap="BaseResultMap">
-		select id,u_id,a_id,a_pv,b_id,b_pv,pv,DATE_FORMAT(created, '%Y-%m-%d') created
-		from j_bonus_scj
+		select a.id,a.u_id,e.real_name u_name,a.a_id,d.real_name a_name,a.a_pv,a.b_id,f.real_name b_name,a.b_pv,a.pv,
+		DATE_FORMAT(a.created, '%Y-%m-%d') created
+		from j_bonus_scj a 
+		left join (select b.id,c.real_name from u_user b,u_user_auth c where b.uuid = c.u_uuid ) d on a.a_id  = d.id
+		left join (select b.id,c.real_name from u_user b,u_user_auth c where b.uuid = c.u_uuid ) e on a.u_id  = e.id
+		left join (select b.id,c.real_name from u_user b,u_user_auth c where b.uuid = c.u_uuid ) f on a.b_id  = f.id
 		<where> 
 			<if test="uId != null and uId != ''">
-				and u_id = #{uId,jdbcType=INTEGER}
+				and a.u_id = #{uId,jdbcType=INTEGER}
 			</if>
 			<if test="month != null and month != ''">
-				and date_format(created, '%Y-%m') = #{month}
+				and date_format(a.created, '%Y-%m') = #{month}
 			</if>
-			and status = 1
+			and a.status = 1
 		</where>
 		ORDER BY  created DESC 
 	</select>
 	
 	<!-- 按月查询查询个人列表总值 -->
 	<select id="selectJBonusScjByMonth" parameterType="com.jyss.yqy.entity.JBonusScj"  resultMap="BaseResultMap">
-		select u_id,a_id,IFNULL(SUM(a_pv),0.00) as a_pv,b_id,IFNULL(SUM(b_pv),0.00) as b_pv,IFNULL(SUM(pv),0.00) as pv
-		from j_bonus_scj
+		select a.u_id,e.real_name u_name,a.a_id,d.real_name a_name,IFNULL(SUM(a.a_pv),0.00) as a_pv,a.b_id,
+		f.real_name b_name,IFNULL(SUM(a.b_pv),0.00) as b_pv,IFNULL(SUM(a.pv),0.00) as pv
+		from j_bonus_scj a 
+		left join (select b.id,c.real_name from u_user b,u_user_auth c where b.uuid = c.u_uuid ) d on a.a_id  = d.id
+		left join (select b.id,c.real_name from u_user b,u_user_auth c where b.uuid = c.u_uuid ) e on a.u_id  = e.id
+		left join (select b.id,c.real_name from u_user b,u_user_auth c where b.uuid = c.u_uuid ) f on a.b_id  = f.id
 		<where>
 			<if test="month != null and month != ''">
-				and date_format(created, '%Y-%m') = #{month}
+				and date_format(a.created, '%Y-%m') = #{month}
 			</if>
-			and status = 1
+			and a.status = 1
 		</where>
-		group by u_id
+		group by a.u_id
 	</select>
 	
 	<!-- 按月查询查询总pv -->
