@@ -1,23 +1,12 @@
 package com.jyss.yqy.entity;
 
-import java.io.Serializable;
-import java.util.List;
-
-public class JBonusScjResult implements Serializable{
+public class JBonusFxjResult {
 	
-	private Float amount;            //总pv 
-	private Long total;              //总条数
+	private Float amount;           //今日收益
 	private Float cashScore;         //现金积分
 	private Float shoppingScore;     //购物积分
-	private List<JBonusScj> list;    
 	
 	
-	public Long getTotal() {
-		return total;
-	}
-	public void setTotal(Long total) {
-		this.total = total;
-	}
 	public Float getAmount() {
 		return amount;
 	}
@@ -35,12 +24,6 @@ public class JBonusScjResult implements Serializable{
 	}
 	public void setShoppingScore(Float shoppingScore) {
 		this.shoppingScore = shoppingScore;
-	}
-	public List<JBonusScj> getList() {
-		return list;
-	}
-	public void setList(List<JBonusScj> list) {
-		this.list = list;
 	}
 	
 	

@@ -1,0 +1,157 @@
+
+<!--  <?xml version="1.0" encoding="UTF-8" ?>-->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jyss.yqy.mapper.ScoreBalanceMapper" > 
+
+<!--现金积分=购物积分=记录表-->
+    <resultMap type="com.jyss.yqy.entity.ScoreBalance" id="sblResultMap">   
+        <id property="id" column="id"  />
+        <result property="end" column="end"  /> <!--1=A端 2=B端  -->
+        <result property="uUuid" column="u_uuid"  />
+        <result property="category" column="category"  /><!--积分来源或去向[1=A端取现，2=A端消费，3=A端返佣，4=管理奖，5=辅导奖，6=分销奖，7=市场奖，8=B端消费]  -->
+        <result property="type" column="type"  /><!--1=收入 2=支出  -->
+        <result property="score" column="score"  />
+        <result property="jyScore" column="jy_score"  />
+        <result property="createdAt" column="created_at"  />
+        <result property="title" column="title"  />
+        <result property="cjsj" column="cjsj"  />
+        <result property="status" column="status"  />
+         <result property="orderSn" column="order_sn"  />
+
+    </resultMap>           
+     
+    <!--购物积分=查询--> 
+    <select id="getShoppingScoreBalance" resultMap="sblResultMap" >  
+        select t.*,DATE_FORMAT(t.created_at, '%Y-%m-%d %H:%i' )  cjsj from (select u.*,c.bz_value as title from u_shopping_score_balance u 
+                           left join p_xt_cl c 
+                           on u.category = c.bz_id 
+                           where c.bz_type='category_type') t
+            <where> 
+                 1 = 1
+			   <if test="uUuid != null and uUuid !=''"> and t.u_uuid = #{uUuid} </if>  
+			</where>  
+			order by created_at desc 
+    </select> 
+    
+   <!--现金积分=查询--> 
+    <select id="getCashScoreBalance" resultMap="sblResultMap" >  
+        <!-- select * from u_cash_score_balance  -->
+         select m.*, DATE_FORMAT(m.created_at, '%Y-%m-%d %H:%i' )  cjsj  from (select u.*,c.bz_value as title from u_cash_score_balance u 
+                           left join p_xt_cl c 
+                           on u.category = c.bz_id 
+                           where c.bz_type='category_type') m
+            <where> 
+                 1 = 1
+			   <if test="uUuid != null and uUuid !=''"> and m.u_uuid = #{uUuid} </if>  
+			</where>   
+			order by created_at desc
+    </select> 
+  
+     <!--现金积分=插入-->
+    <insert id="addCashScoreBalance" parameterType="com.jyss.yqy.entity.ScoreBalance" 
+        useGeneratedKeys="true" keyProperty="id">                                                     <!-- ordersn -->
+        insert into u_cash_score_balance values(null,#{end},#{uUuid},#{category},#{type},#{score},#{jyScore},'B',#{createdAt},#{status})              
+    </insert>
+   
+   
+    <!--购物积分=插入-->
+    <insert id="addShoppingScoreBalance" parameterType="com.jyss.yqy.entity.ScoreBalance" 
+        useGeneratedKeys="true" keyProperty="id"> 
+        insert into u_shopping_score_balance values(null,#{end},#{uUuid},#{category},#{type},#{score},#{jyScore},'B',#{createdAt},#{status})              
+    </insert>
+     
+  	<!-- 查询昨日现金总积分 -->
+  	<select id="selectTotalCashScore" parameterType="com.jyss.yqy.entity.ScoreBalance" resultType="float">
+  		select IFNULL(sum(score),0.00) from u_cash_score_balance 
+  		<where>
+  			<if test="category != null"> and category = {category}</if>
+  			and type = 1 and status = 1 and end = 2 and to_days(now()) - to_days(created_at) = 1
+  		</where>
+  	</select>
+  	
+  	<!-- 查询本周现金总积分 -->
+  	<select id="selectTotalCashScoreByWek" parameterType="com.jyss.yqy.entity.ScoreBalance" resultType="float">
+  		select IFNULL(sum(score),0.00) from u_cash_score_balance 
+  		<where>
+  			<if test="category != null"> and category = {category}</if>
+  			and type = 1 and status = 1 and end = 2 and YEARWEEK(date_format(created_at,'%Y-%m-%d')) = YEARWEEK(now())
+  		</where>
+  	</select>
+  	
+  	<!-- 查询时间段现金总积分 -->
+  	<select id="selectTotalCashScoreByDay" parameterType="com.jyss.yqy.entity.ScoreBalance" resultType="float">
+  		select IFNULL(sum(score),0.00) from u_cash_score_balance 
+  		<where>
+  			<if test="category != null"> and category = {category}</if>
+  			<if test="beginTime != null and beginTime != ''">
+				and date_format(created_at, '%Y-%m-%d') &gt;= #{beginTime}
+			</if>
+			<if test="endTime != null and endTime != ''">
+				and date_format(created_at, '%Y-%m-%d') &lt;= #{endTime}
+			</if>
+  			and type = 1 and status = 1 and end = 2 
+  		</where>
+  	</select>
+  	
+  	<!-- 查询月份现金总积分 -->
+  	<select id="selectTotalCashScoreByMonth" parameterType="com.jyss.yqy.entity.ScoreBalance" resultType="float">
+  		select IFNULL(sum(score),0.00) from u_cash_score_balance 
+  		<where>
+  			<if test="category != null"> and category = {category}</if>
+  			<if test="month != null and month != ''">
+				and date_format(created_at, '%Y-%m') = #{month}
+			</if>
+  			and type = 1 and status = 1 and end = 2 
+  		</where>
+  	</select>
+  	
+  	
+  	<!-- 查询昨日购物总积分 -->
+  	<select id="selectTotalShoppingScore" parameterType="com.jyss.yqy.entity.ScoreBalance" resultType="float">
+  		select IFNULL(sum(score),0.00) from u_shopping_score_balance 
+  		<where>
+  			<if test="category != null"> and category = {category}</if>
+  			and type = 1 and status = 1 and end = 2 and to_days(now()) - to_days(created_at) = 1
+  		</where>
+  	</select>
+  	
+  	<!-- 查询本周购物总积分 -->
+  	<select id="selectTotalShoppingScoreByWek" parameterType="com.jyss.yqy.entity.ScoreBalance" resultType="float">
+  		select IFNULL(sum(score),0.00) from u_shopping_score_balance 
+  		<where>
+  			<if test="category != null"> and category = {category}</if>
+  			and type = 1 and status = 1 and end = 2 and YEARWEEK(date_format(created_at,'%Y-%m-%d')) = YEARWEEK(now())
+  		</where>
+  	</select>
+  	
+  	<!-- 查询时间段购物总积分 -->
+  	<select id="selectTotalShoppingScoreByDay" parameterType="com.jyss.yqy.entity.ScoreBalance" resultType="float">
+  		select IFNULL(sum(score),0.00) from u_shopping_score_balance 
+  		<where>
+  			<if test="category != null"> and category = {category}</if>
+  			<if test="beginTime != null and beginTime != ''">
+				and date_format(created_at, '%Y-%m-%d') &gt;= #{beginTime}
+			</if>
+			<if test="endTime != null and endTime != ''">
+				and date_format(created_at, '%Y-%m-%d') &lt;= #{endTime}
+			</if>
+  			and type = 1 and status = 1 and end = 2 
+  		</where>
+  	</select>
+  	
+  	<!-- 查询月份购物总积分 -->
+  	<select id="selectTotalShoppingScoreByMonth" parameterType="com.jyss.yqy.entity.ScoreBalance" resultType="float">
+  		select IFNULL(sum(score),0.00) from u_shopping_score_balance 
+  		<where>
+  			<if test="category != null"> and category = {category}</if>
+  			<if test="month != null and month != ''">
+				and date_format(created_at, '%Y-%m') = #{month}
+			</if>
+  			and type = 1 and status = 1 and end = 2 
+  		</where>
+  	</select>
+  
+    
+</mapper>

@@ -295,6 +295,13 @@
 		group by parent_id
 	</select> -->
 	
+	<!-- 查询本周总值 -->
+	<select id="selectFdjTotalByWek" resultType="double">
+		SELECT IFNULL(SUM(parent_money),0.00) parent_money
+		FROM j_bonus_fdj
+		where status = 1 and YEARWEEK(date_format(created,'%Y-%m-%d')) = YEARWEEK(now())
+	</select>
+	
 	
 	<!-- 按两个日期查询个人列表详情 -->
 	<select id="selectJBonusFdjByPidAndDay"  resultMap="BaseResultMap">
@@ -365,21 +372,16 @@
 	</select> -->
 	
 	<!-- 按月查询总收益 -->
-	<!-- <select id="selectFdjTotalByMonth"  resultType="double">
+	<select id="selectFdjTotalByMonth"  resultType="double">
 		SELECT IFNULL(SUM(parent_money),0.00)
-		FROM
-		j_bonus_fdj
+		from j_bonus_fdj
 		<where>
-			<if test="parentId != null and parentId != ''">
-				and parent_id = #{parentId,jdbcType=INTEGER}
-			</if>
 			<if test="month != null and month != ''">
 				and date_format(created, '%Y-%m') = #{month}
 			</if>
-			AND status = 1 
+			and status = 1 
 		</where>
-		ORDER BY  created DESC
-	</select> -->
+	</select> 
 	
 	
 	

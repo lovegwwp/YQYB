@@ -43,13 +43,19 @@
 	</select>
 
 	<!-- 查询本周个人列表总值 -->
-	<!-- <select id="selectJBonusFxjWek" resultMap="BaseResultMap">
+	<select id="selectJBonusFxjWek" resultMap="BaseResultMap">
 		SELECT id,u_id,u_name,parent_id,IFNULL(SUM(parent_money),0.00) amount
 		FROM j_bonus_fxj
 		where status = 1 and YEARWEEK(date_format(created,'%Y-%m-%d')) = YEARWEEK(now())
 		group by parent_id
-	</select> -->
+	</select>
 	
+	<!-- 查询本周总金额 -->
+ 	<select id="selectFxjTotalByWek"  resultType="float">
+		SELECT IFNULL(SUM(parent_money),0.00) parent_money
+		FROM j_bonus_fxj
+		where status = 1 and YEARWEEK(date_format(created,'%Y-%m-%d')) = YEARWEEK(now())
+	</select>
 	
 	<!-- 按两个日期查询个人列表详情 -->
 	<select id="selectJBonusFxjByPidAndDay"  resultMap="BaseResultMap">
@@ -120,22 +126,16 @@
 	</select> -->
 	
 	<!-- 按月查询总收益 -->
-	<!-- <select id="selectFxjTotalByMonth"  resultType="float">
+	<select id="selectFxjTotalByMonth"  resultType="float">
 		SELECT IFNULL(SUM(parent_money),0.00)
-		FROM
-		j_bonus_fxj
+		FROM j_bonus_fxj
 		<where>
-			<if test="parentId != null and parentId != ''">
-				and parent_id = #{parentId,jdbcType=INTEGER}
-			</if>
 			<if test="month != null and month != ''">
 				and date_format(created, '%Y-%m') = #{month}
 			</if>
 			AND status = 1 
 		</where>
-		ORDER BY  created DESC
-	</select> -->
-	
+	</select> 
 	
 	
 </mapper>

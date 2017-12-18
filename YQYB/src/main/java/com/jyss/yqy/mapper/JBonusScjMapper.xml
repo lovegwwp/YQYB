@@ -10,8 +10,8 @@
     <result column="a_pv" property="aPv" jdbcType="FLOAT" />
     <result column="b_id" property="bId" jdbcType="INTEGER" />
     <result column="b_name" property="bName" jdbcType="VARCHAR" />
-    <result column="b_pv" property="bPv"  /><!-- jdbcType="FLOAT" -->
-    <result column="pv" property="pv"  /> <!-- jdbcType="FLOAT" -->
+    <result column="b_pv" property="bPv" jdbcType="FLOAT" />
+    <result column="pv" property="pv" jdbcType="FLOAT" />
     <result column="status" property="status" jdbcType="TINYINT" />
     <result column="created" property="created" jdbcType="TIMESTAMP" />
   </resultMap>
@@ -26,17 +26,31 @@
 		left join (select b.id,c.real_name from u_user b,u_user_auth c where b.uuid = c.u_uuid ) f on a.b_id  = f.id
 		where a.status = 1 and to_days(now()) - to_days(a.created) = 1 
 	</select>
+	
+	<!-- 查询昨日总pv -->
+	<select id="selectScjTotal" parameterType="com.jyss.yqy.entity.JBonusScj" resultType="float">
+		select IFNULL(SUM(pv),0.00) as pv
+		from j_bonus_scj
+		where status = 1 and to_days(now()) - to_days(created) = 1
+	</select>
 
-	<!-- 查询本周列表详情 -->
+	<!-- 查询本周列表总值 -->
 	<select id="selectJBonusScjWek" resultMap="BaseResultMap">
-		select a.id,a.u_id,e.real_name u_name,a.a_id,d.real_name a_name,a.a_pv,a.b_id,f.real_name b_name,a.b_pv,a.pv,
-		DATE_FORMAT(a.created, '%Y-%m-%d') created
+		select a.u_id,e.real_name u_name,a.a_id,d.real_name a_name,IFNULL(SUM(a.a_pv),0.00) as a_pv,a.b_id,
+		f.real_name b_name,IFNULL(SUM(a.b_pv),0.00) as b_pv,IFNULL(SUM(a.pv),0.00) as pv
 		from j_bonus_scj a 
 		left join (select b.id,c.real_name from u_user b,u_user_auth c where b.uuid = c.u_uuid ) d on a.a_id  = d.id
 		left join (select b.id,c.real_name from u_user b,u_user_auth c where b.uuid = c.u_uuid ) e on a.u_id  = e.id
 		left join (select b.id,c.real_name from u_user b,u_user_auth c where b.uuid = c.u_uuid ) f on a.b_id  = f.id
 		where a.status = 1 and YEARWEEK(date_format(a.created,'%Y-%m-%d')) = YEARWEEK(now())
-		ORDER BY a.created DESC
+		group by a.u_id
+	</select>
+	
+	<!-- 查询本周总pv -->
+	<select id="selectScjTotalWek" parameterType="com.jyss.yqy.entity.JBonusScj" resultType="float">
+		select IFNULL(SUM(pv),0.00) as pv
+		from j_bonus_scj
+		where status = 1 and YEARWEEK(date_format(created,'%Y-%m-%d')) = YEARWEEK(now())
 	</select>
 	
 	<!-- 按两个日期查询个人列表详情 -->
@@ -83,7 +97,7 @@
 	</select>
 	
 	<!-- 按两个日期查询总pv -->
-	<select id="selectScjTotalByDay" parameterType="com.jyss.yqy.entity.JBonusScj" resultMap="BaseResultMap">
+	<select id="selectScjTotalByDay" parameterType="com.jyss.yqy.entity.JBonusScj" resultType="float">
 		select IFNULL(SUM(pv),0.00) as pv
 		from j_bonus_scj
 		<where>
@@ -114,8 +128,8 @@
 			</if>
 			and a.status = 1
 		</where>
-		ORDER BY  created DESC 
-	</select>
+		ORDER BY a.created DESC 
+	</select> 
 	
 	<!-- 按月查询查询个人列表总值 -->
 	<select id="selectJBonusScjByMonth" parameterType="com.jyss.yqy.entity.JBonusScj"  resultMap="BaseResultMap">
@@ -134,8 +148,8 @@
 		group by a.u_id
 	</select>
 	
-	<!-- 按月查询查询总pv -->
-	<select id="selectScjTotalByMonth" parameterType="com.jyss.yqy.entity.JBonusScj"  resultMap="BaseResultMap">
+	<!-- 按月查询总pv -->
+	<select id="selectScjTotalByMonth" parameterType="com.jyss.yqy.entity.JBonusScj"  resultType="float">
 		select IFNULL(SUM(pv),0.00) as pv
 		from j_bonus_scj
 		<where>
@@ -145,7 +159,6 @@
 			and status = 1 
 		</where>
 	</select>
-  
 	
  
 </mapper>

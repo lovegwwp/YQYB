@@ -31,13 +31,16 @@ public interface JBonusGljMapper {
     int updateByPrimaryKey(JBonusGlj record);
     
     //查询昨日个人列表详情
-    List<JBonusGlj> selectJBonusGljByPid(@Param("parentId")int parentId);
+    //List<JBonusGlj> selectJBonusGljByPid(@Param("parentId")int parentId);
     
     //查询昨日个人列表总值
-    List<JBonusGlj> selectJBonusGlj();
+    //List<JBonusGlj> selectJBonusGlj();
     
     //查询昨日总金额
     double selectGljTotal();
+    
+    //查询本周总金额
+    double selectGljTotalByWek();
     
     //按两个日期查询个人列表详情
     List<JBonusGlj> selectJBonusGljByPidAndDay(@Param("parentId")int parentId, @Param("beginTime")String beginTime,@Param("endTime")String endTime);
@@ -49,7 +52,6 @@ public interface JBonusGljMapper {
     double selectGljTotalByDay(@Param("beginTime")String beginTime,@Param("endTime")String endTime);
     
     
-    
     //查询本周个人列表总值
     //List<JBonusGlj> selectJBonusGljWek();
     
@@ -57,7 +59,7 @@ public interface JBonusGljMapper {
     //List<JBonusGlj> selectJBonusGljByMonth(@Param("parentId")int parentId, @Param("month")String month);
     
     //按月查询总收益
-    //double selectGljTotalByMonth(@Param("parentId")int parentId, @Param("month")String month);
+    double selectGljTotalByMonth(@Param("month")String month);
     
     
 }
