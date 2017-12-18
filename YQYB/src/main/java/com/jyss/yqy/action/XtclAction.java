@@ -117,7 +117,7 @@ public class XtclAction {
 			@RequestParam(value = "area", required = true) String area,
 			@RequestParam(value = "fid", required = false) String fid) {
 		// TODO Auto-generated method stub
-		List<BaseArea> clListCo = clService.getBaseAreas("", area, fid);
+		List<BaseArea> clListCo = clService.getBaseAreas("", area, fid, "");
 		return clListCo;
 	}
 

@@ -101,9 +101,9 @@
     
      <!--修改用户 --> 
     <update id="upThd" parameterType="com.jyss.yqy.entity.Thd" >
-        update p_thd  set name = #{name} , tel = #{tel}, tel_show = #{tel} ,th_name = #{thName} 
+        update p_thd  set name = #{name} , tel = #{tel}, tel_show = #{telShow} ,th_name = #{thName} 
               ,province_id = #{provinceId} ,province = #{province} ,city_id = #{cityId} ,city = #{city}, 
-                      area_id = #{areaId} ,area = #{area} , lng = #{lng} , lat = #{lat} , 
+                      area_id = #{areaId} ,area = #{area} , lng = #{lng} , lat = #{lat}  
                       ,addr = #{addr},last_modify_time = now()
              where id =#{id}
     </update>

@@ -104,11 +104,11 @@
 					<th field="name" width="200">提货点联系人</th>
 					<th field="telShow" width="200">联系电话</th>
 					<!-- <th field="provinceId" width="100">省份</th> -->
-					<!-- <th field="province" width="100">省份</th>
+				    <th field="province" width="100">省份</th>
 					<th field="city" width="100">城市</th>
-					<th field="area" width="100">区域</th> -->
-					<th field="addr" width="280">提货地址</th> 
-					<th field="cjsj" width="150">创建时间</th>
+					<th field="area" width="100">区域</th>
+					<th field="addr" width="200">提货地址</th> 
+					<!-- <th field="cjsj" width="150">创建时间</th> -->
 					<th field="xgsj" width="150">修改时间</th>
 					<!-- <th field="dlsj" width="150">登录时间</th> -->
 					<th field="status" width="100"  formatter="formatJy">是否禁用</th>

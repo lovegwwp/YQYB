@@ -60,9 +60,10 @@ public class XtclServiceImpl implements XtclService {
 
 	// ///area=2省份 3城市 4区域
 	@Override
-	public List<BaseArea> getBaseAreas(String status, String area, String fid) {
+	public List<BaseArea> getBaseAreas(String status, String area, String fid,
+			String id) {
 		// TODO Auto-generated method stub
-		return xtclMapper.getBaseAreas(status, area, fid);
+		return xtclMapper.getBaseAreas(status, area, fid, id);
 	}
 
 }

@@ -32,6 +32,7 @@
 			  <if test="status != null and status !=''"> and a.status  = #{status} </if> 
 			  <if test="area != null and area !=''"> and  a.area =#{area}  </if> 
 			  <if test="fid != null and fid !=''"> and  a.fid =#{fid}  </if> 
+			  <if test="id != null and id !=''"> and  a.id =#{id}  </if> 
 		 </where>   
 		 order by id  
     </select> 

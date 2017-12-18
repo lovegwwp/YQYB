@@ -111,7 +111,7 @@ public class ThdAction {
 		// TODO Auto-generated method stub
 		int count = 0;
 		int isOnly = 0;
-		isOnly = thdService.getThdNum(thd.getName());
+		isOnly = thdService.getThdNum(thd.getTel());
 		if (isOnly >= 1) {
 			return new ResponseEntity("NO", "账号冲突！");
 		}

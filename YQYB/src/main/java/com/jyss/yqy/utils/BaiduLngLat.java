@@ -28,6 +28,8 @@ public class BaiduLngLat {
 			map.put("lat", lat);
 			// System.out.println("经度："+lng+"---纬度："+lat);
 		} else {
+			map.put("lng", 0.00);
+			map.put("lat", 0.00);
 			// System.out.println("未找到相匹配的经纬度！");
 		}
 		return map;

@@ -1,6 +1,8 @@
 package com.jyss.yqy.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,6 +12,7 @@ import com.jyss.yqy.entity.Thd;
 import com.jyss.yqy.mapper.ThdMapper;
 import com.jyss.yqy.mapper.XtclMapper;
 import com.jyss.yqy.service.ThdService;
+import com.jyss.yqy.utils.BaiduLngLat;
 import com.jyss.yqy.utils.CommTool;
 import com.jyss.yqy.utils.PasswordUtil;
 
@@ -20,9 +23,11 @@ public class ThdServiceImpl implements ThdService {
 	@Autowired
 	private XtclMapper xtclMapper;
 
-	public String getValue(String bz_type, String id) {
-		if (xtclMapper.getClsValue(bz_type, id) != null) {
-			String nameVal = xtclMapper.getClsValue(bz_type, id).getBz_value();
+	public String getValue(String area, String id) {
+		if (xtclMapper.getBaseAreas("", area, "", id) != null
+				&& xtclMapper.getBaseAreas("", area, "", id).size() != 0) {
+			String nameVal = xtclMapper.getBaseAreas("", area, "", id).get(0)
+					.getName();
 			if (nameVal.isEmpty() || nameVal.equals("")) {
 				return id;
 			}
@@ -52,10 +57,18 @@ public class ThdServiceImpl implements ThdService {
 	}
 
 	public Thd thdCl(Thd t) {
-		t.setProvince(getValue("pro_type", String.valueOf(t.getProvinceId())));
-		t.setCity(getValue("city_type", String.valueOf(t.getCityId())));
-		t.setArea(getValue("area_type", String.valueOf(t.getAreaId())));
-		t.setTelShow(t.getTel());
+		t.setProvince(getValue("2", String.valueOf(t.getProvinceId())));
+		t.setCity(getValue("3", String.valueOf(t.getCityId())));
+		t.setArea(getValue("4", String.valueOf(t.getAreaId())));
+		// t.setTelShow(t.getTel());
+		String addr = "";
+		addr = t.getProvince() + t.getCity() + t.getArea() + t.getAddr();
+		Map<String, Double> m = new HashMap<String, Double>();
+		m = BaiduLngLat.getLngAndLat(addr);
+		float lng = (float) (Math.round((m.get("lng").floatValue()) * 100)) / 100;// //取2位小数
+		float lat = (float) (Math.round((m.get("lat").floatValue()) * 100)) / 100;
+		t.setLat(lat);
+		t.setLng(lng);
 		return t;
 	}
 

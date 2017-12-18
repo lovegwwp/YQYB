@@ -81,5 +81,6 @@ public interface XtclService {
 	 * @return
 	 */
 	List<BaseArea> getBaseAreas(@Param("status") String status,
-			@Param("area") String area, @Param("fid") String fid);
+			@Param("area") String area, @Param("fid") String fid,
+			@Param("id") String id);
 }
