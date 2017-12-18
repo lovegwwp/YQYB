@@ -27,7 +27,9 @@
         <result property="areaId" column="area_id"  />
         <result property="area" column="area"  />
         <result property="addr" column="addr"  />
-        <result property="telShow" column="tel_show"  />
+        <result property="telShow" column="tel_show"  />   
+        <result property="lng" column="lng"  />
+        <result property="lat" column="lat"  />
     </resultMap>     
              
     <resultMap type="com.jyss.yqy.entity.ThOrders" id="spResultMap">   
@@ -94,14 +96,14 @@
     <!-- 增加提货点用户 -->
     <insert id="addThd" parameterType="com.jyss.yqy.entity.Thd" 
         useGeneratedKeys="true" keyProperty="id"> 
-        insert into p_thd values(null,#{name},#{tel},#{password},#{salt},#{pics},now(),now(),now(),#{status},#{thName},#{provinceId},#{province},#{cityId},#{city},#{areaId},#{area},#{addr},#{telShow})             
+        insert into p_thd values(null,#{name},#{tel},#{password},#{salt},#{pics},now(),now(),now(),#{status},#{thName},#{provinceId},#{province},#{cityId},#{city},#{areaId},#{area},#{addr},#{telShow},#{lat},#{lng})             
     </insert>
     
      <!--修改用户 --> 
     <update id="upThd" parameterType="com.jyss.yqy.entity.Thd" >
         update p_thd  set name = #{name} , tel = #{tel}, tel_show = #{tel} ,th_name = #{thName} 
-              <!--    ,province_id = #{provinceId} ,province = #{province} ,city_id = #{cityId} ,city = #{city}, 
-                      area_id = #{areaId} ,area = #{area} , -->
+              ,province_id = #{provinceId} ,province = #{province} ,city_id = #{cityId} ,city = #{city}, 
+                      area_id = #{areaId} ,area = #{area} , lng = #{lng} , lat = #{lat} , 
                       ,addr = #{addr},last_modify_time = now()
              where id =#{id}
     </update>

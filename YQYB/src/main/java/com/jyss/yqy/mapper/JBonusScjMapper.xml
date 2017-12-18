@@ -10,8 +10,8 @@
     <result column="a_pv" property="aPv" jdbcType="FLOAT" />
     <result column="b_id" property="bId" jdbcType="INTEGER" />
     <result column="b_name" property="bName" jdbcType="VARCHAR" />
-    <result column="b_pv" property="bPv" jdbcType="FLOAT" />
-    <result column="pv" property="pv" jdbcType="FLOAT" />
+    <result column="b_pv" property="bPv"  /><!-- jdbcType="FLOAT" -->
+    <result column="pv" property="pv"  /> <!-- jdbcType="FLOAT" -->
     <result column="status" property="status" jdbcType="TINYINT" />
     <result column="created" property="created" jdbcType="TIMESTAMP" />
   </resultMap>
@@ -83,7 +83,7 @@
 	</select>
 	
 	<!-- 按两个日期查询总pv -->
-	<select id="selectScjTotalByDay" parameterType="com.jyss.yqy.entity.JBonusScj" resultMap="float">
+	<select id="selectScjTotalByDay" parameterType="com.jyss.yqy.entity.JBonusScj" resultMap="BaseResultMap">
 		select IFNULL(SUM(pv),0.00) as pv
 		from j_bonus_scj
 		<where>
@@ -135,7 +135,7 @@
 	</select>
 	
 	<!-- 按月查询查询总pv -->
-	<select id="selectScjTotalByMonth" parameterType="com.jyss.yqy.entity.JBonusScj"  resultMap="float">
+	<select id="selectScjTotalByMonth" parameterType="com.jyss.yqy.entity.JBonusScj"  resultMap="BaseResultMap">
 		select IFNULL(SUM(pv),0.00) as pv
 		from j_bonus_scj
 		<where>

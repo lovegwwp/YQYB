@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.jyss.yqy.entity.BaseArea;
 import com.jyss.yqy.entity.Page;
 import com.jyss.yqy.entity.ResponseEntity;
 import com.jyss.yqy.entity.Xtcl;
@@ -107,6 +108,16 @@ public class XtclAction {
 			@RequestParam(value = "pid", required = false) String pid) {
 		// TODO Auto-generated method stub
 		List<Xtcl> clListCo = clService.getClsCombox(bz_type, pid);
+		return clListCo;
+	}
+
+	@RequestMapping("/getBaCo")
+	@ResponseBody
+	public List<BaseArea> getBaCo(
+			@RequestParam(value = "area", required = true) String area,
+			@RequestParam(value = "fid", required = false) String fid) {
+		// TODO Auto-generated method stub
+		List<BaseArea> clListCo = clService.getBaseAreas("", area, fid);
 		return clListCo;
 	}
 

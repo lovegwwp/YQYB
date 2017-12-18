@@ -133,7 +133,7 @@
 				 </form>
 			</div>
 		</div>
-       <div id="addThd" class="easyui-window" title="用户新增"  closed = "true" style="width:450px;height:400px;">
+       <div id="addThd" class="easyui-window" title="用户新增"  closed = "true" style="width:450px;height:60%;">
 			 <form method="post" id="ThdFm" text-align:center>
                 <table cellspacing="8px;"> 
                    <tr>                       
@@ -169,26 +169,21 @@
                             style="color: red">*</span>
                         </td>
                     </tr>
-                    <tr>
-                        <td>提货点地址：</td>
-                        <td>
-                          <textarea class="easyui-textbox" required="true" id="addr" name="addr" data-options="multiline:true" value="请填写" style="width:180px;height:100px;white-space:pre-wrap"></textarea>
-                        </td>
-                    </tr>
-                  <!--  <tr>
+                   
+                   <tr>
                        <td><span style="color: blue">提货点地址</span> </td>
                     </tr>                     
                       <tr> 
                         <td>省份：</td>
                         <td> 
                         <input id="provinceId" name="provinceId" class="easyui-combobox" data-options="    
-					            valueField: 'bz_id',    
-						        textField: 'bz_value',    
-						        url: 'getClsCo.action?bz_type='+'pro_type',
+					            valueField: 'id',    
+						        textField: 'name',    
+						        url: 'getBaCo.action?area='+'2',
 						        method:'get', 
                                 panelHeight:'150',
                                 onSelect: function(rec){    
-						            var url = 'getClsCo.action?bz_type='+'city_type'+'&pid='+rec.bz_id;
+						            var url = 'getBaCo.action?area='+'3'+'&fid='+rec.id;
 						            $('#cityId').combobox('reload', url);    
 						        }  "/> &nbsp;<span style="color: red">*</span>
                         </td>
@@ -197,13 +192,13 @@
                         <td>城市：</td>
                         <td> 
                         <input id="cityId" name="cityId" class="easyui-combobox" data-options="    
-					            valueField: 'bz_id',    
-						        textField: 'bz_value',    
-						        url: 'getClsCo.action?bz_type='+'city_type',
+					            valueField: 'id',    
+						        textField: 'name',    
+						        url: 'getBaCo.action?area='+'3',
 						        method:'get', 
                                 panelHeight:'150',
                                 onSelect: function(rec){    
-						            var url = 'getClsCo.action?bz_type='+'area_type'+'&pid='+rec.bz_id;
+						            var url = 'getBaCo.action?area='+'4'+'&fid='+rec.id;
 						            $('#areaId').combobox('reload', url);    
 						        }  "/> &nbsp;<span style="color: red">*</span>
                         </td>
@@ -212,17 +207,23 @@
                         <td>区域：</td>
                         <td> 
                         <input id="areaId" name="areaId" class="easyui-combobox" data-options="    
-					            valueField: 'bz_id',    
-						        textField: 'bz_value',    
-						        url: 'getClsCo.action?bz_type='+'area_type',
+					            valueField: 'id',    
+						        textField: 'name',    
+						        url: 'getBaCo.action?area='+'4',
 						        method:'get', 
                                 panelHeight:'150',
                                 onSelect: function(rec){    
-						            var url = 'getClsCo.action';    
+						            var url = 'getBaCo.action';    
 						            $('#cc2').combobox('reload', url);    
 						        }  "/> &nbsp;<span style="color: red">*</span>
                         </td>
-                    </tr>         -->
+                    </tr> 
+                    <tr>
+                        <td>详细地址：</td>
+                        <td>
+                          <textarea class="easyui-textbox" required="true" id="addr" name="addr" data-options="multiline:true" value="请填写" style="width:180px;height:100px;white-space:pre-wrap"></textarea>
+                        </td>
+                    </tr>       
                 </table>
 				<div style="padding:5px;text-align:center;">
 					<a href="#" class="easyui-linkbutton" icon="icon-ok" onclick="saveThd()">保存</a>&nbsp;&nbsp;&nbsp;&nbsp;
