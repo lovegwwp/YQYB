@@ -66,7 +66,7 @@
   	<select id="selectTotalCashScore" parameterType="com.jyss.yqy.entity.ScoreBalance" resultType="float">
   		select IFNULL(sum(score),0.00) from u_cash_score_balance 
   		<where>
-  			<if test="category != null"> and category = {category}</if>
+  			<if test="category != null"> and category = #{category}</if>
   			and type = 1 and status = 1 and end = 2 and to_days(now()) - to_days(created_at) = 1
   		</where>
   	</select>
@@ -75,7 +75,7 @@
   	<select id="selectTotalCashScoreByWek" parameterType="com.jyss.yqy.entity.ScoreBalance" resultType="float">
   		select IFNULL(sum(score),0.00) from u_cash_score_balance 
   		<where>
-  			<if test="category != null"> and category = {category}</if>
+  			<if test="category != null"> and category = #{category}</if>
   			and type = 1 and status = 1 and end = 2 and YEARWEEK(date_format(created_at,'%Y-%m-%d')) = YEARWEEK(now())
   		</where>
   	</select>
@@ -84,7 +84,7 @@
   	<select id="selectTotalCashScoreByDay" parameterType="com.jyss.yqy.entity.ScoreBalance" resultType="float">
   		select IFNULL(sum(score),0.00) from u_cash_score_balance 
   		<where>
-  			<if test="category != null"> and category = {category}</if>
+  			<if test="category != null"> and category = #{category}</if>
   			<if test="beginTime != null and beginTime != ''">
 				and date_format(created_at, '%Y-%m-%d') &gt;= #{beginTime}
 			</if>
@@ -99,7 +99,7 @@
   	<select id="selectTotalCashScoreByMonth" parameterType="com.jyss.yqy.entity.ScoreBalance" resultType="float">
   		select IFNULL(sum(score),0.00) from u_cash_score_balance 
   		<where>
-  			<if test="category != null"> and category = {category}</if>
+  			<if test="category != null"> and category = #{category}</if>
   			<if test="month != null and month != ''">
 				and date_format(created_at, '%Y-%m') = #{month}
 			</if>
@@ -112,7 +112,7 @@
   	<select id="selectTotalShoppingScore" parameterType="com.jyss.yqy.entity.ScoreBalance" resultType="float">
   		select IFNULL(sum(score),0.00) from u_shopping_score_balance 
   		<where>
-  			<if test="category != null"> and category = {category}</if>
+  			<if test="category != null"> and category = #{category}</if>
   			and type = 1 and status = 1 and end = 2 and to_days(now()) - to_days(created_at) = 1
   		</where>
   	</select>
@@ -121,7 +121,7 @@
   	<select id="selectTotalShoppingScoreByWek" parameterType="com.jyss.yqy.entity.ScoreBalance" resultType="float">
   		select IFNULL(sum(score),0.00) from u_shopping_score_balance 
   		<where>
-  			<if test="category != null"> and category = {category}</if>
+  			<if test="category != null"> and category = #{category}</if>
   			and type = 1 and status = 1 and end = 2 and YEARWEEK(date_format(created_at,'%Y-%m-%d')) = YEARWEEK(now())
   		</where>
   	</select>
@@ -130,7 +130,7 @@
   	<select id="selectTotalShoppingScoreByDay" parameterType="com.jyss.yqy.entity.ScoreBalance" resultType="float">
   		select IFNULL(sum(score),0.00) from u_shopping_score_balance 
   		<where>
-  			<if test="category != null"> and category = {category}</if>
+  			<if test="category != null"> and category = #{category}</if>
   			<if test="beginTime != null and beginTime != ''">
 				and date_format(created_at, '%Y-%m-%d') &gt;= #{beginTime}
 			</if>
@@ -145,7 +145,7 @@
   	<select id="selectTotalShoppingScoreByMonth" parameterType="com.jyss.yqy.entity.ScoreBalance" resultType="float">
   		select IFNULL(sum(score),0.00) from u_shopping_score_balance 
   		<where>
-  			<if test="category != null"> and category = {category}</if>
+  			<if test="category != null"> and category = #{category}</if>
   			<if test="month != null and month != ''">
 				and date_format(created_at, '%Y-%m') = #{month}
 			</if>

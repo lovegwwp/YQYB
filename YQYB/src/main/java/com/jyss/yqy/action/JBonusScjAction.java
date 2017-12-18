@@ -11,7 +11,7 @@ import com.jyss.yqy.entity.JBonusScjResult;
 import com.jyss.yqy.service.JBonusScjService;
 
 @Controller
-@RequestMapping("showScj")
+@RequestMapping("/showScj")
 public class JBonusScjAction {
 	
 	@Autowired
