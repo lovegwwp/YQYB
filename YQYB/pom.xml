@@ -363,6 +363,12 @@
             <artifactId>shiro-quartz</artifactId>  
             <version>${shiro.version}</version>  
         </dependency>  
+        
+        <dependency >  
+	  		<groupId >org.apache.geronimo.bundles</groupId >  
+	 	    <artifactId >aspectjweaver</artifactId >  
+ 			<version >1.6.8_2</version >  
+		</dependency >
 		
     </dependencies>
     

@@ -47,5 +47,13 @@ public interface UserMapper {
 	 */
 	List<UserBean> getUserIdByAccount(@Param("account") String account);
 	
+	/**
+	 * 通过id查询积分
+	 */
+	List<UserBean> getUserScoreById(@Param("id") int id);
+	
+	//更新积分
+	int updateScore(UserBean userBean);
+	
 
 }
