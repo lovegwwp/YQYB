@@ -111,6 +111,16 @@ public class XtclAction {
 		return clListCo;
 	}
 
+	@RequestMapping("/getClsCoCl")
+	@ResponseBody
+	public List<Xtcl> getClsComboxCl(
+			@RequestParam(value = "bz_type", required = true) String bz_type,
+			@RequestParam(value = "pid", required = false) String pid) {
+		// TODO Auto-generated method stub
+		List<Xtcl> clListCo = clService.getClsCl(bz_type, pid);
+		return clListCo;
+	}
+
 	@RequestMapping("/getBaCo")
 	@ResponseBody
 	public List<BaseArea> getBaCo(

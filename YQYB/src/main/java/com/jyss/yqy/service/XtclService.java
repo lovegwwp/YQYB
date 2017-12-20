@@ -29,6 +29,16 @@ public interface XtclService {
 			@Param("bz_value") String bz_value);
 
 	/**
+	 * 获取常量下拉 cl
+	 * 
+	 * @param bz_type
+	 * @param pid
+	 * @return
+	 */
+	List<Xtcl> getClsCl(@Param("bz_type") String bz_type,
+			@Param("pid") String pid);
+
+	/**
 	 * 获取常量下拉
 	 * 
 	 * @param bz_type

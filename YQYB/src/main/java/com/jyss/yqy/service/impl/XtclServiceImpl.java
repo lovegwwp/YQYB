@@ -66,4 +66,10 @@ public class XtclServiceImpl implements XtclService {
 		return xtclMapper.getBaseAreas(status, area, fid, id);
 	}
 
+	@Override
+	public List<Xtcl> getClsCl(String bz_type, String pid) {
+		// TODO Auto-generated method stub
+		return xtclMapper.getClsCl(bz_type, pid);
+	}
+
 }

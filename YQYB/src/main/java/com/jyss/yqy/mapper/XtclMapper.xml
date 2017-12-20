@@ -73,6 +73,17 @@
 		  order by bz_id 
     </select> 
     
+   <select id="getClsCl" resultMap="clResultMap">  
+        select * from p_xt_cl 
+         <where> 
+              1=1
+			  <if test="bz_type != null and bz_type !=''"> and bz_type  LIKE CONCAT('%',#{bz_type},'%') </if> 
+			  <if test="pid != null and pid !=''"> AND  pid = #{pid}  </if> 
+		 </where> 
+		  order by id 
+    </select> 
+    
+    
      <insert id="addCl" parameterType="com.jyss.yqy.entity.Xtcl" 
         useGeneratedKeys="true" keyProperty="id"> 
         insert into p_xt_cl values(null,#{bz_type},#{bz_id},#{bz_value},#{bz_info},#{pid},#{status})  

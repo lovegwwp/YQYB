@@ -17,153 +17,185 @@
 		<script type="text/javascript" src="js/jquery-1.8.0.min.js"></script>
 		<script type="text/javascript" src="js/jquery.easyui.min.js"></script>
 		<script type="text/javascript" src="js/common.js"></script>
-		<script type="text/javascript" src="js/cwDic.js"></script>
 	</head>
 	 <script type="text/javascript"> 
+	
 	  
-	  $( function() {	
-	     
-	  } );
-	  
-	  $.fn.datebox.defaults.formatter = function(date){
+	 $(function() {
+		 		
+
+		   $('#attYearMonth').datebox({
+		       //显示日趋选择对象后再触发弹出月份层的事件，初始化时没有生成月份层
+		       onShowPanel: function () {
+		          //触发click事件弹出月份层
+		          span.trigger('click'); 
+		          if (!tds)
+		            //延时触发获取月份对象，因为上面的事件触发和对象生成有时间间隔
+		            setTimeout(function() { 
+		                tds = p.find('div.calendar-menu-month-inner td');
+		                tds.click(function(e) {
+		                   //禁止冒泡执行easyui给月份绑定的事件
+		                   e.stopPropagation(); 
+		                   //得到年份
+		                   var year = /\d{4}/.exec(span.html())[0] ,
+		                   //月份
+		                   //之前是这样的month = parseInt($(this).attr('abbr'), 10) + 1; 
+		                   month = parseInt($(this).attr('abbr'), 10);  
+
+		         //隐藏日期对象                     
+		         $('#attYearMonth').datebox('hidePanel') 
+		           //设置日期的值
+		           .datebox('setValue', year + '-' + month); 
+		                        });
+		                    }, 0);
+		            },
+		            //配置parser，返回选择的日期
+		            parser: function (s) {
+		                if (!s) return new Date();
+		                var arr = s.split('-');
+		                return new Date(parseInt(arr[0], 10), parseInt(arr[1], 10) - 1, 1);
+		            },
+		            //配置formatter，只返回年月 之前是这样的d.getFullYear() + '-' +(d.getMonth()); 
+		            formatter: function (d) { 
+		                var currentMonth = (d.getMonth()+1);
+		                var currentMonthStr = currentMonth < 10 ? ('0' + currentMonth) : (currentMonth + '');
+		                return d.getFullYear() + '-' + currentMonthStr; 
+		            }
+		        });
+
+		        //日期选择对象
+		        var p = $('#attYearMonth').datebox('panel'), 
+		        //日期选择对象中月份
+		        tds = false, 
+		        //显示月份层的触发控件
+		        span = p.find('span.calendar-text'); 
+		        var curr_time = new Date();
+
+		        //设置当前年月
+		        $("#attYearMonth").datebox("setValue", myformatter(curr_time));
+		        
+		       
+	        
+		});
+	 
+	//格式化日期
+	 function myformatter(date) {
+	     //获取年份
+	     var y = date.getFullYear();
+	     //获取月份
+	     var m = date.getMonth() + 1;
+	     return y + '-' + m;
+	 }
+	
+
+	
+   $.fn.datebox.defaults.formatter = function(date){
 			var y = date.getFullYear();
 			var m = date.getMonth()+1;
+			m = m < 10 ? ("0" + m) : m;
 			var d = date.getDate();
+			d= d < 10 ? ("0" + d) : d;
 			return y+'-'+m+'-'+d;
-		}
+		}  
+   
+   $.fn.datebox.defaults.parser =  function (date) {
+	   	if (!date) return new Date();
+	    var arr = date.split('-');
+	    return new Date(parseInt(arr[0], 10), parseInt(arr[1], 10) - 1 , parseInt(arr[2], 10));
+} 
+ /*   
+   $('#kssj').datebox({
+	    formatter: function(date){ return date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDate();},
+	    parser: function (date) {
+	    	if (!date) return new Date();
+            var arr = date.split('-');
+            return new Date(parseInt(arr[0], 10), parseInt(arr[1], 10) - 1 , parseInt(arr[2], 10));
+        } 
+	   });
 
+ */
 
     
-      function reCwFlash(){
+      function reFdjtjFlash(){
          //reload:重新执行url，condition是url中的参数  
-            $("#searchCwFm").form("clear");  
-           // $("#cwDg").datagrid("reload");  
-            $("#cwDg").datagrid({
- 	           url:"getCw.action"      	     
+            $("#searchFdjtjFm").form("clear");  
+           // $("#FdjtjDg").datagrid("reload");  
+            $("#FdjtjDg").datagrid({
+ 	           url:"showFdj/list.action"      	     
  	         }); 
         
         }
-      function doCwSearch(){
-	      $("#cwDg").datagrid({
-	           url:"getCwBy.action",      
-	           queryParams: {  
-	              account: $("#account").val(), 
-	              czType: $("#czType1").combobox("getValue"), 	
-	              kssj: $("#kssj").datebox("getValue"), 
-	              jssj: $("#jssj").datebox("getValue"),
+      function doFdjtjWeekSearch(){
+	      $("#FdjtjDg").datagrid({
+	           url:"showFdj/listByWek.action",      
+	           queryParams: {  	             
 	          }  
 	      });  
 	   } 
-    function addCwWin(){
-    	  $("#cwDg").datagrid("uncheckAll");         
-          $( "#addCw" ).window("open").window("setTitle", "新增");
-        // $( "#addCw" ).window("open"); 
-      }
-    function closeCwWin(){
-         $( "#addCw" ).window("close");
-         $("#cwFm").form("clear"); 
-      }
 
-    function saveCw(){
-	     var grid = $("#cwDg"); 
-	     var fm = $("#cwFm");	   
-	     var addWin = $( "#addCw" );	    
-	     commonSaveOperate(fm,"${pageContext.request.contextPath}/addCw.action",addWin,grid);  
-      	     
-     }
-     
-    
-    function deleteCw() {
-        var grid = $("#cwDg"); 
-     	commonBatchOperate(grid, "${pageContext.request.contextPath}/delCw.action","确认删除所选数据吗？");
-     }
-    
+      function doFdjtjSearch(){
+    	  alert($("#kssj").datebox("getValue"));
+	      $("#FdjtjDg").datagrid({
+	           url:"showFdj/listByDay.action",      
+	           queryParams: {  	             	
+	              beginTime: $("#kssj").datebox("getValue"), 
+	              endTime: $("#jssj").datebox("getValue"), 
+	          }  
+	      });  
+	   } 
+
+      function doFdjtjMonthSearch(){
+    	 // alert($("#attYearMonth").datebox("getValue"));
+	      $("#FdjtjDg").datagrid({
+	           url:"showFdj/listByMonth.action",      
+	           queryParams: {  	         
+	              month: $("#attYearMonth").datebox("getValue"), 		             
+	          }  
+	      });  
+	   } 
+
 
 
  
     </script>  
 	<body class="easyui-layout">
-		<table id="cwDg" title="财务统计列表" class="easyui-datagrid" style="width:1750px;height:865px"
-			url="getCw.action"
+		<table id="FdjtjDg" title="财务统计列表" class="easyui-datagrid" style="width:1750px;height:865px"
+			url="showFdj/list.action"
 			toolbar="#toolbar" pagination="true" rownumbers="true"  singleSelect="false">
 			<thead>
 				<tr>
 				    <th field="ck" checkbox="true"></th>
 					<!-- <th field="id" width="50">id</th> -->
-					<th field="macOrderId" width="250">充值订单号</th>
-					<th field="account" width="200">充值账户</th>
-					<th field="zhType" width="80" formatter="formatZhType">充值账户类型</th>
-					<th field="czTime" width="100">充值时长</th>
-					<th field="czMoney" width="100">充值金额</th>
-					<th field="czType" width="100" formatter="formatCwzfType" >充值类型</th>
-					<th field="zfType" width="80" formatter="formatZfType">支付类型</th>
-					<th field="zfAccount" width="200">支付账号</th>
-					<th field="zfUname" width="200">支付昵称</th>
-					<th field="status" width="100" formatter="formatCzzt">支付状态</th>
-				<!-- 	<th field="createdAt" width="200">支付时间</th> -->
-					<th field="cjsj" width="150">创建时间</th>
-					<!-- <th field="xgsj" width="150">修改时间</th> -->
-
+					<th field="amount" width="250">推荐总额</th>
+					<th field="cashScore" width="200">现金积分</th>
+					<th field="shoppingScore" width="200">购物积分</th>
+					
 				</tr>
 			</thead>
 		</table>
-		<div id="toolbar" style="padding:3px">
-			<!-- <div style="padding:3px">
-				<a href="#" class="easyui-linkbutton" iconCls="icon-add"   onclick="addCwWin()">新增记录</a>		
-				<a href="#" class="easyui-linkbutton" iconCls="icon-remove"   onclick="deleteCw()">删除记录</a>
-		    </div> -->
+		<div id="toolbar" style="padding:3px">			
 		    <div style="padding:3px">
-		        <form id="searchCwFm">  
-					<span>充值账号:</span>
-				    <input id="account" name="account" style="line-height:18px;border:1px solid #95b9e7 ">&nbsp;&nbsp;
-					<!-- <input  id="kssj"  type= "text" class= "easyui-datebox" required ="required"> </input>	 -->
-					<span>开始时间:</span>
-					<input  id="kssj"  type= "text" class= "easyui-datebox" > </input>&nbsp;&nbsp;   
+		        <form id="searchFdjtjFm">  									   
+					<span>开始时间:</span>  <!-- formatter ="myformatter2"  -->
+					<input  id="kssj"  type= "text" class= "easyui-datebox" > </input>&nbsp;&nbsp;  								 
 					<span>结束时间:</span>
-					<input  id="jssj"  type= "text" class= "easyui-datebox" > </input>&nbsp;&nbsp; 
-					<span>充值类型:</span>&nbsp;&nbsp;
-					<input id="czType1" name="czType1" style="line-height:18px;border:1px solid #95b9e7" class="easyui-combobox" data-options="    
+					<input  id="jssj"  type= "text" class= "easyui-datebox" > </input>&nbsp;&nbsp; 								
+					<a href="#" class="easyui-linkbutton" iconCls="icon-search"  onclick="doFdjtjSearch()">搜索</a>&nbsp;&nbsp;	
+					<span>月份选择:</span>&nbsp;&nbsp;
+					<input  id="attYearMonth"  type= "text" class= "easyui-datebox" > </input>&nbsp;&nbsp;
+					<!-- <input id="month1" name="month1" style="line-height:18px;border:1px solid #95b9e7" class="easyui-combobox" data-options="    
 					            valueField: 'bz_id',    
 						        textField: 'bz_value',    
-						        url: 'getClsCo.action?bz_type='+'zfsz_type',
+						        url: 'getClsCoCl.action?bz_type='+'month_type',
 						        method:'get',  
                                 panelHeight:'auto'
-                              "/>&nbsp;&nbsp;&nbsp;&nbsp;  			
-					<a href="#" class="easyui-linkbutton" iconCls="icon-search"  onclick="doCwSearch()">搜索</a>&nbsp;&nbsp;				
-					<a href="#" class="easyui-linkbutton" iconCls="icon-reload"  onclick="reCwFlash()">刷新</a>
+                              "/>&nbsp;&nbsp;&nbsp;&nbsp;  -->
+					<a href="#" class="easyui-linkbutton" iconCls="icon-search"  onclick="doFdjtjMonthSearch()">按月查询</a>&nbsp;&nbsp;	
+					<a href="#" class="easyui-linkbutton" iconCls="icon-search"  onclick="doFdjtjWeekSearch()">本周查询</a>&nbsp;&nbsp;								
+					<a href="#" class="easyui-linkbutton" iconCls="icon-reload"  onclick="reFdjtjFlash()">刷新(昨日)</a>
 				 </form>
 			</div>
-		</div>
-       <div id="addCw" class="easyui-window" title="新增财务记录"  closed = "true" style="width:500px;height:400px;">
-			 <form method="post" id="cwFm"  enctype="multipart/form-data" text-align:left>
-                <table cellspacing="8px;"> 
-                   <tr>                       
-                        <td>
-                        	<input type="hidden" id="id" name="id" value="0"/>
-                        </td>
-                    </tr> 
-                    <tr> 
-                        <td>训练类型：</td>
-                        <td> 
-                        <input id="status" name="status" class="easyui-combobox" data-options="    
-					            valueField: 'bz_id',    
-						        textField: 'bz_value',    
-						        url: 'getClsCo.action?bz_type='+'xlxm_type',
-						        method:'get',
-						        required:true,    
-                                panelHeight:'auto'
-                              "/> &nbsp;<span style="color: red">*</span>
-                        </td>
-                    </tr>               
-                                
-                        
-                </table>
-				<div style="padding:5px;text-align:center;">
-					<a href="#" class="easyui-linkbutton" icon="icon-ok" onclick="saveCw()">保存</a>&nbsp;&nbsp;&nbsp;&nbsp;
-					<a href="#" class="easyui-linkbutton" icon="icon-cancel"  onclick="closeCwWin()">取消</a>
-				</div>
-			</form>
-	  </div>	  
+		</div>       
 	
   </body>
 
