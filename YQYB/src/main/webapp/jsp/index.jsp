@@ -164,8 +164,20 @@
 						     <shiro:hasAnyRoles name="admin">     --%>							    
 							     <div title="财务管理" style="padding:10px;">  
 							        <ul id="tree_cw" class="easyui-tree" >  
-									    <li  data-options="iconCls:'icon-client_account_template'">  
+									   <!--  <li  data-options="iconCls:'icon-client_account_template'">  
 					                        <span>金额列表</span>  
+					                    </li>  -->
+					                    <li  data-options="iconCls:'icon-client_account_template'">  
+					                        <span>辅导奖统计</span>  
+					                    </li> 
+					                     <li  data-options="iconCls:'icon-client_account_template'">  
+					                        <span>管理奖统计</span>  
+					                    </li> 
+					                    <li  data-options="iconCls:'icon-client_account_template'">  
+					                        <span>分销奖统计</span>  
+					                    </li> 
+					                     <li  data-options="iconCls:'icon-client_account_template'">  
+					                        <span>市场奖统计</span>  
 					                    </li> 				                 
 									</ul>  
 							    </div>
@@ -410,6 +422,18 @@
 
                 }else if(noteText=="金额列表"){
                 	content = '<iframe scrolling="auto" frameborder="0"  src="cwzf.action" style="width:100%;height:100%;"></iframe>';
+
+                }else if(noteText=="辅导奖统计"){
+                	content = '<iframe scrolling="auto" frameborder="0"  src="fdjtj.action" style="width:100%;height:100%;"></iframe>';
+
+                }else if(noteText=="管理奖统计"){
+                	content = '<iframe scrolling="auto" frameborder="0"  src="gljtj.action" style="width:100%;height:100%;"></iframe>';
+
+                }else if(noteText=="分销奖统计"){
+                	content = '<iframe scrolling="auto" frameborder="0"  src="fxjtj.action" style="width:100%;height:100%;"></iframe>';
+
+                }else if(noteText=="市场奖统计"){
+                	content = '<iframe scrolling="auto" frameborder="0"  src="scjtj.action" style="width:100%;height:100%;"></iframe>';
 
                 }else if(noteText=="每日封顶"){
                 	content = '<iframe scrolling="auto" frameborder="0"  src="mrfd.action" style="width:100%;height:100%;"></iframe>';
