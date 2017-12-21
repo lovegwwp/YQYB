@@ -170,6 +170,8 @@
 					<th field="cashScore" width="200">现金积分</th>
 					<th field="shoppingScore" width="200">购物积分</th>
 					
+					<th field="shoppingScore.list[0].bName" width="200">购物积分</th>
+					
 				</tr>
 			</thead>
 		</table>
