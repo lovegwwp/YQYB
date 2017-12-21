@@ -10,7 +10,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>财务统计首页</title>
+		<title>辅导奖统计首页</title>
 		
 		<link rel="stylesheet" type="text/css" href="easyui/themes/default/easyui.css">
 		<link rel="stylesheet" type="text/css" href="easyui/themes/icon.css">
@@ -22,7 +22,7 @@
 	
 	  
 	 $(function() {
-		 		
+
 
 		   $('#attYearMonth').datebox({
 		       //显示日趋选择对象后再触发弹出月份层的事件，初始化时没有生成月份层
@@ -73,7 +73,7 @@
 
 		        //设置当前年月
 		        $("#attYearMonth").datebox("setValue", myformatter(curr_time));
-		        
+		       
 		       
 	        
 		});
@@ -87,7 +87,7 @@
 	     return y + '-' + m;
 	 }
 	
-
+	 
 	
    $.fn.datebox.defaults.formatter = function(date){
 			var y = date.getFullYear();
@@ -103,19 +103,10 @@
 	    var arr = date.split('-');
 	    return new Date(parseInt(arr[0], 10), parseInt(arr[1], 10) - 1 , parseInt(arr[2], 10));
 } 
- /*   
-   $('#kssj').datebox({
-	    formatter: function(date){ return date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDate();},
-	    parser: function (date) {
-	    	if (!date) return new Date();
-            var arr = date.split('-');
-            return new Date(parseInt(arr[0], 10), parseInt(arr[1], 10) - 1 , parseInt(arr[2], 10));
-        } 
-	   });
-
- */
-
-    
+ 
+	/*  $("#kssj").datebox("setValue", myformatter(new Date()));
+	   $("#jssj").datebox("setValue", myformatter(new Date()));	 */
+       
       function reFdjtjFlash(){
          //reload:重新执行url，condition是url中的参数  
             $("#searchFdjtjFm").form("clear");  
@@ -159,7 +150,7 @@
  
     </script>  
 	<body class="easyui-layout">
-		<table id="FdjtjDg" title="财务统计列表" class="easyui-datagrid" style="width:1750px;height:865px"
+		<table id="FdjtjDg" title="辅导奖统计列表" class="easyui-datagrid" style="width:1750px;height:865px"
 			url="showFdj/list.action"
 			toolbar="#toolbar" pagination="true" rownumbers="true"  singleSelect="false">
 			<thead>

@@ -10,7 +10,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>财务统计首页</title>
+		<title>管理奖统计首页</title>
 		
 		<link rel="stylesheet" type="text/css" href="easyui/themes/default/easyui.css">
 		<link rel="stylesheet" type="text/css" href="easyui/themes/icon.css">
@@ -116,27 +116,27 @@
  */
 
     
-      function reFdjtjFlash(){
+      function reGljtjFlash(){
          //reload:重新执行url，condition是url中的参数  
-            $("#searchFdjtjFm").form("clear");  
-           // $("#FdjtjDg").datagrid("reload");  
-            $("#FdjtjDg").datagrid({
- 	           url:"showFdj/list.action"      	     
+            $("#searchGljtjFm").form("clear");  
+           // $("#GljtjDg").datagrid("reload");  
+            $("#GljtjDg").datagrid({
+ 	           url:"showGlj/list.action"      	     
  	         }); 
         
         }
-      function doFdjtjWeekSearch(){
-	      $("#FdjtjDg").datagrid({
-	           url:"showFdj/listByWek.action",      
+      function doGljtjWeekSearch(){
+	      $("#GljtjDg").datagrid({
+	           url:"showGlj/listByWek.action",      
 	           queryParams: {  	             
 	          }  
 	      });  
 	   } 
 
-      function doFdjtjSearch(){
+      function doGljtjSearch(){
     	  alert($("#kssj").datebox("getValue"));
-	      $("#FdjtjDg").datagrid({
-	           url:"showFdj/listByDay.action",      
+	      $("#GljtjDg").datagrid({
+	           url:"showGlj/listByDay.action",      
 	           queryParams: {  	             	
 	              beginTime: $("#kssj").datebox("getValue"), 
 	              endTime: $("#jssj").datebox("getValue"), 
@@ -144,10 +144,10 @@
 	      });  
 	   } 
 
-      function doFdjtjMonthSearch(){
+      function doGljtjMonthSearch(){
     	 // alert($("#attYearMonth").datebox("getValue"));
-	      $("#FdjtjDg").datagrid({
-	           url:"showFdj/listByMonth.action",      
+	      $("#GljtjDg").datagrid({
+	           url:"showGlj/listByMonth.action",      
 	           queryParams: {  	         
 	              month: $("#attYearMonth").datebox("getValue"), 		             
 	          }  
@@ -159,8 +159,8 @@
  
     </script>  
 	<body class="easyui-layout">
-		<table id="FdjtjDg" title="财务统计列表" class="easyui-datagrid" style="width:1750px;height:865px"
-			url="showFdj/list.action"
+		<table id="GljtjDg" title="管理奖统计列表" class="easyui-datagrid" style="width:1750px;height:865px"
+			url="showGlj/list.action"
 			toolbar="#toolbar" pagination="true" rownumbers="true"  singleSelect="false">
 			<thead>
 				<tr>
@@ -175,12 +175,12 @@
 		</table>
 		<div id="toolbar" style="padding:3px">			
 		    <div style="padding:3px">
-		        <form id="searchFdjtjFm">  									   
+		        <form id="searchGljtjFm">  									   
 					<span>开始时间:</span>  <!-- formatter ="myformatter2"  -->
 					<input  id="kssj"  type= "text" class= "easyui-datebox" > </input>&nbsp;&nbsp;  								 
 					<span>结束时间:</span>
 					<input  id="jssj"  type= "text" class= "easyui-datebox" > </input>&nbsp;&nbsp; 								
-					<a href="#" class="easyui-linkbutton" iconCls="icon-search"  onclick="doFdjtjSearch()">搜索</a>&nbsp;&nbsp;	
+					<a href="#" class="easyui-linkbutton" iconCls="icon-search"  onclick="doGljtjSearch()">搜索</a>&nbsp;&nbsp;	
 					<span>月份选择:</span>&nbsp;&nbsp;
 					<input  id="attYearMonth"  type= "text" class= "easyui-datebox" > </input>&nbsp;&nbsp;
 					<!-- <input id="month1" name="month1" style="line-height:18px;border:1px solid #95b9e7" class="easyui-combobox" data-options="    
@@ -190,9 +190,9 @@
 						        method:'get',  
                                 panelHeight:'auto'
                               "/>&nbsp;&nbsp;&nbsp;&nbsp;  -->
-					<a href="#" class="easyui-linkbutton" iconCls="icon-search"  onclick="doFdjtjMonthSearch()">按月查询</a>&nbsp;&nbsp;	
-					<a href="#" class="easyui-linkbutton" iconCls="icon-search"  onclick="doFdjtjWeekSearch()">本周查询</a>&nbsp;&nbsp;								
-					<a href="#" class="easyui-linkbutton" iconCls="icon-reload"  onclick="reFdjtjFlash()">刷新(昨日)</a>
+					<a href="#" class="easyui-linkbutton" iconCls="icon-search"  onclick="doGljtjMonthSearch()">按月查询</a>&nbsp;&nbsp;	
+					<a href="#" class="easyui-linkbutton" iconCls="icon-search"  onclick="doGljtjWeekSearch()">本周查询</a>&nbsp;&nbsp;								
+					<a href="#" class="easyui-linkbutton" iconCls="icon-reload"  onclick="reGljtjFlash()">刷新(昨日)</a>
 				 </form>
 			</div>
 		</div>       
