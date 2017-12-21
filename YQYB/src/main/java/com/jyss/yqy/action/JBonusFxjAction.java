@@ -21,6 +21,11 @@ public class JBonusFxjAction {
 	@Autowired
 	private JBonusFxjService jBonusFxjService;
 
+	@RequestMapping("/fxjtj")
+	public String fxjtjTz() {
+		return "fxjtj";
+	}
+
 	/**
 	 * 昨日总金额
 	 */

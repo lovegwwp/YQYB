@@ -21,6 +21,11 @@ public class JBonusScjAction {
 	@Autowired
 	private JBonusScjService bonusScjService;
 
+	@RequestMapping("/scjtj")
+	public String scjtjTz() {
+		return "scjtj";
+	}
+
 	/**
 	 * 昨日列表
 	 */

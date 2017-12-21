@@ -21,6 +21,11 @@ public class JBonusGljAction {
 	@Autowired
 	private JBonusGljService jBonusGljService;
 
+	@RequestMapping("/gljtj")
+	public String gljtjTz() {
+		return "gljtj";
+	}
+
 	/**
 	 * 昨日总金额
 	 */
