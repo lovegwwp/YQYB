@@ -16,7 +16,7 @@ public class CodeImgAction {
 
 	@RequestMapping("/shiro-getCode")
 	public void getCode(HttpServletResponse response, HttpSession session) {
-		ValidateCode vCode = new ValidateCode(100, 30, 4, 100);
+		ValidateCode vCode = new ValidateCode(100, 30, 4, 50);
 		session.removeAttribute("codeImg");
 		try {
 			vCode.write(response.getOutputStream());

@@ -79,7 +79,7 @@ public class ValidateCode {
 		// 生成随机数
 		Random random = new Random();
 		// 将图像填充为白色
-		g.setColor(Color.GRAY);
+		g.setColor(Color.WHITE);
 		g.fillRect(0, 0, width, height);
 		// 创建字体
 		/*
@@ -87,7 +87,7 @@ public class ValidateCode {
 		 * imgFont.getFont(fontHeight); g.setFont(font);
 		 */
 		// 设置字体
-		g.setFont(new Font("宋体", Font.BOLD, 20));
+		g.setFont(new Font("宋体", Font.BOLD, 25));
 
 		for (int i = 0; i < lineCount; i++) {
 			int xs = random.nextInt(width);
