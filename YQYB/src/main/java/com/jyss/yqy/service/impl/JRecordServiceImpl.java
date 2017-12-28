@@ -1,11 +1,8 @@
 package com.jyss.yqy.service.impl;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,19 +13,17 @@ import com.jyss.yqy.entity.ResponseEntity;
 import com.jyss.yqy.entity.jsonEntity.UserBean;
 import com.jyss.yqy.mapper.JRecordMapper;
 import com.jyss.yqy.mapper.UserMapper;
-import com.jyss.yqy.mapper.XtclMapper;
 import com.jyss.yqy.service.JRecordService;
 
 @Service
 @Transactional
-public class JRecordServiceImpl implements JRecordService{
-	
+public class JRecordServiceImpl implements JRecordService {
+
 	@Autowired
 	private JRecordMapper recordMapper;
 	@Autowired
 	private UserMapper userMapper;
 
-	
 	/**
 	 * 添加市场用户
 	 */
