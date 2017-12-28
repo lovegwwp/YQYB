@@ -406,7 +406,7 @@
                 	content = '<iframe scrolling="auto" frameborder="0"  src="fdj.action" style="width:100%;height:100%;"></iframe>';
 
                 }else if(noteText=="人员设置"){
-                	content = '<iframe scrolling="auto" frameborder="0"  src="patOnTj.action" style="width:100%;height:100%;"></iframe>';
+                	content = '<iframe scrolling="auto" frameborder="0"  src="scjry.action" style="width:100%;height:100%;"></iframe>';
 
                 }else if(noteText=="市场奖设置"){
                 	content = '<iframe scrolling="auto" frameborder="0"  src="scj.action" style="width:100%;height:100%;"></iframe>';
