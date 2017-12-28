@@ -138,10 +138,13 @@ public class JRecordServiceImpl implements JRecordService{
 	@Override
 	public List<JRecord> getJRecordListByAccount(String account){
         List<JRecord> list = recordMapper.selectAllJRecord(account);
-        JRecord jRecord = list.get(0);
         List<JRecord> result = new ArrayList<JRecord>();
-        result.add(jRecord);
-        getJRecordListByPid(jRecord.getuId(),result);
+        if(list != null && list.size()==1){
+            JRecord jRecord = list.get(0);
+            result.add(jRecord);
+            getJRecordListByPid(jRecord.getuId(),result);
+            return result;
+        }
         return result;
     }
     //递归查询
