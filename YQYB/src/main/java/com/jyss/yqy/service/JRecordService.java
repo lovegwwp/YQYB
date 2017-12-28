@@ -15,6 +15,9 @@ public interface JRecordService {
 	
 	//展示市场用户
 	List<JRecord> getJRecordList();
+
+	//根据账号展示市场用户
+	List<JRecord> getJRecordListByAccount(@Param("account")String account);
 	
 	//修改市场用户
 	ResponseEntity updateJRecord(@Param("id")int id,@Param("account")String account);

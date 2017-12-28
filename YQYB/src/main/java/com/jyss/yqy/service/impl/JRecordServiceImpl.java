@@ -1,5 +1,6 @@
 package com.jyss.yqy.service.impl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -129,8 +130,32 @@ public class JRecordServiceImpl implements JRecordService{
 	public List<JRecord> getJRecordList(){
 		return recordMapper.selectAllJRecord(null);
 	}
-	
-	
+
+
+	/**
+	 * 根据账号查询
+	 */
+	@Override
+	public List<JRecord> getJRecordListByAccount(String account){
+        List<JRecord> list = recordMapper.selectAllJRecord(account);
+        JRecord jRecord = list.get(0);
+        List<JRecord> result = new ArrayList<JRecord>();
+        result.add(jRecord);
+        getJRecordListByPid(jRecord.getuId(),result);
+        return result;
+    }
+    //递归查询
+    private void getJRecordListByPid(Integer pId,List<JRecord> result){
+        List<JRecord> list = recordMapper.selectJRecordByPid(pId);
+        if(list != null && list.size()>0){
+            for (JRecord jRecord : list) {
+                result.add(jRecord);
+                getJRecordListByPid(jRecord.getuId(),result);
+            }
+        }
+    }
+
+
 	/**
 	 * 修改市场用户
 	 */

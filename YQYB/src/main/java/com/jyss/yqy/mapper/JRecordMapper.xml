@@ -7,7 +7,7 @@
     <result column="u_name" property="uName" jdbcType="VARCHAR" />
     <result column="u_account" property="uAccount" jdbcType="VARCHAR" />
     <result column="parent_id" property="parentId" jdbcType="INTEGER" />
-    <result column="p_account" property="pAccount" jdbcType="VARCHAR" />
+    <!--<result column="p_account" property="pAccount" jdbcType="VARCHAR" />-->
     <result column="depart" property="depart" jdbcType="TINYINT" />
     <result column="floor" property="floor" jdbcType="INTEGER" />
     <result column="pv" property="pv" jdbcType="FLOAT" />
@@ -20,13 +20,23 @@
 
 	<!-- 查询用户 -->
 	<select id="selectAllJRecord" parameterType="String" resultMap="BaseResultMap">
+		select id,u_id,u_name,u_account,parent_id,depart,floor
+		from j_record
+		<where>
+			<if test="uAccount != null and uAccount != ''">and u_account = #{uAccount} </if>
+			and status = 1
+		</where>
+		order by floor
+	</select>
+	<!--<select id="selectAllJRecord" parameterType="String" resultMap="BaseResultMap">
 		select a.id,a.u_id,a.u_name,a.u_account,a.parent_id,a.depart,a.floor,b.account p_account
 		from j_record a,u_user b
 		<where>
 			<if test="uAccount != null and uAccount != ''">and a.u_account = #{uAccount} </if>
 			and a.status = 1 and a.parent_id = b.id
 		</where>
-	</select>
+		order by a.floor
+	</select>-->
   	
   	<!-- 根据id查询 -->
   	<select id="selectJRecordById" parameterType="int" resultMap="BaseResultMap">
@@ -36,22 +46,20 @@
   
     <!-- 根据父id查询 -->
 	<select id="selectJRecordByPid" parameterType="int" resultMap="BaseResultMap">
-		select id,u_id,depart,floor
-		from j_record 
-		where parent_id = #{parentId} and status = 1
+        select id,u_id,u_name,u_account,parent_id,depart,floor from j_record
+        where parent_id = #{parentId} and status = 1
 	</select>
 	
 	<!-- 根据用户id查询 -->
 	<select id="selectJRecordByUid" parameterType="int" resultMap="BaseResultMap">
-		select id,parent_id,depart,floor
-		from j_record 
+        select id,u_id,u_name,u_account,parent_id,depart,floor from j_record
 		where u_id = #{uId} and status = 1
 	</select>
 	
 	
 	<!-- 添加市场用户 -->
 	<insert id="insertJRecord" parameterType="com.jyss.yqy.entity.JRecord" useGeneratedKeys="true" keyProperty="id" >
-		insert into j_record  values(null,#{uId},#{uAccount},#{uName},#{parentId},#{depart},#{floor},'0.00','0.00',#{status},now(),now())
+		insert into j_record  values(null,#{uId},#{uAccount},#{uName},#{parentId},#{depart},#{floor},0.00,0.00,#{status},now(),now())
 	</insert>
 	
   <!-- 修改市场用户 -->
