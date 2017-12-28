@@ -134,7 +134,7 @@ public class JRecordServiceImpl implements JRecordService {
 	public List<JRecord> getJRecordListByAccount(String account){
         List<JRecord> list = recordMapper.selectAllJRecord(account);
         List<JRecord> result = new ArrayList<JRecord>();
-        if(list != null && list.size()==1){
+        if(list != null && list.size() == 1){
             JRecord jRecord = list.get(0);
             result.add(jRecord);
             getJRecordListByPid(jRecord.getuId(),result);
