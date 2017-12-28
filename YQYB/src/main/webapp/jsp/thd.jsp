@@ -133,7 +133,7 @@
 				 </form>
 			</div>
 		</div>
-       <div id="addThd" class="easyui-window" title="用户新增"  closed = "true" style="width:450px;height:60%;">
+       <div id="addThd" class="easyui-window" title="用户新增"  closed = "true" style="width:450px;height:70%;">
 			 <form method="post" id="ThdFm" text-align:center>
                 <table cellspacing="8px;"> 
                    <tr>                       
