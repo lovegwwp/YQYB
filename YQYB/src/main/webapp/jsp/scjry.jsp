@@ -36,8 +36,9 @@
 	      $("#scjRyDg").datagrid({
 	           url:"jrc/listByAccount.action",      
 	           queryParams: {  
-	        	   account: $("#account1").val() 	            
-	          }  
+	        	   account: $("#account1").val(),
+	        	   uId: $("#uId").val(),
+	          }
 	      });  
 	   } 
     function addScjRyWin(){
@@ -81,7 +82,7 @@
        $("#pAccount").val("0");
        var grid = $("#scjRyDg"); 
 	   var fm = $("#scjRyFm");
-	   var addWin = $( "#addScjRy" );  
+	   var addWin = $( "#addScjRy" );
        openEditWin(grid,addWin,fm);
      }
      
@@ -125,6 +126,7 @@
 		        <form id="searchscjRyFm">  
 					<span>账户:</span>
 					<input id="account1" name="account1" style="line-height:18px;border:1px solid #95b9e7">&nbsp;&nbsp;					
+					<input id="uId" name="uId" style="line-height:18px;border:1px solid #95b9e7">&nbsp;&nbsp;
 					<a href="#" class="easyui-linkbutton" iconCls="icon-search"  onclick="doScjRySearch()">搜索</a>&nbsp;&nbsp;
 					<a href="#" class="easyui-linkbutton" iconCls="icon-reload"  onclick="reScjRyFlash()">刷新</a>
 				 </form>
