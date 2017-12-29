@@ -72,7 +72,7 @@
 	         $.messager.alert("系统提示", "请选择一条要编辑的数据！");
 	         return;
 	    }
-     	commonBatchOperate(grid, "${pageContext.request.contextPath}/jrc/deleteJrc.action","确认删除所选数据吗？");
+     	commonBatchOperate(grid, "${pageContext.request.contextPath}/jrc/deleteJrc.action","当前操作会清空层级下所有数据，确认删除数据吗？");
      	reScjRyFlash();
      }
     
