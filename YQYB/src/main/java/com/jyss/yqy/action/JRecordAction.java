@@ -1,5 +1,6 @@
 package com.jyss.yqy.action;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -82,6 +83,10 @@ public class JRecordAction {
 	@ResponseBody
 	public List<JRecord> getJRecordListByAccount(
 			@RequestParam("account") String account) {
+		if(StringUtils.isEmpty(account)){
+			List<JRecord> list = new ArrayList<JRecord>();
+			return list;
+		}
 		List<JRecord> list = recordService.getJRecordListByAccount(account);
 		return list;
 	}
@@ -92,6 +97,10 @@ public class JRecordAction {
 	@RequestMapping("/jrc/listByUid")
 	@ResponseBody
 	public List<JRecord> getJRecordListByUid(@RequestParam("uId") Integer uId) {
+		if(StringUtils.isEmpty(uId)){
+			List<JRecord> list = new ArrayList<JRecord>();
+			return list;
+		}
 		List<JRecord> list = recordService.getJRecordListByUid(uId);
 		return list;
 	}
