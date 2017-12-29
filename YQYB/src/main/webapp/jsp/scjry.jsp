@@ -43,7 +43,13 @@
     function addScjRyWin(){
     	setClear();
     	$("#ppp").show();
-    	$("#scjRyDg").datagrid("uncheckAll");         
+    	var selectedRows2 = $("#scjRyDg").datagrid("getSelections");
+    	if (selectedRows2.length==1) {
+    		var ppAccount = selectedRows2[0].uAccount;  
+    		$("#pAccount").val(ppAccount);
+		}
+    		
+    	$("#id").val("0");       
         $( "#addScjRy" ).window("open").window("setTitle", "新增");
       }
     function closeScjRyWin(){
@@ -112,7 +118,7 @@
 		<div id="toolbar" style="padding:3px">
 			<div style="padding:3px">
 				<a href="#" class="easyui-linkbutton" iconCls="icon-add"   onclick="addScjRyWin()">新增市场</a>
-				<a href="#" class="easyui-linkbutton" iconCls="icon-edit"  onclick="editScjRyWin()">修改市场</a>
+				<!-- <a href="#" class="easyui-linkbutton" iconCls="icon-edit"  onclick="editScjRyWin()">修改市场</a> -->
 				<a href="#" class="easyui-linkbutton" iconCls="icon-remove"   onclick="deleteScjRy()">删除市场</a>
 		    </div>
 		    <div style="padding:3px">
