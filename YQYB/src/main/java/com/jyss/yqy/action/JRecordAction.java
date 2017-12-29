@@ -33,16 +33,29 @@ public class JRecordAction {
 	 */
 	@RequestMapping(value = "/jrc/addJRecord", method = RequestMethod.POST)
 	@ResponseBody
-	public ResponseEntity addJRecord(@RequestParam("uAccount") String uAccount,
+	public ResponseEntity addJRecord(@RequestParam("id") int id,
+			@RequestParam("uAccount") String uAccount,
 			@RequestParam("pAccount") String pAccount,
 			@RequestParam("depart") Integer depart) {
-		if (StringUtils.isEmpty(depart)) {
-			return new ResponseEntity("false", "请选择分配的市场！");
+		ResponseEntity entity = new ResponseEntity("false", "操作失败！");
+		System.out.println("id======>" + id);
+		// /新增
+		if (id == 0) {
+			if (StringUtils.isEmpty(depart)) {
+				return new ResponseEntity("false", "请选择分配的市场！");
+			}
+			entity = recordService.insertJRecord(uAccount, pAccount, depart);
+			// //修改
+		} else {
+			entity = updateJRecord2(id, uAccount);
 		}
-		ResponseEntity entity = recordService.insertJRecord(uAccount, pAccount,
-				depart);
 		return entity;
 
+	}
+
+	public ResponseEntity updateJRecord2(int id, String account) {
+		ResponseEntity entity = recordService.updateJRecord(id, account);
+		return entity;
 	}
 
 	/**

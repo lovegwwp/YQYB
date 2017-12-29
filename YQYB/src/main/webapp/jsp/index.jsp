@@ -12,8 +12,8 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>后台管理首页</title>
-		<link rel="icon" href="img/mst.ico" type="image/x-icon" />
-        <link rel="shortcut icon" href="img/mst.ico" type="image/x-icon" />
+	    <link rel="icon" href="img/yqy.png" type="image/x-icon" />
+        <link rel="shortcut icon" href="img/yqy.png" type="image/x-icon" />
 		
 		<link rel="stylesheet" type="text/css" href="easyui/themes/default/easyui.css">
 		<link rel="stylesheet" type="text/css" href="easyui/themes/icon.css">

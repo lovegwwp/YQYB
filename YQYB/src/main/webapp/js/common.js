@@ -323,6 +323,22 @@ function setFmValue(){
 	         }  
 	 		 
 	 }
+	 
+	 
+	 function formatDepart(value,row,index){
+	 		if(value==null){  
+	             return "";  
+	         }else{  
+	           if(value==0){  
+	               return "顶层";  
+	           }else if(value==1){  
+	               return "市场A";  
+	           }else if(value==2){  
+	               return "市场B";  
+	           } 
+	         }  
+	 		 
+	 }
 
 	 ////0=审核中 1=通过 2=未通过
  function formatSh(value,row,index){

@@ -50,7 +50,12 @@
        var grid = $("#blDg"); 
 	   var fm = $("#blFm");
 	   var addWin = $( "#addbl" );  
-       openEditWin(grid,addWin,fm);
+	   $("#blDg").datagrid({
+	        onClickRow : function(index, row){	        	
+	        	 $(this).datagrid("selectRow", index);	
+	        	openEditWin(grid,addWin,fm);
+	        }
+	  }); 
      }
      
 

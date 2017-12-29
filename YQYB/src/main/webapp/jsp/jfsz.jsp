@@ -44,16 +44,21 @@
     function deletejfsz() {
         var grid = $("#jfszDg"); 
      	commonBatchOperate(grid, "${pageContext.request.contextPath}/delCl.action","确认删除所选数据吗？");
-     }
-    
+     }    
+     
     function editFzWin(){
        var grid = $("#jfszDg"); 
-	   var fm = $("#jfszFm");
-	   var addWin = $( "#addjfsz" );  
-       openEditWin(grid,addWin,fm);
+ 	   var fm = $("#jfszFm");
+ 	   var addWin = $( "#addjfsz" ); 
+ 	   $("#jfszDg").datagrid({
+ 	        onClickRow : function(index, row){	        	
+ 	        	 $(this).datagrid("selectRow", index);	
+ 	        	openEditWin(grid,addWin,fm);
+ 	        }
+ 	  }); 	   
+ 	  
+       
      }
-     
-
     
     </script>  
 	<body class="easyui-layout">

@@ -42,6 +42,7 @@
 	   } 
     function addScjRyWin(){
     	setClear();
+    	$("#ppp").show();
     	$("#scjRyDg").datagrid("uncheckAll");         
         $( "#addScjRy" ).window("open").window("setTitle", "新增");
       }
@@ -70,6 +71,8 @@
      }
     
     function editScjRyWin(){
+       $("#ppp").hide();
+       $("#pAccount").val("0");
        var grid = $("#scjRyDg"); 
 	   var fm = $("#scjRyFm");
 	   var addWin = $( "#addScjRy" );  
@@ -92,16 +95,16 @@
 				<tr>
 				    <th field="ck" checkbox="true"></th>
 					<!-- <th field="id" width="50">id</th> -->
-					<th field="uid" width="50">用户ID</th>
+					<th field="uId" width="50">用户ID</th>
 					<th field="uName" width="120">真实姓名</th>
 					<th field="uAccount" width="150">账号</th>
 					<th field="parentId" width="50">父级ID</th>
-					<th field="depart" width="80">父级</th>
-					<th field="pv" width="80">禁用状态</th>
+					<th field="depart" width="100" formatter="formatDepart">市场分布</th>
+				<!-- 	<th field="pv" width="80">禁用状态</th>
 					<th field="jyPv" width="80">禁用状态</th>
 					<th field="status" width="80">禁用状态</th>
 					<th field="created" width="80">禁用状态</th>
-					<th field="modifyTime" width="80">禁用状态</th>
+					<th field="modifyTime" width="80">禁用状态</th> -->
 
 				</tr>
 			</thead>
@@ -124,20 +127,21 @@
        <div id="addScjRy" class="easyui-window" title="新增市场人员"  closed = "true" style="width:400px;height:250px;">
 			 <form method="post" id="scjRyFm" text-align:center>
                 <table cellspacing="8px;"> 
-                   <tr>                       
+                  <tr>                       
                         <td>
                         	<input type="hidden" id="id" name="id" value="0"/>
                         </td>
-                    </tr>                                 
-                     <tr>
-                        <td>上级账号：</td>
+                    </tr>
+                                                    
+                     <tr id="ppp">
+                        <td>父级账号：</td>
                         <td><input type="text" id="pAccount" name="pAccount"
  							class="easyui-validatebox" required="true" />&nbsp;<span
                             style="color: red">*</span>
                         </td>
                     </tr>  
                      <tr>
-                        <td>下级账号：</td>
+                        <td>本级账号：</td>
                         <td><input type="text" id="uAccount" name="uAccount"
                             class="easyui-validatebox" required="true" />&nbsp;<span
                             style="color: red">*</span>
@@ -145,10 +149,16 @@
                     </tr>                 
                     <tr>
                         <td>市场分布：</td>
-                        <td><input type="text" id="depart" name="depart"
+                        <td>
+                       <!--  <input type="text" id="depart" name="depart"
                             class="easyui-validatebox" required="true" />&nbsp;<span
-                            style="color: red">*</span>
-                        </td>
+                            style="color: red">*</span> -->
+	                        <select id="depart"  name="depart" required="true"  style="width:170px;height:21px;line-height:18px;border:1px solid #95b9e7">
+						        <option value="0">顶层</option>
+						        <option value="1">市场A</option>		
+						        <option value="2">市场B</option>			       			        
+					        </select>&nbsp;<span style="color: red">*</span>
+                        </td>                        
                     </tr>  
                                                
                 </table>

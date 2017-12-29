@@ -50,7 +50,12 @@
        var grid = $("#pvDg"); 
 	   var fm = $("#pvFm");
 	   var addWin = $( "#addpv" );  
-       openEditWin(grid,addWin,fm);
+	   $("#pvDg").datagrid({
+	        onClickRow : function(index, row){	        	
+	        	 $(this).datagrid("selectRow", index);	
+	        	openEditWin(grid,addWin,fm);
+	        }
+	  }); 
      }
      
 

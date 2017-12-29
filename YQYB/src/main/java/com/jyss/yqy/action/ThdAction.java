@@ -112,10 +112,10 @@ public class ThdAction {
 		int count = 0;
 		int isOnly = 0;
 		isOnly = thdService.getThdNum(thd.getTel());
-		if (isOnly >= 1) {
-			return new ResponseEntity("NO", "账号冲突！");
-		}
 		if (thd.getId() == 0) {
+			if (isOnly >= 1) {
+				return new ResponseEntity("NO", "账号冲突！");
+			}
 			// 新增
 			count = thdService.addThd(thd);
 		} else {
