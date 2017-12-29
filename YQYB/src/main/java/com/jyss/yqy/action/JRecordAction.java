@@ -87,6 +87,16 @@ public class JRecordAction {
 	}
 
 	/**
+	 * 根据用户id展示市场用户
+	 */
+	@RequestMapping("/jrc/listByUid")
+	@ResponseBody
+	public List<JRecord> getJRecordListByUid(@RequestParam("uId") Integer uId) {
+		List<JRecord> list = recordService.getJRecordListByUid(uId);
+		return list;
+	}
+
+	/**
 	 * 修改市场用户
 	 */
 	@RequestMapping(value = "/jrc/updateJrc", method = RequestMethod.POST)

@@ -18,15 +18,21 @@
   </resultMap>
 
 
-	<!-- 查询用户 -->
-	<select id="selectAllJRecord" parameterType="String" resultMap="BaseResultMap">
+	<!-- 根据账号查询用户 -->
+	<select id="selectJRecordByAccount" parameterType="String" resultMap="BaseResultMap">
 		select id,u_id,u_name,u_account,parent_id,depart,floor
 		from j_record
 		<where>
 			<if test="uAccount != null and uAccount != ''">and u_account = #{uAccount} </if>
 			and status = 1
 		</where>
-		order by floor
+	</select>
+
+	<!-- 查询用户 -->
+	<select id="selectAllJRecord"  resultMap="BaseResultMap">
+		select id,u_id,u_name,u_account,parent_id,depart,floor
+		from j_record
+		where status = 1 order by floor
 	</select>
 	<!--<select id="selectAllJRecord" parameterType="String" resultMap="BaseResultMap">
 		select a.id,a.u_id,a.u_name,a.u_account,a.parent_id,a.depart,a.floor,b.account p_account

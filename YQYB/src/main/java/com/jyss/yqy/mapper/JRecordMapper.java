@@ -10,8 +10,11 @@ import com.jyss.yqy.entity.JRecord;
 public interface JRecordMapper {
     
 	
+	//根据账号查询用户
+	List<JRecord> selectJRecordByAccount(@Param("uAccount")String uAccount);
+
 	//查询用户
-	List<JRecord> selectAllJRecord(@Param("uAccount")String uAccount);
+	List<JRecord> selectAllJRecord();
 	
 	//根据id查询
 	List<JRecord> selectJRecordById(@Param("id")int id);
