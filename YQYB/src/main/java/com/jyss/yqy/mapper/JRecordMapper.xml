@@ -24,6 +24,7 @@
 		from j_record
 		<where>
 			<if test="uAccount != null and uAccount != ''">and u_account = #{uAccount} </if>
+			<if test="uId != null and uId != ''">and u_id = #{uId} </if>
 			and status = 1
 		</where>
 	</select>

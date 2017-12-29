@@ -11,7 +11,7 @@ public interface JRecordMapper {
     
 	
 	//根据账号查询用户
-	List<JRecord> selectJRecordByAccount(@Param("uAccount")String uAccount);
+	List<JRecord> selectJRecordByAccount(@Param("uAccount")String uAccount,@Param("uId")String uId);
 
 	//查询用户
 	List<JRecord> selectAllJRecord();

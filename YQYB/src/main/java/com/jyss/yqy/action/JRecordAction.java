@@ -77,33 +77,19 @@ public class JRecordAction {
 	}
 
 	/**
-	 * 根据账号展示市场用户
+	 * 搜索展示市场用户
 	 */
 	@RequestMapping("/jrc/listByAccount")
 	@ResponseBody
-	public List<JRecord> getJRecordListByAccount(
-			@RequestParam("account") String account) {
-		if(StringUtils.isEmpty(account)){
+	public List<JRecord> getJRecordListByAccount(@RequestParam("account") String account,@RequestParam("uId") String uId) {
+		if(StringUtils.isEmpty(account) && StringUtils.isEmpty(uId)){
 			List<JRecord> list = new ArrayList<JRecord>();
 			return list;
 		}
-		List<JRecord> list = recordService.getJRecordListByAccount(account);
+		List<JRecord> list = recordService.getJRecordListByAccount(account,uId);
 		return list;
 	}
 
-	/**
-	 * 根据用户id展示市场用户
-	 */
-	@RequestMapping("/jrc/listByUid")
-	@ResponseBody
-	public List<JRecord> getJRecordListByUid(@RequestParam("uId") Integer uId) {
-		if(StringUtils.isEmpty(uId)){
-			List<JRecord> list = new ArrayList<JRecord>();
-			return list;
-		}
-		List<JRecord> list = recordService.getJRecordListByUid(uId);
-		return list;
-	}
 
 	/**
 	 * 修改市场用户

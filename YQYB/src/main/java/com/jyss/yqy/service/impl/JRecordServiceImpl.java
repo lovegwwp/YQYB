@@ -32,7 +32,7 @@ public class JRecordServiceImpl implements JRecordService {
 		if(StringUtils.isEmpty(uAccount)){
 			return new ResponseEntity("false", "账号不能为空！");
 		}
-		List<JRecord> recordList = recordMapper.selectJRecordByAccount(uAccount);
+		List<JRecord> recordList = recordMapper.selectJRecordByAccount(uAccount,null);
 		if(recordList != null && recordList.size()>0){
 			return new ResponseEntity("false", "账号已被分配，不可重复分配！");
 		}
@@ -128,11 +128,11 @@ public class JRecordServiceImpl implements JRecordService {
 
 
 	/**
-	 * 根据账号查询
+	 * 搜索展示市场用户
 	 */
 	@Override
-	public List<JRecord> getJRecordListByAccount(String account){
-        List<JRecord> list = recordMapper.selectJRecordByAccount(account);
+	public List<JRecord> getJRecordListByAccount(String account,String uId){
+        List<JRecord> list = recordMapper.selectJRecordByAccount(account,uId);
         List<JRecord> result = new ArrayList<JRecord>();
         if(list != null && list.size() == 1){
             JRecord jRecord = list.get(0);
@@ -153,22 +153,6 @@ public class JRecordServiceImpl implements JRecordService {
         }
     }
 
-	/**
-	 * 根据用户id查询
-	 */
-	@Override
-	public List<JRecord> getJRecordListByUid(int uId){
-		List<JRecord> list = recordMapper.selectJRecordByUid(uId);
-		List<JRecord> result = new ArrayList<JRecord>();
-		if(list != null && list.size() == 1){
-			JRecord jRecord = list.get(0);
-			result.add(jRecord);
-			getJRecordListByPid(jRecord.getuId(),result);
-			return result;
-		}
-		return result;
-	}
-
 
 	/**
 	 * 修改市场用户
@@ -182,7 +166,7 @@ public class JRecordServiceImpl implements JRecordService {
 		if(list != null && list.size()>0){
 			List<UserBean> userList = userMapper.getUserIdByAccount(account);
 			if(userList != null && userList.size()>0){
-				List<JRecord> recordList = recordMapper.selectJRecordByAccount(account);
+				List<JRecord> recordList = recordMapper.selectJRecordByAccount(account,null);
 				if(recordList == null || recordList.size() == 0){
 					UserBean userBean = userList.get(0);
 					JRecord record = new JRecord();
