@@ -37,7 +37,7 @@
 	           url:"jrc/listByAccount.action",      
 	           queryParams: {  
 	        	   account: $("#account1").val(),
-	        	   uId: $("#uId").val(),
+	        	   uId: $("#uId1").val(),
 	          }
 	      });  
 	   } 
@@ -125,8 +125,9 @@
 		    <div style="padding:3px">
 		        <form id="searchscjRyFm">  
 					<span>账户:</span>
-					<input id="account1" name="account1" style="line-height:18px;border:1px solid #95b9e7">&nbsp;&nbsp;					
-					<input id="uId" name="uId" style="line-height:18px;border:1px solid #95b9e7">&nbsp;&nbsp;
+					<input id="account1" name="account1" style="line-height:18px;border:1px solid #95b9e7">&nbsp;&nbsp;
+					<span>用户ID:</span>					
+					<input id="uId1" name="uId1" style="line-height:18px;border:1px solid #95b9e7">&nbsp;&nbsp;
 					<a href="#" class="easyui-linkbutton" iconCls="icon-search"  onclick="doScjRySearch()">搜索</a>&nbsp;&nbsp;
 					<a href="#" class="easyui-linkbutton" iconCls="icon-reload"  onclick="reScjRyFlash()">刷新</a>
 				 </form>

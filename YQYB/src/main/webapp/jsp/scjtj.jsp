@@ -134,7 +134,7 @@
 	   } 
 
       function doScjtjSearch(){
-    	  alert($("#kssj").datebox("getValue"));
+    	  //alert($("#kssj").datebox("getValue"));
 	      $("#ScjtjDg").datagrid({
 	           url:"showScj/listByDay.action",      
 	           queryParams: {  	             	
@@ -161,16 +161,25 @@
 	<body class="easyui-layout">
 		<table id="ScjtjDg" title="市场将统计列表" class="easyui-datagrid" style="width:1750px;height:865px"
 			url="showScj/list.action"
-			toolbar="#toolbar" pagination="true" rownumbers="true"  singleSelect="false">
+			toolbar="#toolbar" pagination="true" rownumbers="true"   showFooter="true"  singleSelect="false">
 			<thead>
 				<tr>
 				    <th field="ck" checkbox="true"></th>
 					<!-- <th field="id" width="50">id</th> -->
-					<th field="amount" width="250">推荐总额</th>
+					<!-- <th field="amount" width="250">推荐总额</th>
 					<th field="cashScore" width="200">现金积分</th>
-					<th field="shoppingScore" width="200">购物积分</th>
+					<th field="shoppingScore" width="200">购物积分</th> -->
+					<th field="uId" width="100">本级ID</th>
+					<th field="uName" width="120">姓名</th>
+					<th field="aId" width="80">市场aID</th>				
+					<th field="aName" width="120">姓名</th>
+					<th field="aPv" width="100">市场aPV</th>
+					<th field="bId" width="80">市场bID</th>		
+					<th field="bName" width="120">姓名</th>				
+					<th field="bPv" width="100">市场bPV</th>
+					<th field="pv" width="100">本级市场pv</th>
+					<!-- <th field="created" width="200">创建时间</th> -->
 					
-					<th field="shoppingScore.list[0].bName" width="200">购物积分</th>
 					
 				</tr>
 			</thead>

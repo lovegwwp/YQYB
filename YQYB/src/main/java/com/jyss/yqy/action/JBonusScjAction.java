@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.jyss.yqy.entity.JBonusScj;
 import com.jyss.yqy.entity.JBonusScjResult;
 import com.jyss.yqy.entity.Page;
 import com.jyss.yqy.service.JBonusScjService;
@@ -85,16 +86,16 @@ public class JBonusScjAction {
 	 */
 	@RequestMapping("/showScj/list")
 	@ResponseBody
-	public Page<JBonusScjResult> selectJBonusScj(
+	public Page<JBonusScj> selectJBonusScj(
 			@RequestParam(value = "page", required = true) int page,
 			@RequestParam(value = "rows", required = true) int rows) {
 		List<JBonusScjResult> list = new ArrayList<JBonusScjResult>();
 		PageHelper.startPage(page, rows);// 分页语句
-		JBonusScjResult result = bonusScjService.selectJBonusScj(page, rows);
-		list.add(result);
-		PageInfo<JBonusScjResult> pageInfoBy = new PageInfo<JBonusScjResult>(
-				list);
-		return new Page<JBonusScjResult>(pageInfoBy);
+		Page<JBonusScj> result = bonusScjService.selectJBonusScj(page, rows);
+//		list.add(result);
+//		PageInfo<JBonusScjResult> pageInfoBy = new PageInfo<JBonusScjResult>(
+//				list);
+		return result;
 	}
 
 	/**
@@ -102,16 +103,16 @@ public class JBonusScjAction {
 	 */
 	@RequestMapping("/showScj/listByWek")
 	@ResponseBody
-	public Page<JBonusScjResult> selectJBonusScjWek(
+	public Page<JBonusScj> selectJBonusScjWek(
 			@RequestParam(value = "page", required = true) int page,
 			@RequestParam(value = "rows", required = true) int rows) {
 		List<JBonusScjResult> list = new ArrayList<JBonusScjResult>();
 		PageHelper.startPage(page, rows);// 分页语句
-		JBonusScjResult result = bonusScjService.selectJBonusScjWek(page, rows);
-		list.add(result);
-		PageInfo<JBonusScjResult> pageInfoBy = new PageInfo<JBonusScjResult>(
-				list);
-		return new Page<JBonusScjResult>(pageInfoBy);
+		Page<JBonusScj> result = bonusScjService.selectJBonusScjWek(page, rows);
+//		list.add(result);
+//		PageInfo<JBonusScjResult> pageInfoBy = new PageInfo<JBonusScjResult>(
+//				list);
+		return result;
 	}
 
 	/**
@@ -119,19 +120,19 @@ public class JBonusScjAction {
 	 */
 	@RequestMapping("/showScj/listByDay")
 	@ResponseBody
-	public Page<JBonusScjResult> selectJBonusScjByDay(
+	public Page<JBonusScj> selectJBonusScjByDay(
 			@RequestParam(value = "page", required = true) int page,
 			@RequestParam(value = "rows", required = true) int rows,
 			@RequestParam("beginTime") String beginTime,
 			@RequestParam("endTime") String endTime) {
 		List<JBonusScjResult> list = new ArrayList<JBonusScjResult>();
 		PageHelper.startPage(page, rows);// 分页语句
-		JBonusScjResult result = bonusScjService.selectJBonusScjByDay(page,
+		Page<JBonusScj> result = bonusScjService.selectJBonusScjByDay(page,
 				rows, beginTime, endTime);
-		list.add(result);
-		PageInfo<JBonusScjResult> pageInfoBy = new PageInfo<JBonusScjResult>(
-				list);
-		return new Page<JBonusScjResult>(pageInfoBy);
+//		list.add(result);
+//		PageInfo<JBonusScjResult> pageInfoBy = new PageInfo<JBonusScjResult>(
+//				list);
+		return result;
 	}
 
 	/**
@@ -139,18 +140,18 @@ public class JBonusScjAction {
 	 */
 	@RequestMapping("/showScj/listByMonth")
 	@ResponseBody
-	public Page<JBonusScjResult> selectJBonusScjByMonth(
+	public Page<JBonusScj> selectJBonusScjByMonth(
 			@RequestParam(value = "page", required = true) int page,
 			@RequestParam(value = "rows", required = true) int rows,
 			@RequestParam("month") String month) {
 		List<JBonusScjResult> list = new ArrayList<JBonusScjResult>();
 		PageHelper.startPage(page, rows);// 分页语句
-		JBonusScjResult result = bonusScjService.selectJBonusScjByMonth(page,
+		Page<JBonusScj> result = bonusScjService.selectJBonusScjByMonth(page,
 				rows, month);
-		list.add(result);
-		PageInfo<JBonusScjResult> pageInfoBy = new PageInfo<JBonusScjResult>(
-				list);
-		return new Page<JBonusScjResult>(pageInfoBy);
+//		list.add(result);
+//		PageInfo<JBonusScjResult> pageInfoBy = new PageInfo<JBonusScjResult>(
+//				list);
+		return result;
 	}
 
 }
