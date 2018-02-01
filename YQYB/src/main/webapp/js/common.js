@@ -319,7 +319,9 @@ function setFmValue(){
 	               return "中级代理人";  
 	           }else if(value==4){  
 	               return "高级代理人";  
-	           } 
+	           }else if(value==5){  
+	               return "经理人";  
+	           }  
 	         }  
 	 		 
 	 }

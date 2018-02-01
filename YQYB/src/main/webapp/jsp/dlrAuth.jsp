@@ -78,7 +78,7 @@
     
     </script>  
 	<body class="easyui-layout">
-		<table id="dlrAuthDg" title="提货点列表" class="easyui-datagrid" style="width:1750px;height:865px"
+		<table id="dlrAuthDg" title="代理人列表" class="easyui-datagrid" style="width:1750px;height:865px"
 			url="dlrAuthSx.action"
 			toolbar="#toolbar" pagination="true" rownumbers="true"  singleSelect="false">
 			<thead>
