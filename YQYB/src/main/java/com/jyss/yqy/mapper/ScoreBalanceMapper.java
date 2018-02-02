@@ -40,6 +40,9 @@ public interface ScoreBalanceMapper {
 	int addShoppingScoreBalance(ScoreBalance sb);
 	
 	
+	//查询当天现金总积分
+	float selectTodayCashScore(@Param("category") int category);
+	
 	//查询昨日现金总积分
 	float selectTotalCashScore(@Param("category") int category);
 	
@@ -51,6 +54,9 @@ public interface ScoreBalanceMapper {
 	
 	//查询月份现金总积
 	float selectTotalCashScoreByMonth(@Param("category") int category, @Param("month")String month);
+	
+	//查询当日购物总积分
+	float selectTodayShoppingScore(@Param("category") int category);
 	
 	//查询昨日购物总积分
 	float selectTotalShoppingScore(@Param("category") int category);
