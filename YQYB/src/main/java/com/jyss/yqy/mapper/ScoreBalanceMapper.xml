@@ -62,8 +62,19 @@
         insert into u_shopping_score_balance values(null,#{end},#{uUuid},#{category},#{type},#{score},#{jyScore},'B',#{createdAt},#{status})              
     </insert>
      
+     
+    <!-- 查询当天现金总积分 -->
+  	<select id="selectTodayCashScore" parameterType="int" resultType="float">
+  		select IFNULL(sum(score),0.00) from u_cash_score_balance 
+  		<where>
+  			<if test="category != null"> and category = #{category}</if>
+  			and type = 1 and status = 1 and end = 2 and to_days(now()) = to_days(created_at)
+  		</where>
+  	</select>
+     
+     
   	<!-- 查询昨日现金总积分 -->
-  	<select id="selectTotalCashScore" parameterType="com.jyss.yqy.entity.ScoreBalance" resultType="float">
+  	<select id="selectTotalCashScore" parameterType="int" resultType="float">
   		select IFNULL(sum(score),0.00) from u_cash_score_balance 
   		<where>
   			<if test="category != null"> and category = #{category}</if>
@@ -72,7 +83,7 @@
   	</select>
   	
   	<!-- 查询本周现金总积分 -->
-  	<select id="selectTotalCashScoreByWek" parameterType="com.jyss.yqy.entity.ScoreBalance" resultType="float">
+  	<select id="selectTotalCashScoreByWek" parameterType="int" resultType="float">
   		select IFNULL(sum(score),0.00) from u_cash_score_balance 
   		<where>
   			<if test="category != null"> and category = #{category}</if>
@@ -81,7 +92,7 @@
   	</select>
   	
   	<!-- 查询时间段现金总积分 -->
-  	<select id="selectTotalCashScoreByDay" parameterType="com.jyss.yqy.entity.ScoreBalance" resultType="float">
+  	<select id="selectTotalCashScoreByDay"  resultType="float">
   		select IFNULL(sum(score),0.00) from u_cash_score_balance 
   		<where>
   			<if test="category != null"> and category = #{category}</if>
@@ -96,7 +107,7 @@
   	</select>
   	
   	<!-- 查询月份现金总积分 -->
-  	<select id="selectTotalCashScoreByMonth" parameterType="com.jyss.yqy.entity.ScoreBalance" resultType="float">
+  	<select id="selectTotalCashScoreByMonth"  resultType="float">
   		select IFNULL(sum(score),0.00) from u_cash_score_balance 
   		<where>
   			<if test="category != null"> and category = #{category}</if>
@@ -107,9 +118,18 @@
   		</where>
   	</select>
   	
+  	<!-- 查询当日购物总积分 -->
+  	<select id="selectTodayShoppingScore" parameterType="int" resultType="float">
+  		select IFNULL(sum(score),0.00) from u_shopping_score_balance 
+  		<where>
+  			<if test="category != null"> and category = #{category}</if>
+  			and type = 1 and status = 1 and end = 2 and to_days(now()) = to_days(created_at) 
+  		</where>
+  	</select>
+  	
   	
   	<!-- 查询昨日购物总积分 -->
-  	<select id="selectTotalShoppingScore" parameterType="com.jyss.yqy.entity.ScoreBalance" resultType="float">
+  	<select id="selectTotalShoppingScore" parameterType="int" resultType="float">
   		select IFNULL(sum(score),0.00) from u_shopping_score_balance 
   		<where>
   			<if test="category != null"> and category = #{category}</if>
@@ -118,7 +138,7 @@
   	</select>
   	
   	<!-- 查询本周购物总积分 -->
-  	<select id="selectTotalShoppingScoreByWek" parameterType="com.jyss.yqy.entity.ScoreBalance" resultType="float">
+  	<select id="selectTotalShoppingScoreByWek" parameterType="int" resultType="float">
   		select IFNULL(sum(score),0.00) from u_shopping_score_balance 
   		<where>
   			<if test="category != null"> and category = #{category}</if>
@@ -127,7 +147,7 @@
   	</select>
   	
   	<!-- 查询时间段购物总积分 -->
-  	<select id="selectTotalShoppingScoreByDay" parameterType="com.jyss.yqy.entity.ScoreBalance" resultType="float">
+  	<select id="selectTotalShoppingScoreByDay"  resultType="float">
   		select IFNULL(sum(score),0.00) from u_shopping_score_balance 
   		<where>
   			<if test="category != null"> and category = #{category}</if>
@@ -142,7 +162,7 @@
   	</select>
   	
   	<!-- 查询月份购物总积分 -->
-  	<select id="selectTotalShoppingScoreByMonth" parameterType="com.jyss.yqy.entity.ScoreBalance" resultType="float">
+  	<select id="selectTotalShoppingScoreByMonth" resultType="float">
   		select IFNULL(sum(score),0.00) from u_shopping_score_balance 
   		<where>
   			<if test="category != null"> and category = #{category}</if>
