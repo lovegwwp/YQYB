@@ -43,6 +43,7 @@ public class JBonusFhjAction {
 		return new Page<JBonusFxjResult>(pageInfoBy);
 	}
 
+	
 	/**
 	 * 本周总金额
 	 */
