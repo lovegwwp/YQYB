@@ -13,13 +13,17 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.jyss.yqy.entity.JBonusFxjResult;
 import com.jyss.yqy.entity.Page;
+import com.jyss.yqy.entity.Xtcl;
 import com.jyss.yqy.service.JBonusFhjService;
+import com.jyss.yqy.service.XtclService;
 
 @Controller
 public class JBonusFhjAction {
 
 	@Autowired
 	private JBonusFhjService jBonusFhjService;
+	@Autowired
+	private XtclService xtclService;
 
 	@RequestMapping("/fhjtj")
 	public String fhjtjTz() {
@@ -35,9 +39,12 @@ public class JBonusFhjAction {
 	public Page<JBonusFxjResult> selectGljTotal(
 			@RequestParam(value = "page", required = true) int page,
 			@RequestParam(value = "rows", required = true) int rows) {
+		Xtcl xtcl = xtclService.getClsValue("jjbl_type", "xj");      //现金积分比例
+		float float1 = Float.parseFloat(xtcl.getBz_value());         //0.7
+		
 		List<JBonusFxjResult> list = new ArrayList<JBonusFxjResult>();
 		PageHelper.startPage(page, rows);// 分页语句
-		JBonusFxjResult result = jBonusFhjService.selectFhjTotal();
+		JBonusFxjResult result = jBonusFhjService.selectFhjTotal(float1);
 		list.add(result);
 		PageInfo<JBonusFxjResult> pageInfoBy = new PageInfo<JBonusFxjResult>(list);
 		return new Page<JBonusFxjResult>(pageInfoBy);
@@ -52,9 +59,12 @@ public class JBonusFhjAction {
 	public Page<JBonusFxjResult> selectGljTotalByWek(
 			@RequestParam(value = "page", required = true) int page,
 			@RequestParam(value = "rows", required = true) int rows) {
+		Xtcl xtcl = xtclService.getClsValue("jjbl_type", "xj");      //现金积分比例
+		float float1 = Float.parseFloat(xtcl.getBz_value());         //0.7
+		
 		List<JBonusFxjResult> list = new ArrayList<JBonusFxjResult>();
 		PageHelper.startPage(page, rows);// 分页语句
-		JBonusFxjResult result = jBonusFhjService.selectFhjTotalByWek();
+		JBonusFxjResult result = jBonusFhjService.selectFhjTotalByWek(float1);
 		list.add(result);
 		PageInfo<JBonusFxjResult> pageInfoBy = new PageInfo<JBonusFxjResult>(
 				list);
@@ -71,9 +81,12 @@ public class JBonusFhjAction {
 			@RequestParam("endTime") String endTime,
 			@RequestParam(value = "page", required = true) int page,
 			@RequestParam(value = "rows", required = true) int rows) {
+		Xtcl xtcl = xtclService.getClsValue("jjbl_type", "xj");      //现金积分比例
+		float float1 = Float.parseFloat(xtcl.getBz_value());         //0.7
+		
 		List<JBonusFxjResult> list = new ArrayList<JBonusFxjResult>();
 		PageHelper.startPage(page, rows);// 分页语句
-		JBonusFxjResult result = jBonusFhjService.selectFhjTotalByDay(beginTime, endTime);
+		JBonusFxjResult result = jBonusFhjService.selectFhjTotalByDay(float1,beginTime, endTime);
 		list.add(result);
 		PageInfo<JBonusFxjResult> pageInfoBy = new PageInfo<JBonusFxjResult>(
 				list);
@@ -89,9 +102,12 @@ public class JBonusFhjAction {
 			@RequestParam("month") String month,
 			@RequestParam(value = "page", required = true) int page,
 			@RequestParam(value = "rows", required = true) int rows) {
+		Xtcl xtcl = xtclService.getClsValue("jjbl_type", "xj");      //现金积分比例
+		float float1 = Float.parseFloat(xtcl.getBz_value());         //0.7
+		
 		List<JBonusFxjResult> list = new ArrayList<JBonusFxjResult>();
 		PageHelper.startPage(page, rows);// 分页语句
-		JBonusFxjResult result = jBonusFhjService.selectFhjTotalByMonth(month);
+		JBonusFxjResult result = jBonusFhjService.selectFhjTotalByMonth(float1,month);
 		list.add(result);
 		PageInfo<JBonusFxjResult> pageInfoBy = new PageInfo<JBonusFxjResult>(list);
 		return new Page<JBonusFxjResult>(pageInfoBy);
