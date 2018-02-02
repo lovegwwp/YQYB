@@ -10,7 +10,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>代言费首页</title>
+		<title>全球分红奖首页</title>
 		
 		<link rel="stylesheet" type="text/css" href="easyui/themes/default/easyui.css">
 		<link rel="stylesheet" type="text/css" href="easyui/themes/icon.css">
@@ -24,33 +24,33 @@
 	     
 	  } );
  
-    function adddyfWin(){
-    	$("#dyfDg").datagrid("uncheckAll");         
-        $( "#adddyf" ).window("open").window("setTitle", "修改");
+    function addzqWin(){
+    	$("#zqDg").datagrid("uncheckAll");         
+        $( "#addzq" ).window("open").window("setTitle", "修改");
         // $( "#addCl" ).window("open"); 
       }
-    function closedyfWin(){
-         $( "#adddyf" ).window("close");
-         $("#dyfFm").form("clear"); 
+    function closezqWin(){
+         $( "#addzq" ).window("close");
+         $("#zqFm").form("clear"); 
       }
 
-    function savedyf(){
-	     var grid = $("#dyfDg"); 
-	     var fm = $("#dyfFm");	   
-	     var addWin = $( "#adddyf" );  
+    function savezq(){
+	     var grid = $("#zqDg"); 
+	     var fm = $("#zqFm");	   
+	     var addWin = $( "#addzq" );  
       	 commonSaveOperate(fm,"${pageContext.request.contextPath}/addCl.action",addWin,grid);     	     
      }
     
-    function deletedyf() {
-        var grid = $("#dyfDg"); 
+    function deletezq() {
+        var grid = $("#zqDg"); 
      	commonBatchOperate(grid, "${pageContext.request.contextPath}/delCl.action","确认删除所选数据吗？");
      }
     
     function editFzWin(){
-       var grid = $("#dyfDg"); 
-	   var fm = $("#dyfFm");
-	   var addWin = $( "#adddyf" );  
-	   $("#dyfDg").datagrid({
+       var grid = $("#zqDg"); 
+	   var fm = $("#zqFm");
+	   var addWin = $( "#addzq" );  
+	   $("#zqDg").datagrid({
 	        onClickRow : function(index, row){	        	
 	        	 $(this).datagrid("selectRow", index);	
 	        	openEditWin(grid,addWin,fm);
@@ -62,8 +62,8 @@
     
     </script>  
 	<body class="easyui-layout">
-		<table id="dyfDg" title="代言积分列表" class="easyui-datagrid" style="width:1750px;height:865px"
-			url="getClsBy.action?bz_type=dyjf_type"
+		<table id="zqDg" title="分红奖列表" class="easyui-datagrid" style="width:1750px;height:865px"
+			url="getClsBy.action?bz_type=qqfhj_type"
 			toolbar="#toolbar" pagination="true" rownumbers="true"  singleSelect="false">
 			<thead>
 				<tr>
@@ -80,12 +80,12 @@
 				</tr>
 			</thead>
 		</table>
-		<div id="toolbar" style="padding:3px">
+		<!--<div id="toolbar" style="padding:3px">
 			<div style="padding:3px">
-			<!-- 	<a href="#" class="easyui-linkbutton" iconCls="icon-add"   onclick="addClWin()">新增常量</a> 
+			 	<a href="#" class="easyui-linkbutton" iconCls="icon-add"   onclick="addClWin()">新增常量</a> 
 				<a href="#" class="easyui-linkbutton" iconCls="icon-edit"  onclick="editblWin()">修改封顶值</a>
 				 <a href="#" class="easyui-linkbutton" iconCls="icon-remove"   onclick="deleteCl()">删除常量</a> -->
-		    </div>
+		   <!--  </div> -->
 		 <!--    <div style="padding:3px">
 		        <form id="searchClFm">  
 					<span>标志类型:</span>
@@ -96,10 +96,10 @@
 					 <a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="reFlash()">reFlash</a>
 					<a href="#" class="easyui-linkbutton" iconCls="icon-reload"  onclick="reClFlash()">刷新</a>
 				 </form>
-			</div> -->
-		</div>
-       <div id="adddyf" class="easyui-window" title="修改数值"  closed = "true" style="width:450px;height:250px;">
-			 <form method="post" id="dyfFm" text-align:center>
+			</div> 
+		</div>-->
+       <div id="addzq" class="easyui-window" title="修改数值"  closed = "true" style="width:450px;height:250px;">
+			 <form method="post" id="zqFm" text-align:center>
                 <table cellspacing="8px;">   
                     <tr>                       
                         <td>
@@ -122,13 +122,13 @@
                     </tr>                                                                    
                 </table>
 				<div style="padding:5px;text-align:center;">
-					<a href="#" class="easyui-linkbutton" icon="icon-ok" onclick="savedyf()">保存</a>&nbsp;&nbsp;&nbsp;&nbsp;
-					<a href="#" class="easyui-linkbutton" icon="icon-cancel"  onclick="closedyfWin()">取消</a>
+					<a href="#" class="easyui-linkbutton" icon="icon-ok" onclick="savezq()">保存</a>&nbsp;&nbsp;&nbsp;&nbsp;
+					<a href="#" class="easyui-linkbutton" icon="icon-cancel"  onclick="closezqWin()">取消</a>
 				</div>
 			</form>
 	  </div>	  
 	<style>
-	  	#dyfFm{
+	  	#zqFm{
 	  		margin:0 auto !important;
 	  		width: 300px
 	  	}

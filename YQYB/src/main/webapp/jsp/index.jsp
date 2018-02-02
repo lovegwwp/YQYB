@@ -73,24 +73,24 @@
 							    </div>
 							<%-- </shiro:hasAnyRoles>  
 							 <shiro:hasAnyRoles name="admin">   --%> 
+							   <div title="pv管理" style="padding:10px;">  
+							        <ul id="tree_pv" class="easyui-tree" >  									  
+					                    <li  data-options="iconCls:'icon-client_account_template'">  
+					                        <span>pv设置</span>  
+					                    </li>  
+									</ul>  
+							    </div>  
 							    <div title="代理支付管理" style="padding:10px;">  
 							        <ul id="tree_dlzf" class="easyui-tree" >  
 									    <li  data-options="iconCls:'icon-client_account_template'">    
 					                        <span>代理费设置</span>  
 					                    </li> 					                   
 									</ul>  
-							    </div>
-							    <div title="pv管理" style="padding:10px;">  
-							        <ul id="tree_pv" class="easyui-tree" >  									  
-					                    <li  data-options="iconCls:'icon-client_account_template'">  
-					                        <span>pv设置</span>  
-					                    </li>  
-									</ul>  
-							    </div>  						    
+							    </div>							  						    
 							    <div title="代理积分管理" style="padding:10px;">  
 							        <ul id="tree_dljf" class="easyui-tree" >  
 									    <li  data-options="iconCls:'icon-client_account_template'">  
-					                        <span>积分设置</span>  
+					                        <span>代理积分设置</span>  
 					                    </li>  
 									</ul>  
 							    </div>						      
@@ -108,35 +108,25 @@
 					                    </li> 					                     
 									</ul>  
 							    </div> 
-							    <div title="代言人管理奖设置" style="padding:10px;">  
+							    <div title="分红奖设置" style="padding:10px;">  
+							        <ul id="tree_fxj" class="easyui-tree" >  
+									    <li  data-options="iconCls:'icon-client_account_template'">  
+					                        <span>分红奖设置</span>  
+					                    </li>  					                    
+									</ul>  
+							    </div>
+							    <div title="管理奖设置" style="padding:10px;">  
 							        <ul id="tree_glj" class="easyui-tree" >  
 									    <li  data-options="iconCls:'icon-client_account_template'">  
 					                        <span>管理奖设置</span>  
 					                    </li>  					                    
 									</ul>  
 							    </div>
-							     <div title="代言人辅导奖设置" style="padding:10px;">  
+							     <div title="辅导奖设置" style="padding:10px;">  
 							        <ul id="tree_fdj" class="easyui-tree" >  
 									    <li  data-options="iconCls:'icon-client_account_template'">  
 					                        <span>辅导奖设置</span>  
 					                    </li>  					                    
-									</ul>  
-							    </div>
-							     <div title="市场奖人员管理" style="padding:10px;">  
-							        <ul id="tree_scjry" class="easyui-tree" >  
-									    <li  data-options="iconCls:'icon-client_account_template'">  
-					                        <span>人员设置</span>  
-					                    </li> 					                     					                    
-									</ul>  
-							    </div>
-							    <div title="市场奖设置" style="padding:10px;">  
-							        <ul id="tree_scj" class="easyui-tree" >  
-									    <li  data-options="iconCls:'icon-client_account_template'">  
-					                        <span>市场奖设置</span>  
-					                    </li> 
-					                   <!--  <li  data-options="iconCls:'icon-client_account_template'">  
-					                        <span>封顶设置</span>  
-					                    </li>   -->					                    
 									</ul>  
 							    </div>
 							    <div title="分销奖设置" style="padding:10px;">  
@@ -146,6 +136,25 @@
 					                    </li>  					                    
 									</ul>  
 							    </div>
+							     <div title="市场奖设置" style="padding:10px;">  
+							        <ul id="tree_scj" class="easyui-tree" >  
+									    <li  data-options="iconCls:'icon-client_account_template'">  
+					                        <span>市场奖设置</span>  
+					                    </li> 
+					                   <!--  <li  data-options="iconCls:'icon-client_account_template'">  
+					                        <span>封顶设置</span>  
+					                    </li>   -->					                    
+									</ul>  
+							    </div>
+							    
+							     <div title="市场奖人员管理" style="padding:10px;">  
+							        <ul id="tree_scjry" class="easyui-tree" >  
+									    <li  data-options="iconCls:'icon-client_account_template'">  
+					                        <span>人员设置</span>  
+					                    </li> 					                     					                    
+									</ul>  
+							    </div>
+							 
 							    <div title="每日封顶设置" style="padding:10px;">  
 							        <ul id="tree_fd" class="easyui-tree" >  
 									    <li  data-options="iconCls:'icon-client_account_template'">  
@@ -153,7 +162,7 @@
 					                    </li>  					                    
 									</ul>  
 							    </div>
-							    <div title="奖金比例管理" style="padding:10px;">  
+							    <div title="平台比例管理" style="padding:10px;">  
 							        <ul id="tree_ptbl" class="easyui-tree" >  
 									    <li  data-options="iconCls:'icon-client_account_template'">  
 					                        <span>比例设置</span>  
@@ -175,6 +184,9 @@
 					                    </li> 
 					                    <li  data-options="iconCls:'icon-client_account_template'">  
 					                        <span>分销奖统计</span>  
+					                    </li>
+					                     <li  data-options="iconCls:'icon-client_account_template'">  
+					                        <span>分红奖统计</span>  
 					                    </li> 
 					                     <li  data-options="iconCls:'icon-client_account_template'">  
 					                        <span>市场奖统计</span>  
@@ -399,6 +411,9 @@
                 }else if(noteText=="返还周期设置"){
                 	content = '<iframe scrolling="auto" frameborder="0"  src="fhzq.action" style="width:100%;height:100%;"></iframe>';
 
+                }else if(noteText=="分红奖设置"){
+                	content = '<iframe scrolling="auto" frameborder="0"  src="qqfhj.action" style="width:100%;height:100%;"></iframe>';
+
                 }else if(noteText=="管理奖设置"){
                 	content = '<iframe scrolling="auto" frameborder="0"  src="glj.action" style="width:100%;height:100%;"></iframe>';
 
@@ -434,6 +449,9 @@
 
                 }else if(noteText=="市场奖统计"){
                 	content = '<iframe scrolling="auto" frameborder="0"  src="scjtj.action" style="width:100%;height:100%;"></iframe>';
+
+                }else if(noteText=="分红奖统计"){
+                	content = '<iframe scrolling="auto" frameborder="0"  src="fhjtj.action" style="width:100%;height:100%;"></iframe>';
 
                 }else if(noteText=="每日封顶"){
                 	content = '<iframe scrolling="auto" frameborder="0"  src="mrfd.action" style="width:100%;height:100%;"></iframe>';

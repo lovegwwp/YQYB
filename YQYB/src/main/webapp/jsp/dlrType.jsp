@@ -76,7 +76,8 @@
 				    <select id="isChuangke1"   style="width:150px;height:24px;line-height:20px;border:1px solid #95b9e7">
 				        <option value="2">初级代理人</option>
 				        <option value="3">中级代理人</option>
-				        <option value="4">高级代理人</option>				        
+				        <option value="4">高级代理人</option>	
+				        <option value="5">经理人</option>				        
 				    </select>&nbsp;&nbsp;
 					<a href="#" class="easyui-linkbutton" iconCls="icon-search"  onclick="doDlrSearch()">搜索</a>&nbsp;&nbsp;				
 					<a href="#" class="easyui-linkbutton" iconCls="icon-reload"  onclick="reDlrFlash()">刷新</a>

@@ -47,17 +47,17 @@
         select *, '&lt;a href="javascript:;" onclick="editFzWin()"&gt;编辑&lt;/a&gt;' as hrefStr from p_xt_cl 
          <where> 
               status = 1
-			  <if test="bz_type != null and bz_type !=''"> and bz_type  LIKE CONCAT('%',#{bz_type},'%') </if> 
+			  <if test="bz_type != null and bz_type !=''"> and bz_type  = #{bz_type} </if> 
 			  <if test="bz_value != null and bz_value !=''"> and  bz_value LIKE CONCAT('%',#{bz_value},'%')  </if> 
 		 </where> 
 		 order by bz_type ,bz_id
     </select> 
     
-     <select id="getClsValue" resultType="com.jyss.yqy.entity.Xtcl">  
+     <select id="getClsValue" resultType="com.jyss.yqy.entity.Xtcl">    <!--  LIKE CONCAT('%',#{bz_type},'%')  -->
         select * from p_xt_cl 
          <where> 
               status = 1
-			  <if test="bz_type != null and bz_type !=''">and bz_type  LIKE CONCAT('%',#{bz_type},'%') </if> 
+			  <if test="bz_type != null and bz_type !=''">and bz_type  = #{bz_type} </if> 
 			  <if test="bz_id != null and bz_id !=''"> and  bz_id = #{bz_id} </if> 
 		 </where> 
 		limit 0,1
@@ -67,7 +67,7 @@
         select * from p_xt_area 
          <where> 
               1=1
-			  <if test="bz_type != null and bz_type !=''"> and bz_type  LIKE CONCAT('%',#{bz_type},'%') </if> 
+			  <if test="bz_type != null and bz_type !=''"> and bz_type  = #{bz_type} </if> 
 			  <if test="pid != null and pid !=''"> AND  pid = #{pid}  </if> 
 		 </where> 
 		  order by bz_id 
@@ -77,7 +77,7 @@
         select * from p_xt_cl 
          <where> 
               1=1
-			  <if test="bz_type != null and bz_type !=''"> and bz_type  LIKE CONCAT('%',#{bz_type},'%') </if> 
+			  <if test="bz_type != null and bz_type !=''"> and bz_type = #{bz_type} </if> 
 			  <if test="pid != null and pid !=''"> AND  pid = #{pid}  </if> 
 		 </where> 
 		  order by id 

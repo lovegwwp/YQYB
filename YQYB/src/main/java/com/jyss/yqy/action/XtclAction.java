@@ -87,6 +87,12 @@ public class XtclAction {
 	public String dyjfTz() {
 		return "dyjf";
 	}
+	
+	// 代言积分
+	@RequestMapping("/qqfhj")
+	public String qqfhjTz() {
+			return "qqfhj";
+	}
 
 	@RequestMapping("/getClsBy")
 	@ResponseBody
