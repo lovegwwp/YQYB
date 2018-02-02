@@ -15,6 +15,7 @@
         <result property="score" column="score"  />
         <result property="jyScore" column="jy_score"  />
         <result property="createdAt" column="created_at"  />
+        <result property="jsTime" column="js_time"  />
         <result property="title" column="title"  />
         <result property="cjsj" column="cjsj"  />
         <result property="status" column="status"  />
@@ -52,14 +53,14 @@
      <!--现金积分=插入-->
     <insert id="addCashScoreBalance" parameterType="com.jyss.yqy.entity.ScoreBalance" 
         useGeneratedKeys="true" keyProperty="id">                                                     <!-- ordersn -->
-        insert into u_cash_score_balance values(null,#{end},#{uUuid},#{category},#{type},#{score},#{jyScore},'B',#{createdAt},#{status})              
+        insert into u_cash_score_balance values(null,#{end},#{uUuid},#{category},#{type},#{score},#{jyScore},'B',#{createdAt},now(),#{status})              
     </insert>
    
    
     <!--购物积分=插入-->
     <insert id="addShoppingScoreBalance" parameterType="com.jyss.yqy.entity.ScoreBalance" 
         useGeneratedKeys="true" keyProperty="id"> 
-        insert into u_shopping_score_balance values(null,#{end},#{uUuid},#{category},#{type},#{score},#{jyScore},'B',#{createdAt},#{status})              
+        insert into u_shopping_score_balance values(null,#{end},#{uUuid},#{category},#{type},#{score},#{jyScore},'B',#{createdAt},now(),#{status})              
     </insert>
      
      
@@ -68,7 +69,7 @@
   		select IFNULL(sum(score),0.00) from u_cash_score_balance 
   		<where>
   			<if test="category != null"> and category = #{category}</if>
-  			and type = 1 and status = 1 and end = 2 and to_days(now()) = to_days(created_at)
+  			and type = 1 and status = 1 and end = 2 and to_days(now()) = to_days(js_time)
   		</where>
   	</select>
      
@@ -78,7 +79,7 @@
   		select IFNULL(sum(score),0.00) from u_cash_score_balance 
   		<where>
   			<if test="category != null"> and category = #{category}</if>
-  			and type = 1 and status = 1 and end = 2 and to_days(now()) - to_days(created_at) = 1
+  			and type = 1 and status = 1 and end = 2 and to_days(now()) - to_days(js_time) = 1
   		</where>
   	</select>
   	
@@ -87,7 +88,8 @@
   		select IFNULL(sum(score),0.00) from u_cash_score_balance 
   		<where>
   			<if test="category != null"> and category = #{category}</if>
-  			and type = 1 and status = 1 and end = 2 and YEARWEEK(date_format(created_at,'%Y-%m-%d')) = YEARWEEK(now())
+  			and type = 1 and status = 1 and end = 2 
+  			and YEARWEEK(date_format(js_time,'%Y-%m-%d')) = YEARWEEK(now())
   		</where>
   	</select>
   	
@@ -97,10 +99,10 @@
   		<where>
   			<if test="category != null"> and category = #{category}</if>
   			<if test="beginTime != null and beginTime != ''">
-				and date_format(created_at, '%Y-%m-%d') &gt;= #{beginTime}
+				and date_format(js_time, '%Y-%m-%d') &gt;= #{beginTime}
 			</if>
 			<if test="endTime != null and endTime != ''">
-				and date_format(created_at, '%Y-%m-%d') &lt;= #{endTime}
+				and date_format(js_time, '%Y-%m-%d') &lt;= #{endTime}
 			</if>
   			and type = 1 and status = 1 and end = 2 
   		</where>
@@ -112,7 +114,7 @@
   		<where>
   			<if test="category != null"> and category = #{category}</if>
   			<if test="month != null and month != ''">
-				and date_format(created_at, '%Y-%m') = #{month}
+				and date_format(js_time, '%Y-%m') = #{month}
 			</if>
   			and type = 1 and status = 1 and end = 2 
   		</where>
@@ -123,7 +125,7 @@
   		select IFNULL(sum(score),0.00) from u_shopping_score_balance 
   		<where>
   			<if test="category != null"> and category = #{category}</if>
-  			and type = 1 and status = 1 and end = 2 and to_days(now()) = to_days(created_at) 
+  			and type = 1 and status = 1 and end = 2 and to_days(now()) = to_days(js_time) 
   		</where>
   	</select>
   	
@@ -133,7 +135,7 @@
   		select IFNULL(sum(score),0.00) from u_shopping_score_balance 
   		<where>
   			<if test="category != null"> and category = #{category}</if>
-  			and type = 1 and status = 1 and end = 2 and to_days(now()) - to_days(created_at) = 1
+  			and type = 1 and status = 1 and end = 2 and to_days(now()) - to_days(js_time) = 1
   		</where>
   	</select>
   	
@@ -142,7 +144,8 @@
   		select IFNULL(sum(score),0.00) from u_shopping_score_balance 
   		<where>
   			<if test="category != null"> and category = #{category}</if>
-  			and type = 1 and status = 1 and end = 2 and YEARWEEK(date_format(created_at,'%Y-%m-%d')) = YEARWEEK(now())
+  			and type = 1 and status = 1 and end = 2 
+  			and YEARWEEK(date_format(js_time,'%Y-%m-%d')) = YEARWEEK(now())
   		</where>
   	</select>
   	
@@ -152,10 +155,10 @@
   		<where>
   			<if test="category != null"> and category = #{category}</if>
   			<if test="beginTime != null and beginTime != ''">
-				and date_format(created_at, '%Y-%m-%d') &gt;= #{beginTime}
+				and date_format(js_time, '%Y-%m-%d') &gt;= #{beginTime}
 			</if>
 			<if test="endTime != null and endTime != ''">
-				and date_format(created_at, '%Y-%m-%d') &lt;= #{endTime}
+				and date_format(js_time, '%Y-%m-%d') &lt;= #{endTime}
 			</if>
   			and type = 1 and status = 1 and end = 2 
   		</where>
@@ -167,7 +170,7 @@
   		<where>
   			<if test="category != null"> and category = #{category}</if>
   			<if test="month != null and month != ''">
-				and date_format(created_at, '%Y-%m') = #{month}
+				and date_format(js_time, '%Y-%m') = #{month}
 			</if>
   			and type = 1 and status = 1 and end = 2 
   		</where>
