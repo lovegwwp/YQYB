@@ -7,12 +7,12 @@ import com.jyss.yqy.entity.JBonusFxjResult;
 
 public interface JBonusFhjService {
 	
-	JBonusFxjResult selectFhjTotal();
+	JBonusFxjResult selectFhjTotal(@Param("float1")float float1);
 	
-	JBonusFxjResult selectFhjTotalByWek();
+	JBonusFxjResult selectFhjTotalByWek(@Param("float1")float float1);
 	
-	JBonusFxjResult selectFhjTotalByDay(@Param("beginTime")String beginTime,@Param("endTime")String endTime);
+	JBonusFxjResult selectFhjTotalByDay(@Param("float1")float float1,@Param("beginTime")String beginTime,@Param("endTime")String endTime);
 	
-	JBonusFxjResult selectFhjTotalByMonth(@Param("month")String month);
+	JBonusFxjResult selectFhjTotalByMonth(@Param("float1")float float1,@Param("month")String month);
 
 }

@@ -24,9 +24,7 @@ public class JBonusFhjServiceImpl implements JBonusFhjService{
 	 * 当日金额
 	 */
 	@Override
-	public JBonusFxjResult selectFhjTotal(){
-		Xtcl xtcl = xtclMapper.getClsValue("jjbl_type", "xj");      //现金积分比例
-		float float1 = Float.parseFloat(xtcl.getBz_value());        //0.7
+	public JBonusFxjResult selectFhjTotal(float float1){
 		
 		float cashScore = scoreBalanceMapper.selectTodayCashScore(11);
 		float shoppingScore = scoreBalanceMapper.selectTodayShoppingScore(11);
@@ -44,9 +42,7 @@ public class JBonusFhjServiceImpl implements JBonusFhjService{
 	 * 本周金额
 	 */
 	@Override
-	public JBonusFxjResult selectFhjTotalByWek(){
-		Xtcl xtcl = xtclMapper.getClsValue("jjbl_type", "xj");      //现金积分比例
-		float float1 = Float.parseFloat(xtcl.getBz_value());        //0.7
+	public JBonusFxjResult selectFhjTotalByWek(float float1){
 		
 		float cashScore = scoreBalanceMapper.selectTotalCashScoreByWek(11);
 		float shoppingScore = scoreBalanceMapper.selectTotalShoppingScoreByWek(11);
@@ -64,9 +60,7 @@ public class JBonusFhjServiceImpl implements JBonusFhjService{
 	 * 两个时间段的总金额
 	 */
 	@Override
-	public JBonusFxjResult selectFhjTotalByDay(String beginTime,String endTime){
-		Xtcl xtcl = xtclMapper.getClsValue("jjbl_type", "xj");      //现金积分比例
-		float float1 = Float.parseFloat(xtcl.getBz_value());        //0.7
+	public JBonusFxjResult selectFhjTotalByDay(float float1,String beginTime,String endTime){
 		
 		float cashScore = scoreBalanceMapper.selectTotalCashScoreByDay(11, beginTime, endTime);
 		float shoppingScore = scoreBalanceMapper.selectTotalShoppingScoreByDay(11, beginTime, endTime);
@@ -84,9 +78,7 @@ public class JBonusFhjServiceImpl implements JBonusFhjService{
 	 * 按月查询总金额
 	 */
 	@Override
-	public JBonusFxjResult selectFhjTotalByMonth(String month){
-		Xtcl xtcl = xtclMapper.getClsValue("jjbl_type", "xj");      //现金积分比例
-		float float1 = Float.parseFloat(xtcl.getBz_value());        //0.7
+	public JBonusFxjResult selectFhjTotalByMonth(float float1,String month){
 		
 		float cashScore = scoreBalanceMapper.selectTotalCashScoreByMonth(11, month);
 		float shoppingScore = scoreBalanceMapper.selectTotalShoppingScoreByMonth(11, month);
