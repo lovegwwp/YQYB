@@ -52,7 +52,7 @@ public class UserRecordBServiceImpl implements UserRecordBService {
 		if(isAuth == 2 && (uLevel == 2 || uLevel == 3 || uLevel == 4 || uLevel == 5)){
 			int count = userRecordMapper.updateByUid(userBean.getId(), 1);
 			
-			if(count > 0){
+			if(count == 1){
 				UUserRRecordBExample example = new UUserRRecordBExample();
 				Criteria criteria = example.createCriteria();
 				criteria.andUIdEqualTo(userBean.getId());
