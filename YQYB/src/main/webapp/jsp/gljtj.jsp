@@ -134,7 +134,7 @@
 	   } 
 
       function doGljtjSearch(){
-    	  alert($("#kssj").datebox("getValue"));
+    	  //alert($("#kssj").datebox("getValue"));
 	      $("#GljtjDg").datagrid({
 	           url:"showGlj/listByDay.action",      
 	           queryParams: {  	             	

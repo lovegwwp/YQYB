@@ -134,7 +134,7 @@
 	   } 
 
       function doFxjtjSearch(){
-    	  alert($("#kssj").datebox("getValue"));
+    	 // alert($("#kssj").datebox("getValue"));
 	      $("#FxjtjDg").datagrid({
 	           url:"showFxj/listByDay.action",      
 	           queryParams: {  	             	
