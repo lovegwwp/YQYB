@@ -27,7 +27,6 @@
     function addblWin(){
     	$("#blDg").datagrid("uncheckAll");         
         $( "#addbl" ).window("open").window("setTitle", "修改");
-        // $( "#addCl" ).window("open"); 
       }
     function closeblWin(){
          $( "#addbl" ).window("close");
