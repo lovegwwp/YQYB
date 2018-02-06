@@ -1,4 +1,4 @@
-package com.jyss.bacon.entity;
+package com.jyss.yqy.entity;
 
 import java.util.Date;
 
