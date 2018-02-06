@@ -71,6 +71,22 @@
 					                    </li>  
 									</ul>  
 							    </div>
+							     <div title="文字管理" style="padding:10px;">  
+							        <ul id="tree_wzgl" class="easyui-tree" >  
+									    <li  data-options="iconCls:'icon-client_account_template'">  
+					                        <span>注册协议</span>  
+					                    </li> 
+					                     <li  data-options="iconCls:'icon-client_account_template'">  
+					                        <span>代理说明</span>  
+					                    </li> 
+					                     <li  data-options="iconCls:'icon-client_account_template'">  
+					                        <span>常见问题</span>  
+					                    </li> 
+					                     <li  data-options="iconCls:'icon-client_account_template'">  
+					                        <span>分享链接</span>  
+					                    </li>  
+									</ul>  
+							    </div>
 							<%-- </shiro:hasAnyRoles>  
 							 <shiro:hasAnyRoles name="admin">   --%> 
 							   <div title="pv管理" style="padding:10px;">  
@@ -351,6 +367,12 @@
    } 
 		});
 		
+			$("#tree_wzgl").tree( {
+			 onSelect : function(node) {  
+       openMenuTow(node);  
+   } 
+		});
+		
 		$("#tree_th").tree( {
 			 onSelect : function(node) {  
       openMenuTow(node);  
@@ -398,6 +420,18 @@
 
                 }else if(noteText=="代理费设置"){
                 	content = '<iframe scrolling="auto" frameborder="0"  src="dyf.action" style="width:100%;height:100%;"></iframe>';
+
+                }else if(noteText=="文字说明"){
+                	content = '<iframe scrolling="auto" frameborder="0"  src="wzsm.action" style="width:100%;height:100%;"></iframe>';
+
+                }else if(noteText=="注册协议"){
+                	content = '<iframe scrolling="auto" frameborder="0"  src="zcxy.action" style="width:100%;height:100%;"></iframe>';
+
+                }else if(noteText=="常见问题"){
+                	content = '<iframe scrolling="auto" frameborder="0"  src="cjwt.action" style="width:100%;height:100%;"></iframe>';
+
+                }else if(noteText=="分享链接"){
+                	content = '<iframe scrolling="auto" frameborder="0"  src="fxlj.action" style="width:100%;height:100%;"></iframe>';
 
                 }else if(noteText=="pv设置"){
                 	content = '<iframe scrolling="auto" frameborder="0"  src="pvsz.action" style="width:100%;height:100%;"></iframe>';

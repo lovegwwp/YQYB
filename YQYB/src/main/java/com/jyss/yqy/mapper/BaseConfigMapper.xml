@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jyss.yqy.mapper.BaseConfigMapper" >
+  <resultMap id="BaseResultMap" type="com.jyss.yqy.entity.BaseConfig" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="key" property="key" jdbcType="VARCHAR" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="content" property="content" jdbcType="LONGVARCHAR" />
+    <result column="modifyTime" property="modify_time" jdbcType="TIMESTAMP" />
+    <result column="xgsj" property="xgsj"  />
+  </resultMap>
+
+
+  <insert id="insertConfig" parameterType="com.jyss.yqy.entity.BaseConfig" >
+    insert into p_base_config 
+    values (null,#{content,jdbcType=LONGVARCHAR}, #{key,jdbcType=VARCHAR}, 
+            #{title,jdbcType=VARCHAR},#{status,jdbcType=TINYINT},now() )
+  </insert>
+
+
+  <update id="updateByPrimaryKey" parameterType="com.jyss.yqy.entity.BaseConfig" >
+    update p_base_config
+    set content = #{content,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR}  
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <!--查询所有-->
+  <select id="getAllConfig" resultMap="BaseResultMap"><!-- nullif(CONCAT('${httpUrl}',new_pic), '${httpUrl}') as -->
+    select *,DATE_FORMAT(b.modify_time, '%Y-%m-%d %H:%i:%s' ) as xgsj from  p_base_config b
+    <where> 
+        1=1	  
+		<if test="title != null and title !=''">and b.title  LIKE CONCAT('%',#{title},'%')  </if>
+		<if test="key != null and key !=''">and b.key = #{key}  </if> 	 		  
+    </where> 
+    order by b.modify_time desc
+  </select>
+  
+   <delete id="deleteConfig" parameterType="java.util.List">
+        delete from p_base_config  where id in 
+	    <foreach collection="ids" item="id" open="(" separator="," close=")">   
+	        #{id}   
+	    </foreach>  
+    </delete>
+
+ 
+</mapper>
