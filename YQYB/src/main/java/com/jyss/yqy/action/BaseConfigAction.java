@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.jyss.yqy.utils.CommTool;
 import com.jyss.yqy.entity.BaseConfig;
 import com.jyss.yqy.entity.BaseShare;
 import com.jyss.yqy.entity.Page;
@@ -261,7 +262,7 @@ public class BaseConfigAction {
 		//System.out.println(filePath);
 		int index = filePath.indexOf("YQYB");
 		filePath = filePath.substring(0, index) + "uploadShareImg/"
-				+ pics2.getOriginalFilename();
+				+ CommTool.getFileNameOnlyNum(pics2.getOriginalFilename());
 		if (pics2.getSize() > 5400000L) {
 			return new ResponseEntity("NO", "文件过大，应不超过5M!");
 		}

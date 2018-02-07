@@ -61,6 +61,15 @@ public class CommTool {
 		return str.toString();
 
 	}
+	// 随机生成文件名只有数字
+		public static String getFileNameOnlyNum(String fileName) {
+			int index = fileName.lastIndexOf(".");
+			fileName = fileName.substring(index);
+			Date t = new Date();
+			fileName = t.getTime()+getYzm()+fileName;
+			return fileName;
+
+		}
 
 	// 随机生成指定长度字符串+数字组合
 	public static String getNonceStr(int n) {
