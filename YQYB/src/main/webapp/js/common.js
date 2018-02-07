@@ -360,8 +360,8 @@ function setFmValue(){
 
  function showImg(value,row){
 	// var imgUrlStr='http://121.40.29.64:8081/';
-	 var imgUrlStr='http://192.168.0.28:8080/';
-	 value = imgUrlStr +value;
+	// var imgUrlStr='http://192.168.0.28:8080/';
+	 //value = imgUrlStr +value;
 	 var width = 180;
 	 var height = 120;
 	 return '<img  src='+value+' '+' width ='+width+' height='+height+ '/>';

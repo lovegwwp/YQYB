@@ -10,6 +10,18 @@
  <!--    <result column="modifyTime" property="modify_time" jdbcType="TIMESTAMP" /> -->
    <!--  <result column="xgsj" property="xgsj"  /> -->
   </resultMap>
+  
+  <resultMap id="BsMap" type="com.jyss.yqy.entity.BaseShare" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="share_key" property="shareKey" jdbcType="VARCHAR" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="content" property="content" jdbcType="LONGVARCHAR" />
+    <result column="link_url" property="linkUrl" jdbcType="VARCHAR" />
+    <result column="link_pic" property="linkPic" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" /> 
+    <result column="cjsj" property="cjsj"  />
+  </resultMap>
 
 
   <insert id="insertConfig" parameterType="com.jyss.yqy.entity.BaseConfig" >
@@ -45,5 +57,41 @@
 	    </foreach>  
     </delete>
 
+ <!-- baseshare分享 -->
+   <insert id="insertShare" parameterType="com.jyss.yqy.entity.BaseShare" >
+    insert into p_base_share 
+    values (null,#{title,jdbcType=VARCHAR} ,#{content,jdbcType=LONGVARCHAR},#{linkUrl,jdbcType=VARCHAR} , #{linkPic,jdbcType=VARCHAR} ,  #{shareKey,jdbcType=VARCHAR}, 
+          #{status,jdbcType=TINYINT} ,now())
+  </insert>
+
+
+  <update id="updateShare" parameterType="com.jyss.yqy.entity.BaseShare" >
+    update p_base_share
+    set content = #{content,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR} ,link_url = #{linkUrl,jdbcType=VARCHAR} , link_pic = #{linkPic,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <!--查询所有-->
+  <select id="getAllShare" resultMap="BsMap"><!-- nullif(CONCAT('${httpUrl}',new_pic), '${httpUrl}') as -->
+<!--     select *,DATE_FORMAT(b.modify_time, '%Y-%m-%d %H:%i:%s' ) as xgsj from  p_base_config b -->
+    select id,title,content,link_url,CONCAT('${httpUrl}',b.link_pic) as link_pic,share_key,status from  p_base_share b
+    <where> 
+        1=1	  
+		<if test="title != null and title !=''">and b.title  LIKE CONCAT('%',#{title},'%')  </if>
+		<if test="content != null and content !=''">and b.content  LIKE CONCAT('%',#{content},'%')  </if>
+		<if test="shareKey != null and shareKey !=''">and b.share_key = #{shareKey}  </if>
+		<if test="status != null and status !=''">and b.status = #{status}  </if> 	 		  
+    </where> 
+    order by id desc
+  </select>
+  
+   <delete id="deleteShare" parameterType="java.util.List">
+        delete from p_base_share  where id in 
+	    <foreach collection="ids" item="id" open="(" separator="," close=")">   
+	        #{id}   
+	    </foreach>  
+    </delete>
+ 
  
 </mapper>

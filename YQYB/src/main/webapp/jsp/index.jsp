@@ -431,7 +431,7 @@
                 	content = '<iframe scrolling="auto" frameborder="0"  src="cjwt.action" style="width:100%;height:100%;"></iframe>';
 
                 }else if(noteText=="分享链接"){
-                	content = '<iframe scrolling="auto" frameborder="0"  src="fxlj.action" style="width:100%;height:100%;"></iframe>';
+                	content = '<iframe scrolling="auto" frameborder="0"  src="yhfx.action" style="width:100%;height:100%;"></iframe>';
 
                 }else if(noteText=="pv设置"){
                 	content = '<iframe scrolling="auto" frameborder="0"  src="pvsz.action" style="width:100%;height:100%;"></iframe>';
