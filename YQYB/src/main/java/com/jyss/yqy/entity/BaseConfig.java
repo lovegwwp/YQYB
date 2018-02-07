@@ -8,8 +8,8 @@ public class BaseConfig {
 	private String key;
 	private String title;
 	private int status;
-	private Date modifyTime;
-	private String xgsj;
+	/*private Date modifyTime;
+	private String xgsj;*/
 
 	// private int status;
 
@@ -27,21 +27,21 @@ public class BaseConfig {
 
 	
 
-	public Date getModifyTime() {
-		return modifyTime;
-	}
-
-	public void setModifyTime(Date modifyTime) {
-		this.modifyTime = modifyTime;
-	}
-
-	public String getXgsj() {
-		return xgsj;
-	}
-
-	public void setXgsj(String xgsj) {
-		this.xgsj = xgsj;
-	}
+//	public Date getModifyTime() {
+//		return modifyTime;
+//	}
+//
+//	public void setModifyTime(Date modifyTime) {
+//		this.modifyTime = modifyTime;
+//	}
+//
+//	public String getXgsj() {
+//		return xgsj;
+//	}
+//
+//	public void setXgsj(String xgsj) {
+//		this.xgsj = xgsj;
+//	}
 
 	public void setContent(String content) {
 		this.content = content;

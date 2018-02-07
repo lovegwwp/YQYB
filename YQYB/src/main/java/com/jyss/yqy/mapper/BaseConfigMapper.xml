@@ -7,15 +7,15 @@
     <result column="title" property="title" jdbcType="VARCHAR" />
     <result column="status" property="status" jdbcType="TINYINT" />
     <result column="content" property="content" jdbcType="LONGVARCHAR" />
-    <result column="modifyTime" property="modify_time" jdbcType="TIMESTAMP" />
-    <result column="xgsj" property="xgsj"  />
+ <!--    <result column="modifyTime" property="modify_time" jdbcType="TIMESTAMP" /> -->
+   <!--  <result column="xgsj" property="xgsj"  /> -->
   </resultMap>
 
 
   <insert id="insertConfig" parameterType="com.jyss.yqy.entity.BaseConfig" >
     insert into p_base_config 
     values (null,#{content,jdbcType=LONGVARCHAR}, #{key,jdbcType=VARCHAR}, 
-            #{title,jdbcType=VARCHAR},#{status,jdbcType=TINYINT},now() )
+            #{title,jdbcType=VARCHAR},#{status,jdbcType=TINYINT} )
   </insert>
 
 
@@ -28,13 +28,14 @@
 
   <!--查询所有-->
   <select id="getAllConfig" resultMap="BaseResultMap"><!-- nullif(CONCAT('${httpUrl}',new_pic), '${httpUrl}') as -->
-    select *,DATE_FORMAT(b.modify_time, '%Y-%m-%d %H:%i:%s' ) as xgsj from  p_base_config b
+<!--     select *,DATE_FORMAT(b.modify_time, '%Y-%m-%d %H:%i:%s' ) as xgsj from  p_base_config b -->
+    select * from  p_base_config b
     <where> 
         1=1	  
 		<if test="title != null and title !=''">and b.title  LIKE CONCAT('%',#{title},'%')  </if>
 		<if test="key != null and key !=''">and b.key = #{key}  </if> 	 		  
     </where> 
-    order by b.modify_time desc
+    order by id desc
   </select>
   
    <delete id="deleteConfig" parameterType="java.util.List">

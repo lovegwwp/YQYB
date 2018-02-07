@@ -11,7 +11,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>用户协议管理首页</title>
+		<title>注册协议管理首页</title>
 		
 		<link rel="stylesheet" type="text/css" href="easyui/themes/default/easyui.css">
 		<link rel="stylesheet" type="text/css" href="easyui/themes/icon.css">
@@ -55,48 +55,48 @@
       
 	  } );
     
-      function reCzxyInfoFlash(){
+      function reZcxyInfoFlash(){
          //reload:重新执行url，condition是url中的参数  
-            $("#searchCzxyInfoFm").form("clear"); 
-             $("#CzxyInfoDg").datagrid({
-	           url:"getCzxyInfo.action"      	     
+            $("#searchZcxyInfoFm").form("clear"); 
+             $("#ZcxyInfoDg").datagrid({
+	           url:"getZcxyInfo.action"      	     
 	         }); 
 
         
         }
-      function doCzxyInfoSearch(){
-	      $("#CzxyInfoDg").datagrid({
-	           url:"getCzxyInfoBy.action",      
+      function doZcxyInfoSearch(){
+	      $("#ZcxyInfoDg").datagrid({
+	           url:"getZcxyInfoBy.action",      
 	           queryParams: {  
 	              title: $("#title1").val()     
 	          }  
 	      });  
 	   } 
-    function addCzxyInfoWin(){
+    function addZcxyInfoWin(){
          setClear();
-         $("#CzxyInfoDg").datagrid("uncheckAll");         
-         $( "#addCzxyInfo" ).window("open").window("setTitle", "新增");
-         //$( "#addCzxyInfo" ).window("open"); 
+         $("#ZcxyInfoDg").datagrid("uncheckAll");         
+         $( "#addZcxyInfo" ).window("open").window("setTitle", "新增");
+         //$( "#addZcxyInfo" ).window("open"); 
       }
-    function closeCzxyInfoWin(){
-         $( "#addCzxyInfo" ).window("close");
-         $("#CzxyInfoFm").form("clear"); 
+    function closeZcxyInfoWin(){
+         $( "#addZcxyInfo" ).window("close");
+         $("#ZcxyInfoFm").form("clear"); 
          editor.html("");
       }
       
-   function closeCzxyInfoWinRefrsh(){
-         $( "#addCzxyInfo" ).window("close");
-         $("#CzxyInfoFm").form("clear"); 
+   function closeZcxyInfoWinRefrsh(){
+         $( "#addZcxyInfo" ).window("close");
+         $("#ZcxyInfoFm").form("clear"); 
          editor.html("");
-         reCzxyInfoFlash();
+         reZcxyInfoFlash();
       }
 
-    function saveCzxyInfo(){
+    function saveZcxyInfo(){
 	     var idStr = $("#id").val();
 	     var title = $("#title").val();
 	     var content = editor.html();
 	      $.ajax({
-                      url: "${pageContext.request.contextPath}/addCzxyInfo.action",
+                      url: "${pageContext.request.contextPath}/addZcxyInfo.action",
                       data: {
                           id:idStr,
                           title:title,
@@ -106,7 +106,7 @@
                       type: "POST",
                       dataType: "json",
                       success: function (data) {
-                          closeCzxyInfoWinRefrsh();
+                          closeZcxyInfoWinRefrsh();
                           $.messager.alert(data.status, data.message); 
                             
                       },
@@ -118,15 +118,15 @@
      }
      
     
-    function deleteCzxyInfo() {
-        var grid = $("#CzxyInfoDg"); 
-     	commonBatchOperate(grid, "${pageContext.request.contextPath}/delCzxyInfo.action","确认删除所选数据吗？");
+    function deleteZcxyInfo() {
+        var grid = $("#ZcxyInfoDg"); 
+     	commonBatchOperate(grid, "${pageContext.request.contextPath}/delZcxyInfo.action","确认删除所选数据吗？");
      }
     
-    function editCzxyInfoWin(){
-       var grid = $("#CzxyInfoDg"); 
-	   var fm = $("#CzxyInfoFm");
-	   var addWin = $( "#addCzxyInfo" );  
+    function editZcxyInfoWin(){
+       var grid = $("#ZcxyInfoDg"); 
+	   var fm = $("#ZcxyInfoFm");
+	   var addWin = $( "#addZcxyInfo" );  
        var selectedRows = grid.datagrid("getSelections");
 	   if (selectedRows.length != 1) {
 	         $.messager.alert("系统提示", "请选择一条要编辑的数据！");
@@ -146,8 +146,8 @@
      
     </script>  
 	<body class="easyui-layout">
-		<table id="CzxyInfoDg" title="新闻列表" class="easyui-datagrid" style="width:1750px;height:865px"
-			url="getCzxyInfo.action"
+		<table id="ZcxyInfoDg" title="协议列表" class="easyui-datagrid" style="width:1750px;height:865px"
+			url="getZcxyInfo.action"
 			toolbar="#toolbar" pagination="true" rownumbers="true"  singleSelect="false">
 			<thead>
 				<tr>
@@ -163,21 +163,21 @@
 		</table>
 		<div id="toolbar" style="padding:3px">
 			<div style="padding:3px">
-				<a href="#" class="easyui-linkbutton" iconCls="icon-add"   onclick="addCzxyInfoWin()">新增协议</a>
-				<a href="#" class="easyui-linkbutton" iconCls="icon-edit"  onclick="editCzxyInfoWin()">修改协议</a>
-				<a href="#" class="easyui-linkbutton" iconCls="icon-remove"   onclick="deleteCzxyInfo()">删除协议</a>
+				<a href="#" class="easyui-linkbutton" iconCls="icon-add"   onclick="addZcxyInfoWin()">新增协议</a>
+				<a href="#" class="easyui-linkbutton" iconCls="icon-edit"  onclick="editZcxyInfoWin()">修改协议</a>
+				<a href="#" class="easyui-linkbutton" iconCls="icon-remove"   onclick="deleteZcxyInfo()">删除协议</a>
 		    </div>
 		    <div style="padding:3px">
-		        <form id="searchCzxyInfoFm">  
+		        <form id="searchZcxyInfoFm">  
 					<span>标题:</span>
 					<input id="title1" name="title1" style="line-height:18px;border:1px solid #95b9e7">&nbsp;&nbsp;					
-					<a href="#" class="easyui-linkbutton" iconCls="icon-search"  onclick="doCzxyInfoSearch()">搜索</a>&nbsp;&nbsp;				
-					<a href="#" class="easyui-linkbutton" iconCls="icon-reload"  onclick="reCzxyInfoFlash()">刷新</a>
+					<a href="#" class="easyui-linkbutton" iconCls="icon-search"  onclick="doZcxyInfoSearch()">搜索</a>&nbsp;&nbsp;				
+					<a href="#" class="easyui-linkbutton" iconCls="icon-reload"  onclick="reZcxyInfoFlash()">刷新</a>
 				 </form>
 			</div>
 		</div>
-       <div id="addCzxyInfo" class="easyui-window" title="新增信息"  closed ="true" style="width:800px;height:500px;">
-			 <form method="post" id="CzxyInfoFm"  enctype="multipart/form-data" text-align:left>
+       <div id="addZcxyInfo" class="easyui-window" title="新增信息"  closed ="true" style="width:800px;height:500px;">
+			 <form method="post" id="ZcxyInfoFm"  enctype="multipart/form-data" text-align:left>
                 <table cellspacing="8px;"> 
                    <tr>                       
                         <td>
@@ -200,14 +200,14 @@
                         
                 </table>
 				<div style="padding:5px;text-align:center;">
-					<a href="#" class="easyui-linkbutton" icon="icon-ok" onclick="saveCzxyInfo()">保存</a>&nbsp;&nbsp;&nbsp;&nbsp;
-					<a href="#" class="easyui-linkbutton" icon="icon-cancel"  onclick="closeCzxyInfoWin()">取消</a>
+					<a href="#" class="easyui-linkbutton" icon="icon-ok" onclick="saveZcxyInfo()">保存</a>&nbsp;&nbsp;&nbsp;&nbsp;
+					<a href="#" class="easyui-linkbutton" icon="icon-cancel"  onclick="closeZcxyInfoWin()">取消</a>
 				</div>
 			</form>
 	  </div>
 	  	  
 	<style>
-	  	#CzxyInfoFm{
+	  	#ZcxyInfoFm{
 	  		margin:0 auto !important;
 	  		width: 750px
 	  	}

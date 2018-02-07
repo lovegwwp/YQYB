@@ -421,8 +421,8 @@
                 }else if(noteText=="代理费设置"){
                 	content = '<iframe scrolling="auto" frameborder="0"  src="dyf.action" style="width:100%;height:100%;"></iframe>';
 
-                }else if(noteText=="文字说明"){
-                	content = '<iframe scrolling="auto" frameborder="0"  src="wzsm.action" style="width:100%;height:100%;"></iframe>';
+                }else if(noteText=="代理说明"){
+                	content = '<iframe scrolling="auto" frameborder="0"  src="dlsm.action" style="width:100%;height:100%;"></iframe>';
 
                 }else if(noteText=="注册协议"){
                 	content = '<iframe scrolling="auto" frameborder="0"  src="zcxy.action" style="width:100%;height:100%;"></iframe>';

@@ -21,109 +21,47 @@ public class BaseConfigAction {
 	@Autowired
 	private BaseConfigService bcService;
 
-	// //用户注册协议//////
-	@RequestMapping("/baseconfig")
-	public String baseconfigTz() {
-		return "baseconfig";
+	
+
+	// //常见问题//////
+	@RequestMapping("/cjwt")
+	public String cjwtTz() {
+		return "cjwt";
 	}
 
-	@RequestMapping("/getBaseConfig")
+	@RequestMapping("/getCjwtInfo")
 	@ResponseBody
-	public Page<BaseConfig> getBaseConfig(@RequestParam("page") int page,
+	public Page<BaseConfig> getCjwtInfo(@RequestParam("page") int page,
 			@RequestParam("rows") int rows) {
 		// TODO Auto-generated method stub
 		PageHelper.startPage(page, rows);// 分页语句
 		List<BaseConfig> BaseConfigList = bcService.getAllConfig("",
-				"sign.info");
+				"config.issue.b");
 		PageInfo<BaseConfig> pageInfo = new PageInfo<BaseConfig>(BaseConfigList);
 		return new Page<BaseConfig>(pageInfo);
 	}
 
-	@RequestMapping("/getBaseConfigBy")
+	@RequestMapping("/getCjwtInfoBy")
 	@ResponseBody
-	public Page<BaseConfig> getBaseConfigBy(@RequestParam("page") int page,
+	public Page<BaseConfig> getCjwtInfoBy(@RequestParam("page") int page,
 			@RequestParam("rows") int rows, @RequestParam("title") String title) {
 		// TODO Auto-generated method stub
 		PageHelper.startPage(page, rows);// 分页语句
 		List<BaseConfig> BaseConfigListBy = bcService.getAllConfig(title,
-				"sign.info");
+				"config.issue.b");
 		PageInfo<BaseConfig> pageInfo = new PageInfo<BaseConfig>(
 				BaseConfigListBy);
 		return new Page<BaseConfig>(pageInfo);
 	}
 
-	@RequestMapping("/addBaseConfig")
-	@ResponseBody
-	public ResponseEntity addBaseConfig(BaseConfig baseConfig) {
-		// TODO Auto-generated method stub
-		int count = 0;
-		if (baseConfig.getId() == 0) {
-			// 新增
-			baseConfig.setKey("sign.info");
-			count = bcService.insertConfig(baseConfig);
-		} else {
-			// 修改
-			count = bcService.updateByPrimaryKey(baseConfig);
-		}
-
-		if (count == 1) {
-			return new ResponseEntity("OK", "操作成功！");
-		}
-		return new ResponseEntity("NO", "操作失败！");
-	}
-
-	@RequestMapping("/delBaseConfig")
-	@ResponseBody
-	public ResponseEntity delBaseConfig(String strIds) {
-		// TODO Auto-generated method stub
-		int count = 0;
-		List<Long> ids = Utils.stringToLongList(strIds, ",");
-		count = bcService.deleteConfig(ids);
-		if (count >= 1) {
-			return new ResponseEntity("true", "操作成功!");
-		}
-		return new ResponseEntity("false", "操作失败！");
-	}
-
-	// //用户充值协议//////
-	@RequestMapping("/czxy")
-	public String czxyTz() {
-		return "czxy";
-	}
-
-	@RequestMapping("/getCzxyInfo")
-	@ResponseBody
-	public Page<BaseConfig> getCzxyInfo(@RequestParam("page") int page,
-			@RequestParam("rows") int rows) {
-		// TODO Auto-generated method stub
-		PageHelper.startPage(page, rows);// 分页语句
-		List<BaseConfig> BaseConfigList = bcService.getAllConfig("",
-				"czxy.info");
-		PageInfo<BaseConfig> pageInfo = new PageInfo<BaseConfig>(BaseConfigList);
-		return new Page<BaseConfig>(pageInfo);
-	}
-
-	@RequestMapping("/getCzxyInfoBy")
-	@ResponseBody
-	public Page<BaseConfig> getCzxyInfoBy(@RequestParam("page") int page,
-			@RequestParam("rows") int rows, @RequestParam("title") String title) {
-		// TODO Auto-generated method stub
-		PageHelper.startPage(page, rows);// 分页语句
-		List<BaseConfig> BaseConfigListBy = bcService.getAllConfig(title,
-				"czxy.info");
-		PageInfo<BaseConfig> pageInfo = new PageInfo<BaseConfig>(
-				BaseConfigListBy);
-		return new Page<BaseConfig>(pageInfo);
-	}
-
-	@RequestMapping("/addCzxyInfo")
+	@RequestMapping("/addCjwtInfo")
 	@ResponseBody
 	public ResponseEntity addCzxyInfo(BaseConfig baseConfig) {
 		// TODO Auto-generated method stub
 		int count = 0;
 		if (baseConfig.getId() == 0) {
 			// 新增
-			baseConfig.setKey("czxy.info");
+			baseConfig.setKey("config.issue.b");
 			count = bcService.insertConfig(baseConfig);
 		} else {
 			// 修改
@@ -136,7 +74,7 @@ public class BaseConfigAction {
 		return new ResponseEntity("NO", "操作失败！");
 	}
 
-	@RequestMapping("/delCzxyInfo")
+	@RequestMapping("/delCjwtInfo")
 	@ResponseBody
 	public ResponseEntity delCzxyInfo(String strIds) {
 		// TODO Auto-generated method stub
@@ -149,45 +87,45 @@ public class BaseConfigAction {
 		return new ResponseEntity("false", "操作失败！");
 	}
 
-	// //陪玩权限//////
-	@RequestMapping("/pwqx")
-	public String pwqxTz() {
-		return "pwqx";
+	// //注册协议//////
+	@RequestMapping("/zcxy")
+	public String zcxyTz() {
+		return "zcxy";
 	}
 
-	@RequestMapping("/getPwqxInfo")
+	@RequestMapping("/getZcxyInfo")
 	@ResponseBody
-	public Page<BaseConfig> getPwqxInfo(@RequestParam("page") int page,
+	public Page<BaseConfig> getZcxyInfo(@RequestParam("page") int page,
 			@RequestParam("rows") int rows) {
 		// TODO Auto-generated method stub
 		PageHelper.startPage(page, rows);// 分页语句
 		List<BaseConfig> BaseConfigList = bcService.getAllConfig("",
-				"help.info");
+				"config.signup.b");
 		PageInfo<BaseConfig> pageInfo = new PageInfo<BaseConfig>(BaseConfigList);
 		return new Page<BaseConfig>(pageInfo);
 	}
 
-	@RequestMapping("/getPwqxInfoBy")
+	@RequestMapping("/getZcxyInfoBy")
 	@ResponseBody
-	public Page<BaseConfig> getPwqxInfoBy(@RequestParam("page") int page,
+	public Page<BaseConfig> getZcxyInfoBy(@RequestParam("page") int page,
 			@RequestParam("rows") int rows, @RequestParam("title") String title) {
 		// TODO Auto-generated method stub
 		PageHelper.startPage(page, rows);// 分页语句
 		List<BaseConfig> BaseConfigListBy = bcService.getAllConfig(title,
-				"help.info");
+				"config.signup.b");
 		PageInfo<BaseConfig> pageInfo = new PageInfo<BaseConfig>(
 				BaseConfigListBy);
 		return new Page<BaseConfig>(pageInfo);
 	}
 
-	@RequestMapping("/addPwqxInfo")
+	@RequestMapping("/addZcxyInfo")
 	@ResponseBody
-	public ResponseEntity addPwqxInfo(BaseConfig baseConfig) {
+	public ResponseEntity addZcxyInfo(BaseConfig baseConfig) {
 		// TODO Auto-generated method stub
 		int count = 0;
 		if (baseConfig.getId() == 0) {
 			// 新增
-			baseConfig.setKey("help.info");
+			baseConfig.setKey("config.signup.b");
 			count = bcService.insertConfig(baseConfig);
 		} else {
 			// 修改
@@ -200,9 +138,9 @@ public class BaseConfigAction {
 		return new ResponseEntity("NO", "操作失败！");
 	}
 
-	@RequestMapping("/delPwqxInfo")
+	@RequestMapping("/delZcxyInfo")
 	@ResponseBody
-	public ResponseEntity delPwqxInfo(String strIds) {
+	public ResponseEntity delZcxyInfo(String strIds) {
 		// TODO Auto-generated method stub
 		int count = 0;
 		List<Long> ids = Utils.stringToLongList(strIds, ",");
@@ -213,45 +151,45 @@ public class BaseConfigAction {
 		return new ResponseEntity("false", "操作失败！");
 	}
 
-	// //提现手续费说明/////
-	@RequestMapping("/txsvf")
-	public String txsvfTz() {
-		return "txsvf";
+	// //代理人说明/////
+	@RequestMapping("/dlsm")
+	public String dlsmTz() {
+		return "dlsm";
 	}
 
-	@RequestMapping("/getTxsvfInfo")
+	@RequestMapping("/getDlsmInfo")
 	@ResponseBody
-	public Page<BaseConfig> getTxsvfInfo(@RequestParam("page") int page,
+	public Page<BaseConfig> getDlsmInfo(@RequestParam("page") int page,
 			@RequestParam("rows") int rows) {
 		// TODO Auto-generated method stub
 		PageHelper.startPage(page, rows);// 分页语句
 		List<BaseConfig> BaseConfigList = bcService.getAllConfig("",
-				"take.info");
+				"config.dljb.b");
 		PageInfo<BaseConfig> pageInfo = new PageInfo<BaseConfig>(BaseConfigList);
 		return new Page<BaseConfig>(pageInfo);
 	}
 
-	@RequestMapping("/getTxsvfInfoBy")
+	@RequestMapping("/getDlsmInfoBy")
 	@ResponseBody
-	public Page<BaseConfig> getTxsvfInfoBy(@RequestParam("page") int page,
+	public Page<BaseConfig> getDlsmInfoBy(@RequestParam("page") int page,
 			@RequestParam("rows") int rows, @RequestParam("title") String title) {
 		// TODO Auto-generated method stub
 		PageHelper.startPage(page, rows);// 分页语句
 		List<BaseConfig> BaseConfigListBy = bcService.getAllConfig(title,
-				"take.info");
+				"config.dljb.b");
 		PageInfo<BaseConfig> pageInfo = new PageInfo<BaseConfig>(
 				BaseConfigListBy);
 		return new Page<BaseConfig>(pageInfo);
 	}
 
-	@RequestMapping("/addTxsvfInfo")
+	@RequestMapping("/addDlsmInfo")
 	@ResponseBody
-	public ResponseEntity addTxsvfInfo(BaseConfig baseConfig) {
+	public ResponseEntity addDlsmInfo(BaseConfig baseConfig) {
 		// TODO Auto-generated method stub
 		int count = 0;
 		if (baseConfig.getId() == 0) {
 			// 新增
-			baseConfig.setKey("take.info");
+			baseConfig.setKey("config.dljb.b");
 			count = bcService.insertConfig(baseConfig);
 		} else {
 			// 修改
@@ -264,9 +202,9 @@ public class BaseConfigAction {
 		return new ResponseEntity("NO", "操作失败！");
 	}
 
-	@RequestMapping("/delTxsvfInfo")
+	@RequestMapping("/delDlsmInfo")
 	@ResponseBody
-	public ResponseEntity delTxsvfInfo(String strIds) {
+	public ResponseEntity delDlsmInfo(String strIds) {
 		// TODO Auto-generated method stub
 		int count = 0;
 		List<Long> ids = Utils.stringToLongList(strIds, ",");
@@ -277,69 +215,6 @@ public class BaseConfigAction {
 		return new ResponseEntity("false", "操作失败！");
 	}
 
-	// //系统消息/////
-	@RequestMapping("/sysnews")
-	public String sysnewsTz() {
-		return "sysnews";
-	}
-
-	@RequestMapping("/getSysnewsInfo")
-	@ResponseBody
-	public Page<BaseConfig> getSysnewsInfo(@RequestParam("page") int page,
-			@RequestParam("rows") int rows) {
-		// TODO Auto-generated method stub
-		PageHelper.startPage(page, rows);// 分页语句
-		List<BaseConfig> BaseConfigList = bcService.getAllConfig("",
-				"system.info");
-		PageInfo<BaseConfig> pageInfo = new PageInfo<BaseConfig>(BaseConfigList);
-		return new Page<BaseConfig>(pageInfo);
-	}
-
-	@RequestMapping("/getSysnewsInfoBy")
-	@ResponseBody
-	public Page<BaseConfig> getSysnewsInfoBy(@RequestParam("page") int page,
-			@RequestParam("rows") int rows, @RequestParam("title") String title) {
-		// TODO Auto-generated method stub
-		PageHelper.startPage(page, rows);// 分页语句
-		List<BaseConfig> BaseConfigListBy = bcService.getAllConfig(title,
-				"system.info");
-		PageInfo<BaseConfig> pageInfo = new PageInfo<BaseConfig>(
-				BaseConfigListBy);
-		return new Page<BaseConfig>(pageInfo);
-	}
-
-	@RequestMapping("/addSysnewsInfo")
-	@ResponseBody
-	public ResponseEntity addSysnewsInfo(BaseConfig baseConfig) {
-		// TODO Auto-generated method stub
-		int count = 0;
-		if (baseConfig.getId() == 0) {
-			// 新增
-			baseConfig.setKey("system.info");
-			count = bcService.insertConfig(baseConfig);
-		} else {
-			// 修改
-			count = bcService.updateByPrimaryKey(baseConfig);
-		}
-
-		if (count == 1) {
-			return new ResponseEntity("OK", "操作成功！");
-		}
-		return new ResponseEntity("NO", "操作失败！");
-	}
-
-	@RequestMapping("/delSysnewsInfo")
-	@ResponseBody
-	public ResponseEntity delSysnewsInfo(String strIds) {
-		// TODO Auto-generated method stub
-		int count = 0;
-		List<Long> ids = Utils.stringToLongList(strIds, ",");
-		count = bcService.deleteConfig(ids);
-		if (count >= 1) {
-			return new ResponseEntity("true", "操作成功!");
-		}
-		return new ResponseEntity("false", "操作失败！");
-	}
 	
 	    ////用户分享//////
 		@RequestMapping("/yhfx")
@@ -406,68 +281,6 @@ public class BaseConfigAction {
 		}
 
 		
-	    ////客服电话//////
-			@RequestMapping("/kfdh")
-			public String kfdhTz() {
-				return "kfdh";
-			}
-
-			@RequestMapping("/getKfdhInfo")
-			@ResponseBody
-			public Page<BaseConfig> getKfdhInfo(@RequestParam("page") int page,
-					@RequestParam("rows") int rows) {
-				// TODO Auto-generated method stub
-				PageHelper.startPage(page, rows);// 分页语句
-				List<BaseConfig> BaseConfigList = bcService.getAllConfig("",
-						"tel.info");
-				PageInfo<BaseConfig> pageInfo = new PageInfo<BaseConfig>(BaseConfigList);
-				return new Page<BaseConfig>(pageInfo);
-			}
-
-			@RequestMapping("/getKfdhInfoBy")
-			@ResponseBody
-			public Page<BaseConfig> getKfdhInfoBy(@RequestParam("page") int page,
-					@RequestParam("rows") int rows, @RequestParam("title") String title) {
-				// TODO Auto-generated method stub
-				PageHelper.startPage(page, rows);// 分页语句
-				List<BaseConfig> BaseConfigListBy = bcService.getAllConfig(title,
-						"tel.info");
-				PageInfo<BaseConfig> pageInfo = new PageInfo<BaseConfig>(
-						BaseConfigListBy);
-				return new Page<BaseConfig>(pageInfo);
-			}
-
-			@RequestMapping("/addKfdhInfo")
-			@ResponseBody
-			public ResponseEntity addKfdhInfo(BaseConfig baseConfig) {
-				// TODO Auto-generated method stub
-				int count = 0;
-				if (baseConfig.getId() == 0) {
-					// 新增
-					baseConfig.setKey("tel.info");
-					count = bcService.insertConfig(baseConfig);
-				} else {
-					// 修改
-					count = bcService.updateByPrimaryKey(baseConfig);
-				}
-
-				if (count == 1) {
-					return new ResponseEntity("OK", "操作成功！");
-				}
-				return new ResponseEntity("NO", "操作失败！");
-			}
-
-			@RequestMapping("/delKfdhInfo")
-			@ResponseBody
-			public ResponseEntity delKfdhInfo(String strIds) {
-				// TODO Auto-generated method stub
-				int count = 0;
-				List<Long> ids = Utils.stringToLongList(strIds, ",");
-				count = bcService.deleteConfig(ids);
-				if (count >= 1) {
-					return new ResponseEntity("true", "操作成功!");
-				}
-				return new ResponseEntity("false", "操作失败！");
-			}
+	 
 
 }

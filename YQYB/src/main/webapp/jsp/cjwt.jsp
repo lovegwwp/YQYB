@@ -11,7 +11,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>用户协议管理首页</title>
+		<title>常见问题管理首页</title>
 		
 		<link rel="stylesheet" type="text/css" href="easyui/themes/default/easyui.css">
 		<link rel="stylesheet" type="text/css" href="easyui/themes/icon.css">
@@ -55,48 +55,48 @@
       
 	  } );
     
-      function reCzxyInfoFlash(){
+      function reCjwtInfoFlash(){
          //reload:重新执行url，condition是url中的参数  
-            $("#searchCzxyInfoFm").form("clear"); 
-             $("#CzxyInfoDg").datagrid({
-	           url:"getCzxyInfo.action"      	     
+            $("#searchCjwtInfoFm").form("clear"); 
+             $("#CjwtInfoDg").datagrid({
+	           url:"getCjwtInfo.action"      	     
 	         }); 
 
         
         }
-      function doCzxyInfoSearch(){
-	      $("#CzxyInfoDg").datagrid({
-	           url:"getCzxyInfoBy.action",      
+      function doCjwtInfoSearch(){
+	      $("#CjwtInfoDg").datagrid({
+	           url:"getCjwtInfoBy.action",      
 	           queryParams: {  
 	              title: $("#title1").val()     
 	          }  
 	      });  
 	   } 
-    function addCzxyInfoWin(){
+    function addCjwtInfoWin(){
          setClear();
-         $("#CzxyInfoDg").datagrid("uncheckAll");         
-         $( "#addCzxyInfo" ).window("open").window("setTitle", "新增");
-         //$( "#addCzxyInfo" ).window("open"); 
+         $("#CjwtInfoDg").datagrid("uncheckAll");         
+         $( "#addCjwtInfo" ).window("open").window("setTitle", "新增");
+         //$( "#addCjwtInfo" ).window("open"); 
       }
-    function closeCzxyInfoWin(){
-         $( "#addCzxyInfo" ).window("close");
-         $("#CzxyInfoFm").form("clear"); 
+    function closeCjwtInfoWin(){
+         $( "#addCjwtInfo" ).window("close");
+         $("#CjwtInfoFm").form("clear"); 
          editor.html("");
       }
       
-   function closeCzxyInfoWinRefrsh(){
-         $( "#addCzxyInfo" ).window("close");
-         $("#CzxyInfoFm").form("clear"); 
+   function closeCjwtInfoWinRefrsh(){
+         $( "#addCjwtInfo" ).window("close");
+         $("#CjwtInfoFm").form("clear"); 
          editor.html("");
-         reCzxyInfoFlash();
+         reCjwtInfoFlash();
       }
 
-    function saveCzxyInfo(){
+    function saveCjwtInfo(){
 	     var idStr = $("#id").val();
 	     var title = $("#title").val();
 	     var content = editor.html();
 	      $.ajax({
-                      url: "${pageContext.request.contextPath}/addCzxyInfo.action",
+                      url: "${pageContext.request.contextPath}/addCjwtInfo.action",
                       data: {
                           id:idStr,
                           title:title,
@@ -106,7 +106,7 @@
                       type: "POST",
                       dataType: "json",
                       success: function (data) {
-                          closeCzxyInfoWinRefrsh();
+                          closeCjwtInfoWinRefrsh();
                           $.messager.alert(data.status, data.message); 
                             
                       },
@@ -118,15 +118,15 @@
      }
      
     
-    function deleteCzxyInfo() {
-        var grid = $("#CzxyInfoDg"); 
-     	commonBatchOperate(grid, "${pageContext.request.contextPath}/delCzxyInfo.action","确认删除所选数据吗？");
+    function deleteCjwtInfo() {
+        var grid = $("#CjwtInfoDg"); 
+     	commonBatchOperate(grid, "${pageContext.request.contextPath}/delCjwtInfo.action","确认删除所选数据吗？");
      }
     
-    function editCzxyInfoWin(){
-       var grid = $("#CzxyInfoDg"); 
-	   var fm = $("#CzxyInfoFm");
-	   var addWin = $( "#addCzxyInfo" );  
+    function editCjwtInfoWin(){
+       var grid = $("#CjwtInfoDg"); 
+	   var fm = $("#CjwtInfoFm");
+	   var addWin = $( "#addCjwtInfo" );  
        var selectedRows = grid.datagrid("getSelections");
 	   if (selectedRows.length != 1) {
 	         $.messager.alert("系统提示", "请选择一条要编辑的数据！");
@@ -146,8 +146,8 @@
      
     </script>  
 	<body class="easyui-layout">
-		<table id="CzxyInfoDg" title="新闻列表" class="easyui-datagrid" style="width:1750px;height:865px"
-			url="getCzxyInfo.action"
+		<table id="CjwtInfoDg" title="问题列表" class="easyui-datagrid" style="width:1750px;height:865px"
+			url="getCjwtInfo.action"
 			toolbar="#toolbar" pagination="true" rownumbers="true"  singleSelect="false">
 			<thead>
 				<tr>
@@ -155,7 +155,7 @@
 					<th field="title" width="150">标题</th>
 <!-- 					<th field="subTitle" width="100">发布人</th>
 					<th field="newPic" width="250">首页图片</th> -->
-					<th field="content" width="750">协议内容</th>
+					<th field="content" width="750">问题内容</th>
 <!-- 					<th field="cjsj" width="150">创建时间</th>	 -->		
 
 				</tr>
@@ -163,21 +163,21 @@
 		</table>
 		<div id="toolbar" style="padding:3px">
 			<div style="padding:3px">
-				<a href="#" class="easyui-linkbutton" iconCls="icon-add"   onclick="addCzxyInfoWin()">新增协议</a>
-				<a href="#" class="easyui-linkbutton" iconCls="icon-edit"  onclick="editCzxyInfoWin()">修改协议</a>
-				<a href="#" class="easyui-linkbutton" iconCls="icon-remove"   onclick="deleteCzxyInfo()">删除协议</a>
+				<a href="#" class="easyui-linkbutton" iconCls="icon-add"   onclick="addCjwtInfoWin()">新增协议</a>
+				<a href="#" class="easyui-linkbutton" iconCls="icon-edit"  onclick="editCjwtInfoWin()">修改协议</a>
+				<a href="#" class="easyui-linkbutton" iconCls="icon-remove"   onclick="deleteCjwtInfo()">删除协议</a>
 		    </div>
 		    <div style="padding:3px">
-		        <form id="searchCzxyInfoFm">  
+		        <form id="searchCjwtInfoFm">  
 					<span>标题:</span>
 					<input id="title1" name="title1" style="line-height:18px;border:1px solid #95b9e7">&nbsp;&nbsp;					
-					<a href="#" class="easyui-linkbutton" iconCls="icon-search"  onclick="doCzxyInfoSearch()">搜索</a>&nbsp;&nbsp;				
-					<a href="#" class="easyui-linkbutton" iconCls="icon-reload"  onclick="reCzxyInfoFlash()">刷新</a>
+					<a href="#" class="easyui-linkbutton" iconCls="icon-search"  onclick="doCjwtInfoSearch()">搜索</a>&nbsp;&nbsp;				
+					<a href="#" class="easyui-linkbutton" iconCls="icon-reload"  onclick="reCjwtInfoFlash()">刷新</a>
 				 </form>
 			</div>
 		</div>
-       <div id="addCzxyInfo" class="easyui-window" title="新增信息"  closed ="true" style="width:800px;height:500px;">
-			 <form method="post" id="CzxyInfoFm"  enctype="multipart/form-data" text-align:left>
+       <div id="addCjwtInfo" class="easyui-window" title="新增信息"  closed ="true" style="width:800px;height:500px;">
+			 <form method="post" id="CjwtInfoFm"  enctype="multipart/form-data" text-align:left>
                 <table cellspacing="8px;"> 
                    <tr>                       
                         <td>
@@ -200,14 +200,14 @@
                         
                 </table>
 				<div style="padding:5px;text-align:center;">
-					<a href="#" class="easyui-linkbutton" icon="icon-ok" onclick="saveCzxyInfo()">保存</a>&nbsp;&nbsp;&nbsp;&nbsp;
-					<a href="#" class="easyui-linkbutton" icon="icon-cancel"  onclick="closeCzxyInfoWin()">取消</a>
+					<a href="#" class="easyui-linkbutton" icon="icon-ok" onclick="saveCjwtInfo()">保存</a>&nbsp;&nbsp;&nbsp;&nbsp;
+					<a href="#" class="easyui-linkbutton" icon="icon-cancel"  onclick="closeCjwtInfoWin()">取消</a>
 				</div>
 			</form>
 	  </div>
 	  	  
 	<style>
-	  	#CzxyInfoFm{
+	  	#CjwtInfoFm{
 	  		margin:0 auto !important;
 	  		width: 750px
 	  	}
