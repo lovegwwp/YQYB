@@ -38,8 +38,7 @@ public class UserRecordBServiceImpl implements UserRecordBService {
 	@Autowired
 	private ScoreBalanceMapper scoreBalanceMapper;
 
-	
-	
+
 	/**
 	 * 管理奖
 	 */
