@@ -233,7 +233,7 @@ public class UserRecordBServiceImpl implements UserRecordBService {
 			if(type <= type1 && type1 < 5){
 				return userRecord;
 			}else{
-				selectGjDlr(userRecord.getrId(),type);
+				return selectGjDlr(userRecord.getrId(),type);
 			}
 		}
 		return null;
