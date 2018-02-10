@@ -20,6 +20,7 @@ public class UserAuth implements Serializable {
 	private String cjsj;
 	private String account;
 	private String isChuangke;
+	private String bIsPay;
 
 	public int getId() {
 		return id;
@@ -27,6 +28,14 @@ public class UserAuth implements Serializable {
 
 	public String getYxsj() {
 		return yxsj;
+	}
+
+	public String getbIsPay() {
+		return bIsPay;
+	}
+
+	public void setbIsPay(String bIsPay) {
+		this.bIsPay = bIsPay;
 	}
 
 	public void setYxsj(String yxsj) {

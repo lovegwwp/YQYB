@@ -94,7 +94,8 @@
 					<th field="cardPicture2" width="200" formatter="showImg">身份证照片</th> 
 					<th field="cardPicture3" width="200" formatter="showImg">身份证照片</th> 
 				<!-- 	<th field="validityDate" width="280">身份证有效期</th> 	 -->
-					<th field="yxsj" width="100">身份证有效期</th> 												
+					<th field="yxsj" width="100">身份证有效期</th> 	
+					<th field="bIsPay" width="80"  formatter="formatPay">是否交钱</th>											
 					<th field="status" width="80"  formatter="formatSh">是否通过</th>
 					<th field="cjsj" width="150">提交时间</th>		
 

@@ -17,7 +17,8 @@
         <result property="cardPicture3" column="card_picture_3" jdbcType="VARCHAR" />
         <result property="validityDate" column="validity_date"  jdbcType="TIMESTAMP"/>
         <result property="createdAt" column="created_at" jdbcType="TIMESTAMP" />
-        <result property="isChuangke" column="is_chuangke" jdbcType="VARCHAR" />     
+        <result property="isChuangke" column="is_chuangke" jdbcType="VARCHAR" /> 
+        <result property="bIsPay" column="b_is_pay" jdbcType="VARCHAR" />    
         <result property="account" column="account" jdbcType="VARCHAR" />     
         <result property="cjsj" column="cjsj"  />     
     </resultMap>       
@@ -35,11 +36,11 @@
    
    <!-- 用户审核 -->
    <select id="getUserAuth" resultMap="uaResultMap">           
-	    select a.*,DATE_FORMAT(a.created_at, '%Y-%m-%d %H:%i:%s' ) as cjsj ,DATE_FORMAT(a.validity_date, '%Y-%m-%d ' ) as yxsj ,u.account,u.is_chuangke  from u_user_auth a 
+	    select a.*,DATE_FORMAT(a.created_at, '%Y-%m-%d %H:%i:%s' ) as cjsj ,DATE_FORMAT(a.validity_date, '%Y-%m-%d ' ) as yxsj ,u.account,u.is_chuangke ,u.b_is_pay from u_user_auth a 
 	     left join u_user u
 	      on  u.uuid = a.u_uuid
          <where> 
-              1 = 1
+              1 = 1 and u.is_chuangke in(2,3,4,5)
               <if test="uUuid != null and uUuid !=''"> and a.u_uuid = #{uUuid} </if> 	
               <if test="status != null and status !=''"> and a.status = #{status} </if> 		
               <if test="account != null and account !=''"> and u.account like concat('%', #{account},'%') </if> 				  			

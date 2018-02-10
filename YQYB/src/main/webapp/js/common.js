@@ -357,11 +357,26 @@ function setFmValue(){
 	         }  
 	 		 
 	 }
+ 
+
+ ////0=未支付 1=支付
+function formatPay(value,row,index){
+ 		if(value==null){  
+             return "";  
+         }else{  
+           if(value==0){  
+               return "待支付";  
+           }else if(value==1){  
+               return "已支付";  
+           }
+         }  
+ 		 
+ }
 
  function showImg(value,row){
-	// var imgUrlStr='http://121.40.29.64:8081/';
+	var imgUrlStr='http://121.40.29.64:8081/';
 	// var imgUrlStr='http://192.168.0.28:8080/';
-	 //value = imgUrlStr +value;
+	 value = imgUrlStr +value;
 	 var width = 180;
 	 var height = 120;
 	 return '<img  src='+value+' '+' width ='+width+' height='+height+ '/>';
