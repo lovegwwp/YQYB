@@ -45,7 +45,7 @@
 				<div data-options="region:'center'">
 						<div id="frame_accordion" class="easyui-accordion" data-options="fit:true">  
 						  <%--  <shiro:hasAnyRoles name="admin,user">  --%>    					  
-							    <div title="代理人管理" data-options="" style="overflow:auto; style="padding:10px;">  
+							    <div title="代理人管理" data-options="" style="overflow:auto; padding:10px;">
 							        <ul id="tree_dlr" class="easyui-tree" >  
 									    <li  data-options="iconCls:'icon-client_account_template'">  
 					                        <span>代理人统计</span>  
