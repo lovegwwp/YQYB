@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="YQYB:war">
+    <output-path>$PROJECT_DIR$/YQYB/target</output-path>
+    <root id="archive" name="YQYB-0.0.1-SNAPSHOT.war">
+      <element id="artifact" artifact-name="YQYB:war exploded" />
+    </root>
+  </artifact>
+</component>

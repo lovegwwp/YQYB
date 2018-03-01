@@ -125,7 +125,7 @@
 									</ul>  
 							    </div> 
 							    <div title="分红奖设置" style="padding:10px;">  
-							        <ul id="tree_fxj" class="easyui-tree" >  
+							        <ul id="tree_fhj" class="easyui-tree" >
 									    <li  data-options="iconCls:'icon-client_account_template'">  
 					                        <span>分红奖设置</span>  
 					                    </li>  					                    
@@ -306,6 +306,11 @@
 			 onSelect : function(node) {  
                 openMenuTow(node);  
             } 
+		});
+		$("#tree_fhj").tree( {
+			onSelect : function(node) {
+				openMenuTow(node);
+			}
 		});
 		$("#tree_scj").tree( {
 			 onSelect : function(node) {  
