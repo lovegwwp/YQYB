@@ -11,14 +11,40 @@ public class AccountUser {
 	private String permissionName;
 	private String permissionSign;
 	private String name;
-	private String username;
-	private String pwd;
 	private String salt;
+	private String username;
+	private String password;
+	private String code;//标题排序码
+	private String href;//点击链接
+	private String title;//UI显示列表标题
+	private String icon;//图标
+
+	private String description;
 	private int status;
 	private Date lastLoginTime;//
 	private Date createdAt;// 创建时间
 	private String cjsj;// 创建时间
 	private String dlsj;// 登录时间
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getCode(){return code;}
+	public void setCode(String code) {this.code = code ;}
+
+	public String getIcon(){return icon;}
+	public void setIcon(String icon) {this.icon = icon ;}
+
+	public String getHref(){return href;}
+	public void setHref(String href) {this.href = href ;}
+
+	public String getTitle(){return title;}
+	public void setTitle(String title) {this.title = title ;}
 
 	public int getId() {
 		return id;
@@ -84,12 +110,12 @@ public class AccountUser {
 		this.username = username;
 	}
 
-	public String getPwd() {
-		return pwd;
+	public String getPassword() {
+		return password;
 	}
 
-	public void setPwd(String pwd) {
-		this.pwd = pwd;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public String getSalt() {
@@ -139,5 +165,8 @@ public class AccountUser {
 	public void setDlsj(String dlsj) {
 		this.dlsj = dlsj;
 	}
+
+
+
 
 }

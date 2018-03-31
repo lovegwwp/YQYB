@@ -94,7 +94,7 @@ public class MyRealm extends AuthorizingRealm {
 	private AccountUser tokenToUser(UsernamePasswordToken authcToken) {
 		AccountUser user = new AccountUser();
 		user.setUsername(authcToken.getUsername());
-		user.setPwd(String.valueOf(authcToken.getPassword()));
+		user.setPassword(String.valueOf(authcToken.getPassword()));
 		return user;
 	}
 

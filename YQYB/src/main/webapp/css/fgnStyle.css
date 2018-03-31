@@ -1,0 +1,59 @@
+
+
+.accordion{
+	background: url(../img/topcolor.png) repeat-x;
+}
+.accordion .accordion-header-selected{
+	background:rgba(0,0,0,0) url(../img/topcolor.png) repeat-x
+}
+.accordion .accordion-header{
+	background-color:#EEEEEE;
+}
+.tree-node-selected{
+	background-color:#FAD3D8;
+}
+.accordion .accordion-header-selected .panel-title{
+	color:#fff;
+}
+.tree-node-hover{
+	background-color:#FAD3D8;
+}
+.panel-header{
+	background-color:#FAD3D8;
+	background: -webkit-linear-gradient(top,#FAD3D8 0,#FAD3D8 100%);
+    background: -moz-linear-gradient(top,#FAD3D8 0,#FAD3D8 100%);
+    background: -o-linear-gradient(top,#FAD3D8 0,#FAD3D8 100%);
+}
+.tree-node{
+	height:30px;
+	border: 1px solid #EEEEEE;
+}
+.tree-title{
+	line-height:30px;
+	height:30px;
+}
+.tree-file{
+	background: url(../img/tree_icons.png) no-repeat -240px 7px;
+}
+.tree-expanded, .tree-collapsed, .tree-folder, .tree-file, .tree-checkbox, .tree-indent{
+	height:27px;
+}
+.tabs li a.tabs-inner{
+	background-color: #FAD3D8;
+    background: -webkit-linear-gradient(top,#FAD3D8 0,#FAD3D8 100%);
+    background: -moz-linear-gradient(top,#FAD3D8 0,#FAD3D8 100%);
+    background: -o-linear-gradient(top,#FAD3D8 0,#FAD3D8 100%);
+    background: linear-gradient(to bottom,#FAD3D8 0,#FAD3D8 100%);
+}
+.tree-node-selected{
+	border:1px solid red;
+}
+.accordion-body{
+	padding:0!important;
+}
+.tree li{
+	background:#EDEDED;
+}
+.datagrid .panel-body{
+	
+}

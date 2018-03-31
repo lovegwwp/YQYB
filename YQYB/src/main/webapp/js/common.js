@@ -47,6 +47,88 @@ function gridCheckedValid2(grid) {
 	}
 }
 
+/**
+ * 
+ * 取消订单分配
+ */
+function commonBatchQxFp(grid, url,str) {	
+		var selectedRowsFp = grid.datagrid("getSelections");
+	    if (selectedRowsFp.length != 1) {
+	        $.messager.alert("系统提示", "请选择一条要编辑的数据！");
+	        return;
+	    }
+	    var row = selectedRowsFp[0];
+	    if (row.status!=2) {
+	    	 $.messager.alert("系统提示", "当前订单状态异常！");
+	         return;
+		}
+	$.messager.confirm("操作确认", str, function(r) {
+		if (r) {
+			$.ajax({
+				type : "post",
+				url : url,
+				data : {
+					orderId : row.orderId,
+					oid :row.oid,
+					rid :row.rid
+				},
+				success : function(data) {
+					/** 如果删除成功，刷新grid数据* */
+					if (data.status) {
+						$.messager.progress("close");
+//						$("#" + modelName + "_grid").datagrid("reload");
+						grid.datagrid("reload");
+						$.messager.alert("系统提示：", "操作成功！");
+					} else {
+                        $.messager.alert("系统提示", "操作失败，请联系系统管理员！");
+                    }
+				}
+			});
+		}
+	});
+}
+
+
+/**
+ * 
+ * 取消订单
+ */
+function commonBatchQx(grid, url,str) {	
+		var selectedRowsFp = grid.datagrid("getSelections");
+	    if (selectedRowsFp.length != 1) {
+	        $.messager.alert("系统提示", "请选择一条要编辑的数据！");
+	        return;
+	    }
+	    var row = selectedRowsFp[0];
+	    ///只有尚未分配的订单才可以直接取消
+	    if (row.status!=1) {
+	    	 $.messager.alert("系统提示", "当前订单状态异常！");
+	         return;
+		}
+	$.messager.confirm("操作确认", str, function(r) {
+		if (r) {
+			$.ajax({
+				type : "post",
+				url : url,
+				data : {
+					orderId : row.orderId,
+					oid :row.oid,					
+				},
+				success : function(data) {
+					/** 如果删除成功，刷新grid数据* */
+					if (data.status) {
+						$.messager.progress("close");
+//						$("#" + modelName + "_grid").datagrid("reload");
+						grid.datagrid("reload");
+						$.messager.alert("系统提示：", "操作成功！");
+					} else {
+                        $.messager.alert("系统提示", "操作失败，请联系系统管理员！");
+                    }
+				}
+			});
+		}
+	});
+}
 
 /**
  * 通用删除/禁用
@@ -66,6 +148,41 @@ function commonBatchOperate(grid, url,str) {
 				url : url,
 				data : {
 					strIds : ids
+				},
+				success : function(data) {
+					/** 如果删除成功，刷新grid数据* */
+					if (data.status) {
+						$.messager.progress("close");
+//						$("#" + modelName + "_grid").datagrid("reload");
+						grid.datagrid("reload");
+						$.messager.alert("系统提示：", "操作成功！");
+					} else {
+                        $.messager.alert("系统提示", "操作失败，请联系系统管理员！");
+                    }
+				}
+			});
+		}
+	});
+}
+
+/**
+ * 通用删除/禁用
+ * 支持批量操作
+ */
+function commonAuth(grid, url,str) {
+	var ids = gridCheckedValid(grid);
+	if (!ids) {
+		return;
+	}
+	//"您确定要删除这<font color=red>"
+    //+ selectedRows.length + "</font>条数据吗？"
+	$.messager.confirm("操作确认", str, function(r) {
+		if (r) {
+			$.ajax({
+				type : "post",
+				url : url,
+				data : {
+					id : ids
 				},
 				success : function(data) {
 					/** 如果删除成功，刷新grid数据* */
@@ -154,7 +271,7 @@ function commonSaveOperate(fm,url,addWin,grid) {
                   }  
               });  
           } else {  
-              $.messager.alert("系统提示", "数据验证不通过，请注意！");
+              $.messager.alert("系统提示", "数据填写不完整，请注意！");
           }  
 	
 }
@@ -185,7 +302,7 @@ function commonSaveUpload(fm,url,addWin,grid) {
              }  
 	     });
     }else {  
-              $.messager.alert("系统提示", "数据验证不通过，请注意！");
+              $.messager.alert("系统提示", "数据填写不完整，请注意！");
           }  
 	
 }
@@ -199,6 +316,54 @@ function openEditWin(grid,editWin,fm){
      var row = selectedRows[0];
      editWin.window("open").window("setTitle", "编辑信息");
      fm.form("load", row);
+}
+function openEditWin2(grid,editWin,fm){
+	 var selectedRows = grid.datagrid("getSelections");
+    if (selectedRows.length != 1) {
+        $.messager.alert("系统提示", "请选择一条要编辑的数据！");
+        return;
+    }
+    var row = selectedRows[0];
+    if (row.status!=1) {
+    	 $.messager.alert("系统提示", "当前订单状态异常！");
+         return;
+	}
+    editWin.window("open").window("setTitle", "编辑信息");
+    fm.form("load", row);
+}
+
+function openEditWin3(grid,editWin,fm){
+	 var selectedRows = grid.datagrid("getSelections");
+   if (selectedRows.length != 1) {
+       $.messager.alert("系统提示", "请选择一条要编辑的数据！");
+       return;
+   }
+   var row = selectedRows[0];
+   if (row.status!=2) {
+   	 $.messager.alert("系统提示", "当前订单状态异常！");
+        return;
+	}
+   editWin.window("open").window("setTitle", "编辑信息");
+   fm.form("load", row);
+}
+
+function openEditWin4(grid,editWin,fm){
+	 var selectedRows = grid.datagrid("getSelections");
+  if (selectedRows.length != 1) {
+      $.messager.alert("系统提示", "请选择一条要编辑的数据！");
+      return;
+  }
+  var row = selectedRows[0];
+  if (row.status=='0') {
+  	 $.messager.alert("系统提示", "当前用户等级异常！");
+       return;
+  }
+  if (row.isAuth!='1') {
+	  	 $.messager.alert("系统提示", "当前用户尚未认证！");
+	       return;
+  }
+  editWin.window("open").window("setTitle", "编辑信息");
+  fm.form("load", row);
 }
 
 //设置
@@ -223,7 +388,7 @@ function setFmValue(){
  function checkFileExt(filename)
   {
      var flag = false; //状态
-     var arr = ["jpg","png","gif","ico"];
+     var arr = ["jpg","png","gif","ico","mp4","wmv","Ogg","MPGE4","mp3","MP3"];
      //取出上传文件的扩展名
      var index = filename.lastIndexOf(".");
      var ext = filename.substr(index+1);
@@ -244,7 +409,7 @@ function setFmValue(){
  function checkFileExt3(filename)
   {
      var flag = false; //状态
-     var arr = ["war"];
+     var arr = ["war","WAR","apk","APK","ipa","IPA"];
      //取出上传文件的扩展名
      var index = filename.lastIndexOf(".");
      var ext = filename.substr(index+1);
@@ -295,6 +460,21 @@ function setFmValue(){
          }  
  		 
 	 }
+
+	 
+	 function formatXtgxType(value,row,index){
+ 		if(value==null){  
+             return "";  
+         }else{  
+           if(value==1){  
+               return "安卓";  
+           }else{  
+               return "IOS";  
+           }  
+         }  
+ 		 
+	 }
+	 
 	 
 	 function formatJy(value,row,index){
  		if(value==null){  
@@ -309,128 +489,152 @@ function setFmValue(){
  		 
  }
 	 
-	 function formatDlr(value,row,index){
+	 function formatReportresult(value,row,index){
 	 		if(value==null){  
 	             return "";  
 	         }else{  
-	           if(value==2){  
-	               return "初级代理人";  
+	           if(value==1){  
+	               return "情况属实";  
+	           }else  if(value==2){  
+	               return "不属实";  
+	           }else  if(value==0){  
+	               return "未处理";  
+	           }   
+	         }  
+	 		 
+		 }
+	 function formatCzzt(value,row,index){
+	 		if(value==null){  
+	             return "";  
+	         }else{  
+	           if(value==0){  
+	               return "待提现";  
+	           }else  if(value==1){  
+	               return "已支付";  
+	           }else  if(value==2){  
+	               return "未支付";  
+	           }   
+	         }  
+	 		 
+		 }
+	  
+	 function formatSh(value,row,index){
+	 		if(value==null){  
+	             return "";  
+	         }else{  
+	           if(value==1){  
+	               return "审核中";  
+	           }else if(value==2){  
+	               return "通过";  
 	           }else if(value==3){  
-	               return "中级代理人";  
-	           }else if(value==4){  
-	               return "高级代理人";  
-	           }else if(value==5){  
-	               return "经理人";  
+	               return "未通过";  
+	           }    
+	        }  
+	 		 
+	 }
+	 
+	function formatShelve(value,row,index){
+	 		if(value==null){  
+	             return "";  
+	         }else{  
+	           if(value==1){  
+	               return "上架";  
+	           }else if(value==0){  
+	               return "下架";  
 	           }  
-	         }  
+	        }  
 	 		 
 	 }
-	 
-	 
-	 function formatDepart(value,row,index){
-	 		if(value==null){  
-	             return "";  
-	         }else{  
-	           if(value==0){  
-	               return "顶层";  
-	           }else if(value==1){  
-	               return "市场A";  
-	           }else if(value==2){  
-	               return "市场B";  
-	           } 
-	         }  
-	 		 
-	 }
-
-	 ////0=审核中 1=通过 2=未通过
- function formatSh(value,row,index){
-	 		if(value==null){  
-	             return "";  
-	         }else{  
-	           if(value==0){  
-	               return "待审核";  
-	           }else if(value==1){  
-	               return "审核通过";  
-	           }else if(value==2){  
-	               return "审核不通过";  
-	           } 
-	         }  
-	 		 
-	 }
- 
-
- ////0=未支付 1=支付
-function formatPay(value,row,index){
- 		if(value==null){  
-             return "";  
-         }else{  
-           if(value==0){  
-               return "待支付";  
-           }else if(value==1){  
-               return "已支付";  
-           }
-         }  
- 		 
- }
-
- function showImg(value,row){
-	var imgUrlStr='http://121.40.29.64:8081/';
-	// var imgUrlStr='http://192.168.0.28:8080/';
-	 value = imgUrlStr +value;
-	 var width = 180;
-	 var height = 120;
-	 return '<img  src='+value+' '+' width ='+width+' height='+height+ '/>';
-	} 
- 
-	 
 	 
 	 function formatNumSex(value,row,index){
  		if(value==null){  
              return "";  
          }else{  
            if(value==1){  
-               return "男";  
-           }else{  
                return "女";  
+           }else{  
+               return "男";  
            }  
          }  
  		 
- }
-	 
-	 function formatIsYes(value,row,index){
+  }
+	function formatNumState(value,row,index){
 	 		if(value==null){  
 	             return "";  
 	         }else{  
 	           if(value==1){  
-	               return "是";  
-	           }else if(value==0){  
-	               return "否";  
+	               return "单身";  
 	           }else if(value==2){  
-	               return "故障";  
+	               return "未婚";  
 	           }else if(value==3){  
-	               return "送维修";  
-	           }else if(value==4){  
-	               return "报废";  
-	           }     
-	        }  
-	 		 
-	 }
-	
-	 //充值账户
-	 function formatZhType(value,row,index){
-	 		if(value==null){  
-	             return "";  
-	         }else{  
-	           if(value==1){  
-	               return "病人";  
-	           }else if(value==2){  
-	               return "医生";  
-	           }else if(value==3){  
-	               return "单位";  
-	           }    
+	               return "已婚";  
+	           }   
 	         }  
 	 		 
+	 } 
+	function formatStatus(value,row,index){
+ 		if(value==null){  
+             return "";  
+         }else{  
+           if(value==1){  
+               return "普通用户";  
+           }else if(value==2){  
+               return "陪玩用户";  
+           }else if(value==3){  
+               return "明星用户";  
+           }else if(value==0){  
+             return "禁用";  
+           }
+         }  
+ 		 
+ }  
+	
+	function formatSource(value,row,index){
+ 		if(value==null){  
+             return "";  
+         }else{  
+           if(value==1){  
+               return "微信授权";  
+           }else if(value==2){  
+               return "QQ授权";  
+           }else if(value==0){  
+             return "直接注册";  
+           }
+         }  
+ 		 
+ }  
+	
+	function formatAuth(value,row,index){
+ 		if(value==null){  
+             return "";  
+         }else{  
+           if(value==1){  
+               return "已认证";  
+           }else if(value==0){  
+             return "未认证";  
+           }
+         }  
+ 		 
+ }  
+		//上分订单状态表0未支付，1已支付，2已接单，3完成，4订单取消
+function formatOrderSfStatus(value,row,index){
+		 if(value==null){  
+             return "";  
+         }else{  
+           if(value==0){  
+               return "未支付";  
+           }else if(value==1){  
+               return "已支付";  
+           }else if(value==2){  
+               return "已接单";  
+           }else if(value==3){  
+               return "已完成";  
+           }else if(value==4){  
+               return "取消订单";  
+           }      
+         }  
 	 }
+	 
 	 
 	//支付类型
 	 function formatZfType(value,row,index){
@@ -447,41 +651,8 @@ function formatPay(value,row,index){
          }  
 	 }
 	 
-	//支付类型
-	 function formatXtgxType(value,row,index){
-		 if(value==null){  
-             return "";  
-         }else{  
-           if(value==1){  
-               return "病人端";  
-           }else if(value==2){  
-               return "医生端";  
-           }else if(value==3){  
-               return "服务端";  
-           }    
-         }  
-	 }
-	 
-		//支付状态0 未知状态 1预下单状态 2支付成功 3交易超时 4交易失败 5等待付款 
-	 function formatCzzt(value,row,index){
-		 if(value==null){  
-             return "";  
-         }else{  
-           if(value==0){  
-               return "未知状态";  
-           }else if(value==1){  
-               return "预下单";  
-           }else if(value==2){  
-               return "支付成功";  
-           }else if(value==3){  
-               return "交易超时";  
-           }else if(value==4){  
-               return "交易失败";  
-           }else if(value==5){  
-               return "等待付款";  
-           }    
-         }  
-	 }
+
+	
 	 
 	//供使用者调用  
 	 function trim(s){  
@@ -527,50 +698,18 @@ function formatPay(value,row,index){
 	  }
   }
 	 
-	 function checkMacId(macID){
-		 var isValidate = false;
-		 //1.验证19位长度
-		 var macIDStr = myTrim(macID);
-		 if(macIDStr.length!=19){			 
-			 alert("设备号长度不合法！");
-			 return isValidate;
-		 }
-		//2.判断格式是否正确
-		 var re = 0; 
-		 re = macIDStr.indexOf("-");
-		 if (re <=0) {
-			 alert("设备号格式不合法！");
-			 return isValidate;
-		}
-		//3.分割数组，进行下一步校验
-		 var strs= new Array(); //定义一数组
-		 var str ="";
-		 strs=macIDStr.split("-"); //字符分割
-		 if (strs.length!=4) {
-			 alert("设备号格式不合法！");
-			 return isValidate;
-		}
-		 //4.校验每个字符串长度and进行正则匹配
-		 var patern=/^\w{4}$/; 
-		 for (i=0;i<strs.length ;i++ )
-		 {
-			 str =myTrim(strs[i]);
-			 //校验每个字符串长度
-			 if(str.length!=4) {
-				 alert("设备号格式不合法！");
-				 return isValidate;
+	 
+	 
+function showImg(value,row){
+			// var imgUrlStr='http://121.40.29.64:8081/';
+			//var imgUrlStr='http://192.168.0.28:8080/';
+			 //value = imgUrlStr +value;
+			 var width = 100;
+			 var height = 80;
+			 if (value=="http://121.40.29.64:8081/"||value=="http://121.40.29.64:8081/BACONHT/null"||value=="http://121.40.29.64:8081/null"||value =="null"||typeof(value) =="null"||typeof(value) == "undefined") {
+				 value ="http://121.40.29.64:8081/BACONHT/img/404.png";
 			}
-			 //进行正则匹配
-			 if (!patern.exec(str)) {
-				 alert("设备号格式不合法,应有数字和字母构成！");
-				 return isValidate;
-			}
-		 }
-		 isValidate = true;
-		 return isValidate;
-	 }
-	 
-	 
-	 
-	
-	
+			 return '<img  src='+value+' '+' width ='+width+' height='+height+ '/>';
+			} 
+		 
+

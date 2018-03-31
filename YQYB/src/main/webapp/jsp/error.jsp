@@ -17,7 +17,7 @@
 <script type="text/javascript">
   
  
-setTimeout("javascript:location.href='http://localhost:8080/YQYB/login.jsp'", 3000);
+setTimeout("javascript:location.href='${pageContext.request.contextPath}/login.jsp'", 3000);
 </script>
  
 </head>
@@ -27,7 +27,9 @@ setTimeout("javascript:location.href='http://localhost:8080/YQYB/login.jsp'", 30
     <br/>
     <br/>
     <h2>${error}</h2>
-    <h4><a href="http://localhost:8080/YQYB/login.jsp" >立即跳转</a></h4>
+   <!--  http://121.40.29.64:8081/SSM/login.jsp -->
+    <h4><a href="${pageContext.request.contextPath}/login.jsp" >立即跳转</a></h4>
+   
 </div>
   
 </body>

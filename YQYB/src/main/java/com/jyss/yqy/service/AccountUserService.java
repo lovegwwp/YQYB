@@ -7,6 +7,8 @@ import org.apache.ibatis.annotations.Param;
 
 import com.jyss.yqy.entity.AccountUser;
 
+
+
 public interface AccountUserService {
 	/**
 	 * 获取登录用户信息
@@ -26,13 +28,23 @@ public interface AccountUserService {
 
 	/**
 	 * 获取角色列表信息
-	 * 
+	 *
+	 * @return
+	 */
+	List<AccountUser> getRoles(@Param("roleSign") String roleSign);
+
+	AccountUser getAuByUsernameAndPassword(String username, String password);
+
+
+	/**
+	 * 获取登录用户权限信息
+	 *
 	 * @param username
 	 * @return
 	 */
-	List<AccountUser> getRoles();
 
-	AccountUser getAuByUsernameAndPassword(String username, String password);
+	List<AccountUser> getPermissionLsitBy(@Param("username") String username);
+
 
 	/**
 	 * 获取登录用户权限信息
@@ -52,16 +64,57 @@ public interface AccountUserService {
 	int getAuNum(@Param("username") String username);
 
 	int upHtPwd(@Param("username") String username,
-			@Param("password") String password, @Param("salt") String salt);
+                @Param("password") String password, @Param("salt") String salt);
 
 	/**
 	 * 增加用户
-	 * 
-	 * @param ids
+	 *
 	 * @return
 	 * 
 	 */
 	int addAccount(AccountUser au);
+
+	/**
+	 * 增加角色
+	 *
+	 * @param au
+	 * @return
+	 *
+	 */
+	int addRoles(AccountUser au);
+
+	/**
+	 * 增加权限关联
+	 *
+	 */
+	int addrolePermission(@Param("roleId") String roleId,@Param("permissionId") String permissionId);
+
+	/**
+	 * 增加角色
+	 *
+	 * @param au
+	 * @return
+	 *
+	 */
+	int updateMyRoles(AccountUser au,@Param("ids") List<Long> ids);
+
+	/**
+	 * 修改角色（角色修改，权限先删除，后添加）
+	 *
+	 * @param au
+	 * @return
+	 *
+	 */
+	int addMyRoles(AccountUser au,@Param("ids") List<Long> ids);
+
+	/**
+	 * 获取菜单树
+	 *
+	 * @param code
+	 * @return
+	 */
+
+	List<AccountUser> getMennuTree(@Param("code") String code);
 
 	/**
 	 * 修改用户
@@ -82,6 +135,15 @@ public interface AccountUserService {
 	int deleteAccounts(@Param("ids") List<Long> ids);
 
 	/**
+	 * 删除
+	 *
+	 * @param ids
+	 * @return
+	 *
+	 */
+	int delRoles(@Param("ids") List<Long> ids);
+
+	/**
 	 * 禁用
 	 * 
 	 * @param ids
@@ -89,6 +151,38 @@ public interface AccountUserService {
 	 * 
 	 */
 	int upAccountStatus(@Param("ids") List<Long> ids,
-			@Param("status") String status);
+                        @Param("status") String status);
+
+
+	//////20180330增加/////
+	/**
+	 * 获取用户根据姓名和权限
+	 *
+	 * @param username
+	 * @param roleId
+	 * @return
+	 */
+
+	List<AccountUser> getPermissionAndName(@Param("username") String username,@Param("roleId") String roleId);
+
+
+	/**
+	 * 修改角色
+	 *
+	 * @param au
+	 * @return
+	 *
+	 */
+	int upRoles(AccountUser au);
+
+	/**
+	 * 删除权限
+	 *
+	 * @param roleId
+	 * @return
+	 *
+	 */
+	int delRolePermission(@Param("roleId") String roleId);
+
 
 }
