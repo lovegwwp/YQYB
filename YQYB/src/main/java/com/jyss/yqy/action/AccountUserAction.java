@@ -378,7 +378,7 @@ public class AccountUserAction {
 
 	/**
 	 *
-	 * 权限菜单列表
+	 * 权限菜单列表=
 	 * @return
      */
 	@RequestMapping("/getMenuList")
