@@ -7,11 +7,10 @@ public class JRecord implements Serializable {
 
     private Integer id;
     private Integer uId;         //用户id
-    private String uName;        //用户的名字
     private String uAccount;      //用户的账号
     private Integer parentId;    //用户的上级id
-    //private String pAccount;     //用户上级的账号
     private Integer depart;      //用户的部门  0无部门 1市场A 2市场B
+    private Integer zjUid;       //总监id
     private Integer floor;       //用户的层级
     private Float pv;            //用户的个人pv
     private Float jyPv;          //用户的结余pv
@@ -42,14 +41,6 @@ public class JRecord implements Serializable {
 
     public void setuId(Integer uId) {
         this.uId = uId;
-    }
-
-    public String getuName() {
-        return uName;
-    }
-
-    public void setuName(String uName) {
-        this.uName = uName;
     }
 
     public Integer getParentId() {
@@ -114,6 +105,14 @@ public class JRecord implements Serializable {
 
     public void setCreated(Date created) {
         this.created = created;
+    }
+
+    public Integer getZjUid() {
+        return zjUid;
+    }
+
+    public void setZjUid(Integer zjUid) {
+        this.zjUid = zjUid;
     }
 
     /*public String getpAccount() {

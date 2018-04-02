@@ -4,11 +4,10 @@
   <resultMap id="BaseResultMap" type="com.jyss.yqy.entity.JRecord" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="u_id" property="uId" jdbcType="INTEGER" />
-    <result column="u_name" property="uName" jdbcType="VARCHAR" />
     <result column="u_account" property="uAccount" jdbcType="VARCHAR" />
     <result column="parent_id" property="parentId" jdbcType="INTEGER" />
-    <!--<result column="p_account" property="pAccount" jdbcType="VARCHAR" />-->
     <result column="depart" property="depart" jdbcType="TINYINT" />
+    <result column="zj_uid" property="zjUid" jdbcType="INTEGER" />
     <result column="floor" property="floor" jdbcType="INTEGER" />
     <result column="pv" property="pv" jdbcType="FLOAT" />
     <result column="jy_pv" property="jyPv" jdbcType="FLOAT" />
@@ -19,8 +18,8 @@
 
 
 	<!-- 根据账号查询用户 -->
-	<select id="selectJRecordByAccount" parameterType="String" resultMap="BaseResultMap">
-		select id,u_id,u_name,u_account,parent_id,depart,floor
+	<select id="selectJRecordByAccount" resultMap="BaseResultMap">
+		select id,u_id,u_account,parent_id,depart,zj_uid,floor
 		from j_record
 		<where>
 			<if test="uAccount != null and uAccount != ''">and u_account = #{uAccount} </if>
@@ -31,9 +30,9 @@
 
 	<!-- 查询用户 -->
 	<select id="selectAllJRecord"  resultMap="BaseResultMap">
-		select id,u_id,u_name,u_account,parent_id,depart,floor
+		select id,u_id,u_account,parent_id,depart,zj_uid,floor
 		from j_record
-		where status = 1 order by floor
+		where zj_uid = #{zjUid} and status = 1 order by floor,parent_id,depart
 	</select>
 	<!--<select id="selectAllJRecord" parameterType="String" resultMap="BaseResultMap">
 		select a.id,a.u_id,a.u_name,a.u_account,a.parent_id,a.depart,a.floor,b.account p_account
@@ -47,26 +46,27 @@
   	
   	<!-- 根据id查询 -->
   	<select id="selectJRecordById" parameterType="int" resultMap="BaseResultMap">
-  		select id,u_id,u_name,u_account,parent_id,depart,floor from j_record  
+  		select id,u_id,u_account,parent_id,depart,zj_uid,floor from j_record
   		where id = #{id} and status = 1
     </select>
   
     <!-- 根据父id查询 -->
 	<select id="selectJRecordByPid" parameterType="int" resultMap="BaseResultMap">
-        select id,u_id,u_name,u_account,parent_id,depart,floor from j_record
+        select id,u_id,u_account,parent_id,depart,zj_uid,floor from j_record
         where parent_id = #{parentId} and status = 1
 	</select>
 	
 	<!-- 根据用户id查询 -->
 	<select id="selectJRecordByUid" parameterType="int" resultMap="BaseResultMap">
-        select id,u_id,u_name,u_account,parent_id,depart,floor from j_record
+        select id,u_id,u_account,parent_id,depart,zj_uid,floor from j_record
 		where u_id = #{uId} and status = 1
 	</select>
 	
 	
 	<!-- 添加市场用户 -->
 	<insert id="insertJRecord" parameterType="com.jyss.yqy.entity.JRecord" useGeneratedKeys="true" keyProperty="id" >
-		insert into j_record  values(null,#{uId},#{uAccount},#{uName},#{parentId},#{depart},#{floor},0.00,0.00,#{status},now(),now())
+		insert into j_record  values(null,#{uId},#{uAccount},#{parentId},
+		#{depart},#{zjUid},#{floor},0.00,0.00,#{status},now(),now())
 	</insert>
 	
   <!-- 修改市场用户 -->
@@ -74,13 +74,13 @@
 	  update j_record 
 	  <set>
 	 	 <if test="uId != null and uId != ''">u_id = #{uId},</if>
-	 	 <if test="uName != null and uName != ''">u_name = #{uName},</if>
 	 	 <if test="uAccount != null and uAccount != ''">u_account = #{uAccount},</if>
 	 	 created = now()
 	  </set>
 	  where id = #{id} and status = 1
   </update>
-  
+
+
     <!-- 修改父id -->
   <update id="upJRecordById" >
 	  update j_record 
@@ -90,7 +90,8 @@
 	  </set>
 	  where id = #{id} and status = 1
   </update>
-  
+
+
   <!-- 删除市场用户 -->
   <delete id="deleteJRecordById" parameterType="int">
   	delete from j_record where id = #{id}

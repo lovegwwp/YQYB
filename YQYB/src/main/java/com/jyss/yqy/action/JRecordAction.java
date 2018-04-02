@@ -23,11 +23,12 @@ public class JRecordAction {
 	@Autowired
 	private JRecordService recordService;
 
-	// 每日封顶
+	//
 	@RequestMapping("/scjry")
 	public String scjRyTz() {
 		return "scjry";
 	}
+
 
 	/**
 	 * 添加市场用户
@@ -35,9 +36,10 @@ public class JRecordAction {
 	@RequestMapping(value = "/jrc/addJRecord", method = RequestMethod.POST)
 	@ResponseBody
 	public ResponseEntity addJRecord(@RequestParam("id") int id,
-			@RequestParam("uAccount") String uAccount,
-			@RequestParam("pAccount") String pAccount,
-			@RequestParam("depart") Integer depart) {
+									 @RequestParam("uAccount") String uAccount,
+									 @RequestParam("pAccount") String pAccount,
+									 @RequestParam("zjUid") Integer zjUid,
+									 @RequestParam("depart") Integer depart) {
 		ResponseEntity entity = new ResponseEntity("false", "操作失败！");
 		System.out.println("id======>" + id);
 		// /新增
@@ -45,7 +47,10 @@ public class JRecordAction {
 			if (StringUtils.isEmpty(depart)) {
 				return new ResponseEntity("false", "请选择分配的市场！");
 			}
-			entity = recordService.insertJRecord(uAccount, pAccount, depart);
+			if (StringUtils.isEmpty(zjUid)) {
+				return new ResponseEntity("false", "请选择大区域市场！");
+			}
+			entity = recordService.insertJRecord(uAccount, pAccount, zjUid, depart);
 			// //修改
 		} else {
 			entity = updateJRecord2(id, uAccount);
@@ -59,22 +64,24 @@ public class JRecordAction {
 		return entity;
 	}
 
+
 	/**
 	 * 展示市场用户
 	 */
 	@RequestMapping("/jrc/user/list")
 	@ResponseBody
-	public Page getUserList(
-			@RequestParam(value = "page", required = true) int page,
-			@RequestParam(value = "rows", required = true) int rows) {
+	public Page getUserList(@RequestParam("zjUid") Integer zjUid,
+							@RequestParam(value = "page", required = true) int page,
+							@RequestParam(value = "rows", required = true) int rows) {
 		PageHelper.startPage(page, rows);
-		List<JRecord> list = recordService.getJRecordList();
+		List<JRecord> list = recordService.getJRecordList(zjUid);
 		PageInfo<JRecord> pageInfo = new PageInfo<JRecord>(list);
 		Page<JRecord> result = new Page<JRecord>();
 		result.setTotal(pageInfo.getTotal());
 		result.setRows(list);
 		return result;
 	}
+
 
 	/**
 	 * 搜索展示市场用户

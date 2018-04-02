@@ -54,7 +54,7 @@
 	</select>
 	
 	<!-- 按两个日期查询个人列表详情 -->
-	<select id="selectJBonusScjByUidAndDay" parameterType="com.jyss.yqy.entity.JBonusScj" resultMap="BaseResultMap">
+	<!--<select id="selectJBonusScjByUidAndDay" parameterType="com.jyss.yqy.entity.JBonusScj" resultMap="BaseResultMap">
 		select a.id,a.u_id,e.real_name u_name,a.a_id,d.real_name a_name,a.a_pv,a.b_id,f.real_name b_name,a.b_pv,a.pv,
 		DATE_FORMAT(a.created, '%Y-%m-%d') created
 		from j_bonus_scj a 
@@ -74,7 +74,7 @@
 			and a.status = 1
 		</where>
 		ORDER BY a.created DESC
-	</select>
+	</select>-->
 	
 	<!-- 按两个日期查询个人列表总值 -->
 	<select id="selectJBonusScjByDay" parameterType="com.jyss.yqy.entity.JBonusScj" resultMap="BaseResultMap">
@@ -112,7 +112,7 @@
 	</select>
 	
 	<!-- 按月查询查询个人列表详情 -->
-	<select id="selectJBonusScjByUidAndMonth" parameterType="com.jyss.yqy.entity.JBonusScj"  resultMap="BaseResultMap">
+	<!--<select id="selectJBonusScjByUidAndMonth" parameterType="com.jyss.yqy.entity.JBonusScj"  resultMap="BaseResultMap">
 		select a.id,a.u_id,e.real_name u_name,a.a_id,d.real_name a_name,a.a_pv,a.b_id,f.real_name b_name,a.b_pv,a.pv,
 		DATE_FORMAT(a.created, '%Y-%m-%d') created
 		from j_bonus_scj a 
@@ -129,7 +129,7 @@
 			and a.status = 1
 		</where>
 		ORDER BY a.created DESC 
-	</select> 
+	</select> -->
 	
 	<!-- 按月查询查询个人列表总值 -->
 	<select id="selectJBonusScjByMonth" parameterType="com.jyss.yqy.entity.JBonusScj"  resultMap="BaseResultMap">
@@ -158,6 +158,19 @@
 			</if>
 			and status = 1 
 		</where>
+	</select>
+
+
+
+	<!-- 查询列表历史总值 -->
+	<select id="selectTotalJBonusScj" resultMap="BaseResultMap">
+		select a.u_id,e.real_name u_name,a.a_id,d.real_name a_name,IFNULL(SUM(a.a_pv),0.00) as a_pv,a.b_id,
+		f.real_name b_name,IFNULL(SUM(a.b_pv),0.00) as b_pv,IFNULL(SUM(a.pv),0.00) as pv
+		from j_bonus_scj a
+		left join (select b.id,c.real_name from u_user b,u_user_auth c where b.uuid = c.u_uuid ) d on a.a_id  = d.id
+		left join (select b.id,c.real_name from u_user b,u_user_auth c where b.uuid = c.u_uuid ) e on a.u_id  = e.id
+		left join (select b.id,c.real_name from u_user b,u_user_auth c where b.uuid = c.u_uuid ) f on a.b_id  = f.id
+		where a.status = 1 group by a.u_id
 	</select>
 	
  
