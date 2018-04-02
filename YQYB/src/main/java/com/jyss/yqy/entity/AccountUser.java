@@ -10,6 +10,7 @@ public class AccountUser {
 	private String roleSign;
 	private String permissionName;
 	private String permissionSign;
+	private String permissionId;
 	private String name;
 	private String salt;
 	private String username;
@@ -25,6 +26,14 @@ public class AccountUser {
 	private Date createdAt;// 创建时间
 	private String cjsj;// 创建时间
 	private String dlsj;// 登录时间
+
+	public String getPermissionId() {
+		return permissionId;
+	}
+
+	public void setPermissionId(String permissionId) {
+		this.permissionId = permissionId;
+	}
 
 	public String getDescription() {
 		return description;

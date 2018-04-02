@@ -13,6 +13,7 @@
         <result property="roleName" column="role_name"  />
         <result property="permissionName" column="permission_name"  />
         <result property="permissionSign" column="permission_sign"  />
+        <result property="permissionId" column="permission_id"  />
         <result property="username" column="username"  />
         <result property="description" column="description"  />
         <result property="password" column="password"  />
@@ -118,6 +119,15 @@
         order  by  t.code
     </select>
 
+    <select id="getRolePermission" resultMap="auResultMap">
+        select * from  p_role_permission
+        <where>
+            1 = 1
+            <if test="roleId != null and roleId !=''"> and  role_id= #{roleId} </if>
+        </where>
+        order by role_id,permission_id
+    </select>
+
 
     <select id="getAuNum" resultType="int">
         select count(*) from p_account_users_b
@@ -137,7 +147,7 @@
     </select>
 
     <!--修改角色-->
-    <update id="upRoles" parameterType="String" >
+    <update id="upRoles" parameterType="com.jyss.yqy.entity.AccountUser">
         update p_role  set role_name = #{roleName},role_sign = #{roleSign},description = #{description}   where id = #{id}
     </update>
 
@@ -199,5 +209,11 @@
         update p_account_users_b  set role_id =#{roleId},password = #{password},salt = #{salt},username = #{username} ,created_at = now()
         where id =#{id}
     </update>
+
+    <!-- 增加用户操作日志 -->
+    <insert id="addLog" parameterType="String" >
+        insert into p_account_log values(null,#{username},#{description},now(),1)
+    </insert>
+
 
 </mapper>

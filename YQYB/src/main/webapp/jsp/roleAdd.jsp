@@ -31,14 +31,14 @@ String basePath = request.getScheme() + "://"
 			<label class="layui-form-label">角色名称</label>
 			<div class="layui-input-block">
 				<%--<input type="tel" class="layui-input linksUrl" lay-verify="required|url" placeholder="请输入用户名称">--%>
-				<input type="text" class="layui-input roleSign" lay-verify="required" placeholder="请输入用户名称">
+				<input type="text" class="layui-input roleSign" lay-verify="required" placeholder="请输入角色名称">
 			</div>
 		</div>
 		<div class="layui-form-item">
 			<label class="layui-form-label">角色描述</label>
 			<div class="layui-input-block">
 				<%--<input type="tel" class="layui-input linksUrl" lay-verify="required|url" placeholder="请输入用户名称">--%>
-				<input type="text" class="layui-input description" lay-verify="required" placeholder="请输入用户名称">
+				<input type="text" class="layui-input description" lay-verify="required" placeholder="请输入角色描述">
 			</div>
 		</div>
 		<div class="layui-form-item">

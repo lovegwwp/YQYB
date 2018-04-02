@@ -64,6 +64,15 @@ public interface AccountUserMapper {
 	Set<AccountUser> getPermissionBy(@Param("username") String username);
 
 	/**
+	 * 获取配菜单信息
+	 *
+	 * @param roleId
+	 * @return
+	 */
+	List<AccountUser> getRolePermission(@Param("roleId") String roleId);
+
+
+	/**
 	 * 判断当前登录用户是否唯一
 	 * 
 	 * @param username
@@ -168,5 +177,17 @@ public interface AccountUserMapper {
 	 *
 	 */
 	int delRolePermission(@Param("roleId") String roleId);
+
+	/**
+	 * 增加用户操作日志
+	 *
+	 * @param description
+	 * @param username
+	 * @return
+	 *
+	 */
+	int addLog(@Param("username") String username,@Param("description") String description);
+
+
 
 }

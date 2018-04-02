@@ -134,6 +134,11 @@ public class AccountUserServiceImpl implements AccountUserService {
 	}
 
 	@Override
+	public List<AccountUser> getRolePermission(@Param("roleId") String roleId) {
+		return auMapper.getRolePermission(roleId);
+	}
+
+	@Override
 	public int deleteAccounts(List<Long> ids) {
 		// TODO Auto-generated method stub
 		return auMapper.deleteAccounts(ids);
@@ -163,6 +168,11 @@ public class AccountUserServiceImpl implements AccountUserService {
 	@Override
 	public int delRolePermission(@Param("roleId") String roleId) {
 		return auMapper.delRolePermission(roleId);
+	}
+
+	@Override
+	public int addLog(@Param("username") String username, @Param("description") String description) {
+		return auMapper.addLog(username,description);
 	}
 
 	@Override

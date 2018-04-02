@@ -188,6 +188,7 @@ public class AccountUserAction {
 		String salt = CommTool.getSalt();
 		count = auService.upHtPwd(loginName, newPwd, salt);
 		if (count == 1) {
+			auService.addLog(loginName,"当前用户-修改密码");
 			return new ResponseEntity("true", "操作成功！");
 		}
 		return new ResponseEntity("false", "操作失败！");
@@ -199,6 +200,12 @@ public class AccountUserAction {
 		// TODO Auto-generated method stub
 		int count = 0;
 		int isOnly = 0;
+		Subject us = SecurityUtils.getSubject();
+		String lName = us.getPrincipal().toString();
+		if (lName.equals("") || lName == null) {
+			return new ResponseEntity("false", "登录用户信息异常！");
+		}
+		String description="";
 		List<AccountUser> alist = auService.getPermissionAndName(au.getUsername(),null);
 		if (alist!=null&&alist.size()>=1) {
 			if (au.getId()==0){
@@ -209,13 +216,16 @@ public class AccountUserAction {
 		}
 		if (au.getId() == 0) {
 			// 新增
+			description = "权限管理-新增用户";
 			count = auService.addAccount(au);
 		} else {
 			// 修改
+			description = "权限管理-修改用户";
 			count = auService.upAccount(au);
 		}
 
 		if (count == 1) {
+			auService.addLog(lName,description);
 			return new ResponseEntity("true", "操作成功！");
 		}
 		return new ResponseEntity("false", "操作失败！");
@@ -226,9 +236,15 @@ public class AccountUserAction {
 	public ResponseEntity delAccount(String strIds) {
 		// TODO Auto-generated method stub
 		int count = 0;
+		Subject us = SecurityUtils.getSubject();
+		String lName = us.getPrincipal().toString();
+		if (lName.equals("") || lName == null) {
+			return new ResponseEntity("false", "登录用户信息异常！");
+		}
 		List<Long> ids = Utils.stringToLongList(strIds, ",");
 		count = auService.deleteAccounts(ids);
 		if (count >= 1) {
+			auService.addLog(lName,"权限管理-删除用户");
 			return new ResponseEntity("true", "操作成功！");
 		}
 		return new ResponseEntity("false", "操作失败！");
@@ -239,6 +255,11 @@ public class AccountUserAction {
 	public ResponseEntity delRoles(String strIds) {
 		// TODO Auto-generated method stub
 		int count = 0;
+		Subject us = SecurityUtils.getSubject();
+		String lName = us.getPrincipal().toString();
+		if (lName.equals("") || lName == null) {
+			return new ResponseEntity("false", "登录用户信息异常！");
+		}
 		List<Long> ids = Utils.stringToLongList(strIds, ",");
 		List<AccountUser>  aalist = new ArrayList<AccountUser>();
 		///删除前要判断此权限是否有关联用户，若关联，要先删除
@@ -250,6 +271,7 @@ public class AccountUserAction {
 		}
 		count = auService.delRoles(ids);
 		if (count >= 1) {
+			auService.addLog(lName,"权限管理-删除角色");
 			return new ResponseEntity("true", "操作成功！");
 		}
 		return new ResponseEntity("false", "操作失败！");
@@ -260,6 +282,11 @@ public class AccountUserAction {
 	public ResponseEntity addRoles(AccountUser au,String strIds) {
 		// TODO Auto-generated method stub
 		//System.out.print("权限菜单"+strIds);
+		Subject us = SecurityUtils.getSubject();
+		String lName = us.getPrincipal().toString();
+		if (lName.equals("") || lName == null) {
+			return new ResponseEntity("false", "登录用户信息异常！");
+		}
 		if (strIds==null||strIds.length()==0){
 			return new ResponseEntity("false", "请勾选权限菜单！");
 		}
@@ -274,14 +301,17 @@ public class AccountUserAction {
 				return new ResponseEntity("false", "权限名称冲突！");
 			}
 		}
+		String description="权限管理-新增角色";
 		//0===新增，否则修改
 		if (au.getId()==0) {
 			count = auService.addMyRoles(au,ids);
 		}else{
 			///修改，（修改角色（角色修改，权限先删除，后添加））
+			description="权限管理-修改角色";
 			count = auService.updateMyRoles(au,ids);
 		}
 		if (count >= 1) {
+			auService.addLog(lName,description);
 			return new ResponseEntity("true", "操作成功！");
 		}
 		return new ResponseEntity("false", "操作失败！");
@@ -306,8 +336,14 @@ public class AccountUserAction {
 	@ResponseBody
 	public List<AccountUser> accountsCx(
 			@RequestParam("username") String username) {
+		Subject us = SecurityUtils.getSubject();
+		String lName = us.getPrincipal().toString();
+		if (lName.equals("") || lName == null) {
+			lName="异常用户";
+		}
 		List<AccountUser> list = new ArrayList<AccountUser>();
 		list = auService.getAuByUsername(username);
+		auService.addLog(lName,"权限管理-用户列表");
 		return list;
 	}
 
@@ -316,6 +352,12 @@ public class AccountUserAction {
 	public List<AccountUser> accountsSx() {
 		List<AccountUser> list = new ArrayList<AccountUser>();
 		list = auService.getAuByUsername("");
+		Subject us = SecurityUtils.getSubject();
+		String lName = us.getPrincipal().toString();
+		if (lName.equals("") || lName == null) {
+			lName="异常用户";
+		}
+		auService.addLog(lName,"权限管理-用户列表");
 		return list;
 	}
 
@@ -324,6 +366,12 @@ public class AccountUserAction {
 	public List<AccountUser> roleList() {
 		List<AccountUser> list = new ArrayList<AccountUser>();
 		list = auService.getRoles(null);
+		Subject us = SecurityUtils.getSubject();
+		String lName = us.getPrincipal().toString();
+		if (lName.equals("") || lName == null) {
+			lName="异常用户";
+		}
+		auService.addLog(lName,"权限管理-角色列表");
 		return list;
 	}
 
@@ -451,6 +499,89 @@ public class AccountUserAction {
 		return mennuTree;
 
 	}
+
+	/**
+	 *
+	 * 菜单树
+	 * @return
+	 */
+	@RequestMapping("/getEditMenuTree")
+	@ResponseBody
+	public TreeBean getEditMenuTree(@RequestParam("roleId") String roleId) {
+		///顶点节点
+		TreeBean mennuTree = new TreeBean();
+		Map<String,Boolean> state = new HashMap<String,Boolean>();
+		state.put("opened",true);
+		state.put("selected",false);
+		mennuTree.setState(state);
+		mennuTree.setChecked(false);
+		mennuTree.setId("-1");
+		mennuTree.setText("顶级节点");
+		mennuTree.setHasChildren(true);
+		mennuTree.setHasParent(false);
+		//////顶点节点下面的子节点/////
+		List <TreeBean> menuList =  new ArrayList<TreeBean>();
+		List <TreeBean> childList =  new ArrayList<TreeBean>();
+		Map<String ,Object> m = new HashMap<String,Object>();
+		m.put("fMenu","1");
+		TreeBean tb = new TreeBean();
+		int count =0;//是否只有一组菜单列表
+		TreeBean chlilBean = new TreeBean();
+		/////循环权限菜单，进行格式规划
+		List <AccountUser> treeList = auService.getMennuTree(null);
+		/////用户已有菜单
+		List <AccountUser> myMenuList = auService.getRolePermission(roleId);
+		for(AccountUser au : treeList){
+			////循环判断用户菜单数据
+			boolean checkFlag =false;
+			state = new HashMap<String,Boolean>();
+			state.put("opened",true);
+			for(AccountUser aus : myMenuList){
+				if((au.getId()+"").equals(aus.getPermissionId())){
+					checkFlag = true;
+				}
+			}
+			state.put("selected",checkFlag);
+			if (au.getCode().length()==2){
+				count ++;
+				tb = new TreeBean();
+				state.put("selected",false);
+				tb.setState(state);
+				tb.setChecked(false);
+				tb.setId(au.getId()+"");
+				tb.setText(au.getTitle());
+				tb.setHasChildren(true);
+				tb.setHasParent(true);
+				tb.setParentId("0");
+				if (!m.get("fMenu").equals("1")){
+					TreeBean tbF =(TreeBean)m.get("fMenu");
+					tbF.setChildren(childList);
+					menuList.add(tbF);
+					childList = new ArrayList<TreeBean>();
+				}
+				m.put("fMenu",tb);
+			}else if (au.getCode().length()==4){
+				TreeBean cbF =(TreeBean)m.get("fMenu");
+				chlilBean = new TreeBean();
+				chlilBean.setState(state);
+				chlilBean.setChecked(checkFlag);
+				chlilBean.setId(au.getId()+"");
+				chlilBean.setText(au.getTitle());
+				chlilBean.setHasChildren(false);
+				chlilBean.setHasParent(true);
+				chlilBean.setParentId(cbF.getId()+"");
+				childList.add(chlilBean);
+			}
+		}
+		////不止一组列表，最后一组不会自动加上
+		TreeBean tbF =(TreeBean)m.get("fMenu");
+		tbF.setChildren(childList);
+		menuList.add(tbF);
+		mennuTree.setChildren(menuList);
+		return mennuTree;
+
+	}
+
 
 
 

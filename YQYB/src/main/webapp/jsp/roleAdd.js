@@ -13,9 +13,11 @@ layui.config({
 
 	///////////////////////////////////////////////////
 	var menuIds;
-	/*$(function() {*/
-		getMenuTreeData();
-/*	});*/
+	var urls="../getMenuTree.action";
+	///编辑回显///
+	setValue();
+	getMenuTreeData();
+
 
 	function getAllSelectNodes() {
 		var ref = $('#menuTree').jstree(true); // 获得整个树
@@ -30,9 +32,10 @@ layui.config({
 	function getMenuTreeData() {
 		$.ajax({
 			type : "GET",
-			url : "../getMenuTree.action",
+			url : urls,
 			success : function(menuTree) {
 				loadMenuTree(menuTree);
+
 			}
 		});
 	}
@@ -57,16 +60,16 @@ layui.config({
 
     ////////用户修改/页面回显//////////////
     function setValue(){
-        var roleid = getUrlParams("roleName");
-        var username = getUrlParams("username");
+        var roleSign = getUrlParams("roleSign");
+        var description = getUrlParams("description");
         var uid = getUrlParams("uid");
+		console.log(uid+"==>"+roleSign+"==>"+description);
         if(uid){
-            $(".username").val(username);
+            $(".roleSign").val(roleSign);
             $(".id").val(uid);
-            $("#roleId").val(roleid);
-           /* console.log(roleid+"w");
-            console.log($("#roleId").val());*/
-
+            $(".description").val(description);
+			urls="../getEditMenuTree.action?roleId="+uid;
+			layui.form().render();
         }
 
     }
@@ -82,6 +85,7 @@ layui.config({
 			layer.msg("请勾选权限菜单！");
 			//return flag;
 		}
+		//alert(menuIds.toString());
 		$.ajax({
 			async:true,
 			url: "../addRoles.action" ,

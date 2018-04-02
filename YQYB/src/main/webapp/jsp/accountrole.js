@@ -85,7 +85,7 @@ layui.config({
 		var index = layui.layer.open({
 			title : "添加角色",
 			type : 2,
-			area : ['400px' , '520px'],
+			area : ['400px' , '550px'],
 			maxmin: true,
 			content : "jsp/roleAdd.jsp",
 			success : function(layero, index){
@@ -156,15 +156,16 @@ layui.config({
  
 	//操作
 	$("body").on("click",".roles_edit",function(){  //编辑
-        var rolename =$(this).attr("data-roleName") ;
-        var username =$(this).attr("data-name") ;
+        var roleSign =$(this).attr("data-roleSign") ;
+        var description =$(this).attr("data-description") ;
         var uid =$(this).attr("data-id") ;
+		console.log(roleSign);
         var index = layui.layer.open({
-            title : "修改账号",
+            title : "修改角色",
             type : 2,
-            area : ['400px' , '320px'],
+            area : ['400px' , '550px'],
             maxmin: true,
-            content : "jsp/accountAdd.jsp?roleName="+rolename+"&username="+username+"&uid="+uid,
+            content : "jsp/roleAdd.jsp?roleSign="+roleSign+"&description="+description+"&uid="+uid,
             success : function(layero, index){
                 setTimeout(function(){
                 },500)
@@ -208,7 +209,7 @@ layui.config({
 			    	+'<td>'+currData[i].roleSign+'</td>'
 			    	+'<td>'+currData[i].description+'</td>'
 			    	+'<td>'
-					+  '<a class="layui-btn layui-btn-mini roles_edit"   data-id="'+currData[i].id+'"><i class="iconfont icon-edit"></i> 编辑</a>'
+					+  '<a class="layui-btn layui-btn-mini roles_edit"   data-roleSign="'+currData[i].roleSign+'"  data-id="'+currData[i].id+'"  data-description="'+currData[i].description+'"><i class="iconfont icon-edit"></i> 编辑</a>'
 					+  '<a class="layui-btn layui-btn-danger layui-btn-mini roles_del" data-id="'+currData[i].id+'"><i class="layui-icon">&#xe640;</i> 删除</a>'
 			        +'</td>'
 			    	+'</tr>';
