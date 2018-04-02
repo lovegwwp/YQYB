@@ -28,7 +28,7 @@ public class JRecordServiceImpl implements JRecordService {
 	 * 添加市场用户
 	 */
 	@Override
-	public ResponseEntity insertJRecord(String uAccount,String pAccount,int depart) {
+	public ResponseEntity insertJRecord(String uAccount,String pAccount,Integer zjUid,Integer depart) {
 		if(StringUtils.isEmpty(uAccount)){
 			return new ResponseEntity("false", "账号不能为空！");
 		}
@@ -47,7 +47,6 @@ public class JRecordServiceImpl implements JRecordService {
 				UserBean uUserBean = uList.get(0);
 				jRecord.setuId(uUserBean.getId());
 				jRecord.setuAccount(uAccount);
-				jRecord.setuName(uUserBean.getRealName());
 				jRecord.setParentId(0);
 				jRecord.setDepart(depart);
 				jRecord.setFloor(1);
@@ -80,9 +79,9 @@ public class JRecordServiceImpl implements JRecordService {
 							if((depart == 1 && depart1 == 2) || (depart == 2 && depart1 == 1)){
 								jRecord.setuId(uUserBean.getId());
 								jRecord.setuAccount(uAccount);
-								jRecord.setuName(uUserBean.getRealName());
 								jRecord.setParentId(pUserBean.getId());
 								jRecord.setDepart(depart);
+								jRecord.setZjUid(zjUid);
 								jRecord.setFloor(floor);
 								jRecord.setStatus(1);
 								int count = recordMapper.insertJRecord(jRecord);
@@ -96,9 +95,9 @@ public class JRecordServiceImpl implements JRecordService {
 						}else if(pJRecordList == null || pJRecordList.size() == 0){
 							jRecord.setuId(uUserBean.getId());
 							jRecord.setuAccount(uAccount);
-							jRecord.setuName(uUserBean.getRealName());
 							jRecord.setParentId(pUserBean.getId());
 							jRecord.setDepart(depart);
+							jRecord.setZjUid(zjUid);
 							jRecord.setFloor(floor);
 							jRecord.setStatus(1);
 							int count = recordMapper.insertJRecord(jRecord);
@@ -122,8 +121,8 @@ public class JRecordServiceImpl implements JRecordService {
 	 * 展示市场用户
 	 */
 	@Override
-	public List<JRecord> getJRecordList(){
-		return recordMapper.selectAllJRecord();
+	public List<JRecord> getJRecordList(Integer zjUid){
+		return recordMapper.selectAllJRecord(zjUid);
 	}
 
 
@@ -173,7 +172,6 @@ public class JRecordServiceImpl implements JRecordService {
 					record.setId(id);
 					record.setuId(userBean.getId());
 					record.setuAccount(account);
-					record.setuName(userBean.getRealName());
 					int count = recordMapper.updateJRecordById(record);
 					if(count == 1){
 						JRecord record2 = list.get(0);

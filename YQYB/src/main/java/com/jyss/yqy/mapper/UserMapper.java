@@ -22,9 +22,6 @@ public interface UserMapper {
 	/**
 	 * 修改个人。。。等等。。状态
 	 * 
-	 * @param pwd
-	 * @param salt
-	 * @param salt
 	 * @return
 	 */
 	int upUserAllStatus(@Param("status") String status,
@@ -43,7 +40,7 @@ public interface UserMapper {
 	List<UserBean> getUserNameById(@Param("id") int id);
 	
 	/**
-	 * 通过account查询用户id
+	 * 通过推荐码查询用户id
 	 */
 	List<UserBean> getUserIdByAccount(@Param("account") String account);
 	

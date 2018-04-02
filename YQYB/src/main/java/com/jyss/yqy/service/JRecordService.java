@@ -11,10 +11,11 @@ import com.jyss.yqy.entity.ResponseEntity;
 public interface JRecordService {
 	
 	//添加市场用户
-	ResponseEntity insertJRecord(@Param("uAccount")String uAccount,@Param("pAccount")String pAccount,@Param("depart")int depart);
+	ResponseEntity insertJRecord(@Param("uAccount")String uAccount,@Param("pAccount")String pAccount,
+								 @Param("zjUid")Integer zjUid,@Param("depart")Integer depart);
 	
 	//展示市场用户
-	List<JRecord> getJRecordList();
+	List<JRecord> getJRecordList(@Param("zjUid")Integer zjUid);
 
 	//搜索展示市场用户
 	List<JRecord> getJRecordListByAccount(@Param("account")String account,@Param("uId")String uId);
