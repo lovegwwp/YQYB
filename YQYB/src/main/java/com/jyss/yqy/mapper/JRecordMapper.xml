@@ -28,6 +28,7 @@
 		</where>
 	</select>
 
+
 	<!-- 查询用户 -->
 	<select id="selectAllJRecord"  resultMap="BaseResultMap">
 		select id,u_id,u_account,parent_id,depart,zj_uid,floor
