@@ -1,6 +1,5 @@
 package com.jyss.yqy.action;
 
-import com.github.pagehelper.PageHelper;
 
 import com.jyss.yqy.entity.JRecordResult;
 import com.jyss.yqy.service.JBonusCjService;
