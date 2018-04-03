@@ -65,7 +65,6 @@
     </update>
      
 
-
     <!-- 通过用户的uuid查询用户 -->
     <select id="getUserByUuid" resultMap="ubResultMap">           
 	      select u.id,a.real_name,u.is_chuangke,u.is_auth  from u_user u left join u_user_auth a on u.uuid = a.u_uuid					

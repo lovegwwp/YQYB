@@ -19,6 +19,7 @@ public class JRecord implements Serializable {
     private Date modifyTime;      //修改时间
 
 
+
     public String getuAccount() {
         return uAccount;
     }

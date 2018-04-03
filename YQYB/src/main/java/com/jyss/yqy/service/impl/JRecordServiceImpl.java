@@ -116,7 +116,8 @@ public class JRecordServiceImpl implements JRecordService {
 		}
 		return new ResponseEntity("false", "请确认分配市场！");
 	}
-	
+
+
 	/**
 	 * 展示市场用户
 	 */
