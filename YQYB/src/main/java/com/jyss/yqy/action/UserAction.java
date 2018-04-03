@@ -15,15 +15,12 @@ import com.jyss.yqy.entity.Page;
 import com.jyss.yqy.entity.ResponseEntity;
 import com.jyss.yqy.entity.UserAuth;
 import com.jyss.yqy.entity.jsonEntity.UserBean;
-import com.jyss.yqy.service.UserRecordBService;
 import com.jyss.yqy.service.UserService;
 
 @Controller
 public class UserAction {
 	@Autowired
 	private UserService userService;
-	@Autowired
-	private UserRecordBService userRecordBService;
 
 	@RequestMapping("/dlrType")
 	public String DlrTypeTz() {
