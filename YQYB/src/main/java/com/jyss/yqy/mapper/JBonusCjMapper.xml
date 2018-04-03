@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.jyss.yqy.mapper.JBonusCjMapper" >
+
+
+ 	<!-- 查询当日总金额 -->
+ 	<select id="selectCjTotal"  resultType="float">
+		SELECT IFNULL(SUM(amount),0.00)
+		FROM j_bonus_cj
+		where status = 1 and to_days(now()) = to_days(create_time)
+	</select>
+
+
+	<!-- 查询本周总金额 -->
+ 	<select id="selectCjTotalByWek"  resultType="float">
+		SELECT IFNULL(SUM(amount),0.00)
+		FROM j_bonus_cj
+		where status = 1 and YEARWEEK(date_format(create_time,'%Y-%m-%d')) = YEARWEEK(now())
+	</select>
+	
+
+	
+	<!-- 按两个日期查询总收益 -->
+	<select id="selectCjTotalByDay"  resultType="float">
+		SELECT IFNULL(SUM(amount),0.00)
+		FROM j_bonus_cj
+		<where>
+			<if test="beginTime != null and beginTime != ''">
+				and date_format(create_time, '%Y-%m-%d') &gt;= #{beginTime}
+			</if>
+			<if test="endTime != null and endTime != ''">
+				and date_format(create_time, '%Y-%m-%d') &lt;= #{endTime}
+			</if>
+			AND status = 1 
+		</where>
+	</select>
+	
+	
+
+	<!-- 按月查询总收益 -->
+	<select id="selectCjTotalByMonth"  resultType="float">
+		SELECT IFNULL(SUM(amount),0.00)
+		FROM j_bonus_cj
+		<where>
+			<if test="month != null and month != ''">
+				and date_format(create_time, '%Y-%m') = #{month}
+			</if>
+			AND status = 1 
+		</where>
+	</select> 
+	
+	
+</mapper>
