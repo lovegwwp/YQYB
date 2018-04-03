@@ -64,19 +64,20 @@
         insert into u_shopping_score_balance(id,end,u_uuid,category,type,score,jy_score,order_sn,created_at,js_time,status) 
         values(null,#{end},#{uUuid},#{category},#{type},#{score},#{jyScore},'B',#{createdAt},now(),#{status})              
     </insert>
-     
-     
-    <!-- 查询当天现金总积分 -->
+
+
+	<!--////////现金积分（股券）////////-->
+    <!-- 查询当天现金总积分(实际时间) -->
   	<select id="selectTodayCashScore" parameterType="int" resultType="float">
   		select IFNULL(sum(score),0.00) from u_cash_score_balance 
   		<where>
   			<if test="category != null"> and category = #{category}</if>
-  			and type = 1 and status = 1 and end = 2 and to_days(now()) = to_days(js_time)
+  			and type = 1 and status = 1 and end = 2 and to_days(now()) = to_days(created_at)
   		</where>
   	</select>
 
   	<!-- 查询昨日现金总积分 -->
-  	<select id="selectTotalCashScore" parameterType="int" resultType="float">
+  	<select id="selectCashScore" parameterType="int" resultType="float">
   		select IFNULL(sum(score),0.00) from u_cash_score_balance 
   		<where>
   			<if test="category != null"> and category = #{category}</if>
@@ -85,7 +86,7 @@
   	</select>
   	
   	<!-- 查询本周现金总积分 -->
-  	<select id="selectTotalCashScoreByWek" parameterType="int" resultType="float">
+  	<select id="selectCashScoreByWek" parameterType="int" resultType="float">
   		select IFNULL(sum(score),0.00) from u_cash_score_balance 
   		<where>
   			<if test="category != null"> and category = #{category}</if>
@@ -93,9 +94,19 @@
   			and YEARWEEK(date_format(js_time,'%Y-%m-%d')) = YEARWEEK(now())
   		</where>
   	</select>
+
+	<!-- 查询本周现金总积分(实际时间) -->
+	<select id="selectCashScoreByWek1" parameterType="int" resultType="float">
+		select IFNULL(sum(score),0.00) from u_cash_score_balance
+		<where>
+			<if test="category != null"> and category = #{category}</if>
+			and type = 1 and status = 1 and end = 2
+			and YEARWEEK(date_format(created_at,'%Y-%m-%d')) = YEARWEEK(now())
+		</where>
+	</select>
   	
   	<!-- 查询时间段现金总积分 -->
-  	<select id="selectTotalCashScoreByDay"  resultType="float">
+  	<select id="selectCashScoreByDay"  resultType="float">
   		select IFNULL(sum(score),0.00) from u_cash_score_balance 
   		<where>
   			<if test="category != null"> and category = #{category}</if>
@@ -108,9 +119,24 @@
   			and type = 1 and status = 1 and end = 2 
   		</where>
   	</select>
+
+	<!-- 查询时间段现金总积分(实际时间) -->
+	<select id="selectCashScoreByDay1"  resultType="float">
+		select IFNULL(sum(score),0.00) from u_cash_score_balance
+		<where>
+			<if test="category != null"> and category = #{category}</if>
+			<if test="beginTime != null and beginTime != ''">
+				and date_format(created_at, '%Y-%m-%d') &gt;= #{beginTime}
+			</if>
+			<if test="endTime != null and endTime != ''">
+				and date_format(created_at, '%Y-%m-%d') &lt;= #{endTime}
+			</if>
+			and type = 1 and status = 1 and end = 2
+		</where>
+	</select>
   	
   	<!-- 查询月份现金总积分 -->
-  	<select id="selectTotalCashScoreByMonth"  resultType="float">
+  	<select id="selectCashScoreByMonth"  resultType="float">
   		select IFNULL(sum(score),0.00) from u_cash_score_balance 
   		<where>
   			<if test="category != null"> and category = #{category}</if>
@@ -121,19 +147,33 @@
   		</where>
   	</select>
 
+	<!-- 查询月份现金总积分(实际时间) -->
+	<select id="selectCashScoreByMonth1"  resultType="float">
+		select IFNULL(sum(score),0.00) from u_cash_score_balance
+		<where>
+			<if test="category != null"> and category = #{category}</if>
+			<if test="month != null and month != ''">
+				and date_format(created_at, '%Y-%m') = #{month}
+			</if>
+			and type = 1 and status = 1 and end = 2
+		</where>
+	</select>
 
-  	<!-- 查询当日购物总积分 -->
+
+
+	<!--////////购物积分（消费券）////////-->
+  	<!-- 查询当日购物总积分(实际时间) -->
   	<select id="selectTodayShoppingScore" parameterType="int" resultType="float">
-  		select IFNULL(sum(score),0.00) from u_shopping_score_balance 
+  		select IFNULL(sum(score),0.00) from u_shopping_score_balance
   		<where>
   			<if test="category != null"> and category = #{category}</if>
-  			and type = 1 and status = 1 and end = 2 and to_days(now()) = to_days(js_time) 
+  			and type = 1 and status = 1 and end = 2 and to_days(now()) = to_days(created_at)
   		</where>
   	</select>
   	
   	<!-- 查询昨日购物总积分 -->
-  	<select id="selectTotalShoppingScore" parameterType="int" resultType="float">
-  		select IFNULL(sum(score),0.00) from u_shopping_score_balance 
+  	<select id="selectShoppingScore" parameterType="int" resultType="float">
+  		select IFNULL(sum(score),0.00) from u_shopping_score_balance
   		<where>
   			<if test="category != null"> and category = #{category}</if>
   			and type = 1 and status = 1 and end = 2 and to_days(now()) - to_days(js_time) = 1
@@ -141,18 +181,28 @@
   	</select>
   	
   	<!-- 查询本周购物总积分 -->
-  	<select id="selectTotalShoppingScoreByWek" parameterType="int" resultType="float">
-  		select IFNULL(sum(score),0.00) from u_shopping_score_balance 
+  	<select id="selectShoppingScoreByWek" parameterType="int" resultType="float">
+  		select IFNULL(sum(score),0.00) from u_shopping_score_balance
   		<where>
   			<if test="category != null"> and category = #{category}</if>
   			and type = 1 and status = 1 and end = 2 
   			and YEARWEEK(date_format(js_time,'%Y-%m-%d')) = YEARWEEK(now())
   		</where>
   	</select>
+
+	<!-- 查询本周购物总积分(实际时间) -->
+	<select id="selectShoppingScoreByWek1" parameterType="int" resultType="float">
+		select IFNULL(sum(score),0.00) from u_shopping_score_balance
+		<where>
+			<if test="category != null"> and category = #{category}</if>
+			and type = 1 and status = 1 and end = 2
+			and YEARWEEK(date_format(created_at,'%Y-%m-%d')) = YEARWEEK(now())
+		</where>
+	</select>
   	
   	<!-- 查询时间段购物总积分 -->
-  	<select id="selectTotalShoppingScoreByDay"  resultType="float">
-  		select IFNULL(sum(score),0.00) from u_shopping_score_balance 
+  	<select id="selectShoppingScoreByDay"  resultType="float">
+  		select IFNULL(sum(score),0.00) from u_shopping_score_balance
   		<where>
   			<if test="category != null"> and category = #{category}</if>
   			<if test="beginTime != null and beginTime != ''">
@@ -164,10 +214,25 @@
   			and type = 1 and status = 1 and end = 2 
   		</where>
   	</select>
+
+	<!-- 查询时间段购物总积分(实际时间) -->
+	<select id="selectShoppingScoreByDay1"  resultType="float">
+		select IFNULL(sum(score),0.00) from u_shopping_score_balance
+		<where>
+			<if test="category != null"> and category = #{category}</if>
+			<if test="beginTime != null and beginTime != ''">
+				and date_format(created_at, '%Y-%m-%d') &gt;= #{beginTime}
+			</if>
+			<if test="endTime != null and endTime != ''">
+				and date_format(created_at, '%Y-%m-%d') &lt;= #{endTime}
+			</if>
+			and type = 1 and status = 1 and end = 2
+		</where>
+	</select>
   	
   	<!-- 查询月份购物总积分 -->
-  	<select id="selectTotalShoppingScoreByMonth" resultType="float">
-  		select IFNULL(sum(score),0.00) from u_shopping_score_balance 
+  	<select id="selectShoppingScoreByMonth" resultType="float">
+  		select IFNULL(sum(score),0.00) from u_shopping_score_balance
   		<where>
   			<if test="category != null"> and category = #{category}</if>
   			<if test="month != null and month != ''">
@@ -176,6 +241,113 @@
   			and type = 1 and status = 1 and end = 2 
   		</where>
   	</select>
+
+	<!-- 查询月份购物总积分(实际时间) -->
+	<select id="selectShoppingScoreByMonth1" resultType="float">
+		select IFNULL(sum(score),0.00) from u_shopping_score_balance
+		<where>
+			<if test="category != null"> and category = #{category}</if>
+			<if test="month != null and month != ''">
+				and date_format(created_at, '%Y-%m') = #{month}
+			</if>
+			and type = 1 and status = 1 and end = 2
+		</where>
+	</select>
+
+
+
+	<!--////////电子券积分////////-->
+	<!-- 查询当日购物总积分(实际时间) -->
+	<select id="selectTodayElecScore" parameterType="int" resultType="float">
+		select IFNULL(sum(score),0.00) from u_elec_score_balance
+		<where>
+			<if test="category != null"> and category = #{category}</if>
+			and type = 1 and status = 1 and end = 2 and to_days(now()) = to_days(created_at)
+		</where>
+	</select>
+
+	<!-- 查询昨日购物总积分 -->
+	<select id="selectElecScore" parameterType="int" resultType="float">
+		select IFNULL(sum(score),0.00) from u_elec_score_balance
+		<where>
+			<if test="category != null"> and category = #{category}</if>
+			and type = 1 and status = 1 and end = 2 and to_days(now()) - to_days(js_time) = 1
+		</where>
+	</select>
+
+	<!-- 查询本周购物总积分 -->
+	<select id="selectElecScoreByWek" parameterType="int" resultType="float">
+		select IFNULL(sum(score),0.00) from u_elec_score_balance
+		<where>
+			<if test="category != null"> and category = #{category}</if>
+			and type = 1 and status = 1 and end = 2
+			and YEARWEEK(date_format(js_time,'%Y-%m-%d')) = YEARWEEK(now())
+		</where>
+	</select>
+
+	<!-- 查询本周购物总积分(实际时间) -->
+	<select id="selectElecScoreByWek1" parameterType="int" resultType="float">
+		select IFNULL(sum(score),0.00) from u_elec_score_balance
+		<where>
+			<if test="category != null"> and category = #{category}</if>
+			and type = 1 and status = 1 and end = 2
+			and YEARWEEK(date_format(created_at,'%Y-%m-%d')) = YEARWEEK(now())
+		</where>
+	</select>
+
+	<!-- 查询时间段购物总积分 -->
+	<select id="selectElecScoreByDay"  resultType="float">
+		select IFNULL(sum(score),0.00) from u_elec_score_balance
+		<where>
+			<if test="category != null"> and category = #{category}</if>
+			<if test="beginTime != null and beginTime != ''">
+				and date_format(js_time, '%Y-%m-%d') &gt;= #{beginTime}
+			</if>
+			<if test="endTime != null and endTime != ''">
+				and date_format(js_time, '%Y-%m-%d') &lt;= #{endTime}
+			</if>
+			and type = 1 and status = 1 and end = 2
+		</where>
+	</select>
+
+	<!-- 查询时间段购物总积分(实际时间) -->
+	<select id="selectElecScoreByDay1"  resultType="float">
+		select IFNULL(sum(score),0.00) from u_elec_score_balance
+		<where>
+			<if test="category != null"> and category = #{category}</if>
+			<if test="beginTime != null and beginTime != ''">
+				and date_format(created_at, '%Y-%m-%d') &gt;= #{beginTime}
+			</if>
+			<if test="endTime != null and endTime != ''">
+				and date_format(created_at, '%Y-%m-%d') &lt;= #{endTime}
+			</if>
+			and type = 1 and status = 1 and end = 2
+		</where>
+	</select>
+
+	<!-- 查询月份购物总积分 -->
+	<select id="selectElecScoreByMonth" resultType="float">
+		select IFNULL(sum(score),0.00) from u_elec_score_balance
+		<where>
+			<if test="category != null"> and category = #{category}</if>
+			<if test="month != null and month != ''">
+				and date_format(js_time, '%Y-%m') = #{month}
+			</if>
+			and type = 1 and status = 1 and end = 2
+		</where>
+	</select>
+
+	<!-- 查询月份购物总积分(实际时间) -->
+	<select id="selectElecScoreByMonth1" resultType="float">
+		select IFNULL(sum(score),0.00) from u_elec_score_balance
+		<where>
+			<if test="category != null"> and category = #{category}</if>
+			<if test="month != null and month != ''">
+				and date_format(created_at, '%Y-%m') = #{month}
+			</if>
+			and type = 1 and status = 1 and end = 2
+		</where>
+	</select>
   
     
 </mapper>

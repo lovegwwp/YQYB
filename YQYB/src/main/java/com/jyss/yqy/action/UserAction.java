@@ -125,9 +125,9 @@ public class UserAction {
 			count = userService.upUserAllStatus("", "", "", "", "2", uuid);
 			if (count == 1) {
 				//计算管理奖
-				ResponseEntity entity = userRecordBService.insertJBonusGlj(uuid);
-				return entity;
-				//return new ResponseEntity("true", "操作成功！");
+				/*ResponseEntity entity = userRecordBService.insertJBonusGlj(uuid);
+				return entity;*/
+				return new ResponseEntity("true", "操作成功！");
 			}
 		}
 		return new ResponseEntity("false", "操作失败！");

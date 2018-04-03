@@ -17,16 +17,18 @@
   </resultMap>
   
 	<!-- 查询昨日列表详情 -->
-	<select id="selectJBonusScj" resultMap="BaseResultMap">
-		select a.id,a.u_id,e.real_name u_name,a.a_id,d.real_name a_name,a.a_pv,a.b_id,f.real_name b_name,a.b_pv,a.pv,
+	<select id="selectJBonusScj" parameterType="int" resultMap="BaseResultMap">
+		select a.id,a.u_id,c.b_code u_name,a.a_id,b.b_code a_name,a.a_pv,a.b_id,d.b_code b_name,a.b_pv,a.pv,
 		DATE_FORMAT(a.created, '%Y-%m-%d') created
-		from j_bonus_scj a 
-		left join (select b.id,c.real_name from u_user b,u_user_auth c where b.uuid = c.u_uuid ) d on a.a_id  = d.id
-		left join (select b.id,c.real_name from u_user b,u_user_auth c where b.uuid = c.u_uuid ) e on a.u_id  = e.id
-		left join (select b.id,c.real_name from u_user b,u_user_auth c where b.uuid = c.u_uuid ) f on a.b_id  = f.id
-		where a.status = 1 and to_days(now()) - to_days(a.created) = 1 
+		from j_bonus_scj a
+		left join u_user b on a.a_id  = b.id left join u_user c on a.u_id  = c.id
+		left join u_user d on a.b_id  = d.id left join j_record e on a.u_id  = e.u_id
+		<where>
+			<if test="zjUid != null">and e.zj_uid = #{zjUid}</if>
+			and a.status = 1 and to_days(now()) - to_days(a.created) = 1
+		</where>
 	</select>
-	
+
 	<!-- 查询昨日总pv -->
 	<select id="selectScjTotal" parameterType="com.jyss.yqy.entity.JBonusScj" resultType="float">
 		select IFNULL(SUM(pv),0.00) as pv
@@ -34,15 +36,17 @@
 		where status = 1 and to_days(now()) - to_days(created) = 1
 	</select>
 
-	<!-- 查询本周列表总值 -->
-	<select id="selectJBonusScjWek" resultMap="BaseResultMap">
-		select a.u_id,e.real_name u_name,a.a_id,d.real_name a_name,IFNULL(SUM(a.a_pv),0.00) as a_pv,a.b_id,
-		f.real_name b_name,IFNULL(SUM(a.b_pv),0.00) as b_pv,IFNULL(SUM(a.pv),0.00) as pv
-		from j_bonus_scj a 
-		left join (select b.id,c.real_name from u_user b,u_user_auth c where b.uuid = c.u_uuid ) d on a.a_id  = d.id
-		left join (select b.id,c.real_name from u_user b,u_user_auth c where b.uuid = c.u_uuid ) e on a.u_id  = e.id
-		left join (select b.id,c.real_name from u_user b,u_user_auth c where b.uuid = c.u_uuid ) f on a.b_id  = f.id
-		where a.status = 1 and YEARWEEK(date_format(a.created,'%Y-%m-%d')) = YEARWEEK(now())
+	<!-- 查询本周列表总值详情 -->
+	<select id="selectJBonusScjWek" parameterType="int" resultMap="BaseResultMap">
+		select a.u_id,c.b_code u_name,a.a_id,b.b_code a_name,IFNULL(SUM(a.a_pv),0.00) as a_pv,a.b_id,
+		d.b_code b_name,IFNULL(SUM(a.b_pv),0.00) as b_pv,IFNULL(SUM(a.pv),0.00) as pv
+		from j_bonus_scj a
+		left join u_user b on a.a_id  = b.id left join u_user c on a.u_id  = c.id
+		left join u_user d on a.b_id  = d.id left join j_record e on a.u_id  = e.u_id
+		<where>
+			<if test="zjUid != null">and e.zj_uid = #{zjUid}</if>
+			and a.status = 1 and YEARWEEK(date_format(a.created,'%Y-%m-%d')) = YEARWEEK(now())
+		</where>
 		group by a.u_id
 	</select>
 	
@@ -76,15 +80,15 @@
 		ORDER BY a.created DESC
 	</select>-->
 	
-	<!-- 按两个日期查询个人列表总值 -->
+	<!-- 按两个日期查询个人列表总值详情 -->
 	<select id="selectJBonusScjByDay" parameterType="com.jyss.yqy.entity.JBonusScj" resultMap="BaseResultMap">
-		select a.u_id,e.real_name u_name,a.a_id,d.real_name a_name,IFNULL(SUM(a.a_pv),0.00) as a_pv,a.b_id,
-		f.real_name b_name,IFNULL(SUM(a.b_pv),0.00) as b_pv,IFNULL(SUM(a.pv),0.00) as pv
-		from j_bonus_scj a 
-		left join (select b.id,c.real_name from u_user b,u_user_auth c where b.uuid = c.u_uuid ) d on a.a_id  = d.id
-		left join (select b.id,c.real_name from u_user b,u_user_auth c where b.uuid = c.u_uuid ) e on a.u_id  = e.id
-		left join (select b.id,c.real_name from u_user b,u_user_auth c where b.uuid = c.u_uuid ) f on a.b_id  = f.id
+		select a.u_id,c.b_code u_name,a.a_id,b.b_code a_name,IFNULL(SUM(a.a_pv),0.00) as a_pv,a.b_id,
+		d.b_code b_name,IFNULL(SUM(a.b_pv),0.00) as b_pv,IFNULL(SUM(a.pv),0.00) as pv
+		from j_bonus_scj a
+		left join u_user b on a.a_id  = b.id left join u_user c on a.u_id  = c.id
+		left join u_user d on a.b_id  = d.id left join j_record e on a.u_id  = e.u_id
 		<where>
+			<if test="zjUid != null">and e.zj_uid = #{zjUid}</if>
 			<if test="beginTime != null and beginTime != ''">
 				and date_format(a.created, '%Y-%m-%d') &gt;= #{beginTime}
 			</if>
@@ -131,15 +135,15 @@
 		ORDER BY a.created DESC 
 	</select> -->
 	
-	<!-- 按月查询查询个人列表总值 -->
+	<!-- 按月查询查询个人列表总值详情 -->
 	<select id="selectJBonusScjByMonth" parameterType="com.jyss.yqy.entity.JBonusScj"  resultMap="BaseResultMap">
-		select a.u_id,e.real_name u_name,a.a_id,d.real_name a_name,IFNULL(SUM(a.a_pv),0.00) as a_pv,a.b_id,
-		f.real_name b_name,IFNULL(SUM(a.b_pv),0.00) as b_pv,IFNULL(SUM(a.pv),0.00) as pv
-		from j_bonus_scj a 
-		left join (select b.id,c.real_name from u_user b,u_user_auth c where b.uuid = c.u_uuid ) d on a.a_id  = d.id
-		left join (select b.id,c.real_name from u_user b,u_user_auth c where b.uuid = c.u_uuid ) e on a.u_id  = e.id
-		left join (select b.id,c.real_name from u_user b,u_user_auth c where b.uuid = c.u_uuid ) f on a.b_id  = f.id
+		select a.u_id,c.b_code u_name,a.a_id,b.b_code a_name,IFNULL(SUM(a.a_pv),0.00) as a_pv,a.b_id,
+		d.b_code b_name,IFNULL(SUM(a.b_pv),0.00) as b_pv,IFNULL(SUM(a.pv),0.00) as pv
+		from j_bonus_scj a
+		left join u_user b on a.a_id  = b.id left join u_user c on a.u_id  = c.id
+		left join u_user d on a.b_id  = d.id left join j_record e on a.u_id  = e.u_id
 		<where>
+			<if test="zjUid != null">and e.zj_uid = #{zjUid}</if>
 			<if test="month != null and month != ''">
 				and date_format(a.created, '%Y-%m') = #{month}
 			</if>
@@ -147,7 +151,8 @@
 		</where>
 		group by a.u_id
 	</select>
-	
+
+
 	<!-- 按月查询总pv -->
 	<select id="selectScjTotalByMonth" parameterType="com.jyss.yqy.entity.JBonusScj"  resultType="float">
 		select IFNULL(SUM(pv),0.00) as pv
@@ -161,15 +166,13 @@
 	</select>
 
 
-
 	<!-- 查询列表历史总值 -->
 	<select id="selectTotalJBonusScj" resultMap="BaseResultMap">
-		select a.u_id,e.real_name u_name,a.a_id,d.real_name a_name,IFNULL(SUM(a.a_pv),0.00) as a_pv,a.b_id,
-		f.real_name b_name,IFNULL(SUM(a.b_pv),0.00) as b_pv,IFNULL(SUM(a.pv),0.00) as pv
+		select a.u_id,c.b_code u_name,a.a_id,b.b_code a_name,IFNULL(SUM(a.a_pv),0.00) as a_pv,a.b_id,
+		d.b_code b_name,IFNULL(SUM(a.b_pv),0.00) as b_pv,IFNULL(SUM(a.pv),0.00) as pv
 		from j_bonus_scj a
-		left join (select b.id,c.real_name from u_user b,u_user_auth c where b.uuid = c.u_uuid ) d on a.a_id  = d.id
-		left join (select b.id,c.real_name from u_user b,u_user_auth c where b.uuid = c.u_uuid ) e on a.u_id  = e.id
-		left join (select b.id,c.real_name from u_user b,u_user_auth c where b.uuid = c.u_uuid ) f on a.b_id  = f.id
+		left join u_user b on a.a_id  = b.id left join u_user c on a.u_id  = c.id
+		left join u_user d on a.b_id  = d.id left join j_record e on a.u_id  = e.u_id
 		where a.status = 1 group by a.u_id
 	</select>
 	

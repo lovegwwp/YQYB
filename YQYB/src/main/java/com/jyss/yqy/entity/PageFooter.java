@@ -7,7 +7,7 @@ public class PageFooter {
 	  private float aId;
 	  private String aName;
 	  private float aPv;
-	  
+
 		public String getbPv() {
 			return bPv;
 		}

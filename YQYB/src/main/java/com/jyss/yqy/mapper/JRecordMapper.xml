@@ -32,7 +32,11 @@
 	<select id="selectAllJRecord"  resultMap="BaseResultMap">
 		select id,u_id,u_account,parent_id,depart,zj_uid,floor
 		from j_record
-		where zj_uid = #{zjUid} and status = 1 order by floor,parent_id,depart
+		<where>
+			<if test="zjUid != null">and zj_uid = #{zjUid}</if>
+			and status = 1
+		</where>
+		order by floor,parent_id,depart
 	</select>
 	<!--<select id="selectAllJRecord" parameterType="String" resultMap="BaseResultMap">
 		select a.id,a.u_id,a.u_name,a.u_account,a.parent_id,a.depart,a.floor,b.account p_account

@@ -55,7 +55,7 @@
    <!--status=1删除 1=正常2=禁用  -->  <!--isAuth= 1=已提交 2=审核通过3=审核不通过  -->
    <!--bCode=====个人推广码  -->  <!--bIsPay===0=未 1=付款  -->
     <update id="upUserAllStatus"  >
-        update u_user  set last_modify_time =now()
+        update u_user  set last_modify_time = now()
           <if test="status != null and status !=''"> ,status = #{status} </if>
           <if test="bCode != null and bCode !=''"> ,b_code = #{bCode} </if> 
           <if test="bIsPay != null and bIsPay !=''"> ,b_is_pay = #{bIsPay} </if> 

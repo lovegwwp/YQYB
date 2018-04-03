@@ -1,18 +1,14 @@
 package com.jyss.yqy.service.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import com.jyss.yqy.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.jyss.yqy.entity.JBonusScj;
-import com.jyss.yqy.entity.JBonusScjResult;
-import com.jyss.yqy.entity.Page;
-import com.jyss.yqy.entity.PageFooter;
 import com.jyss.yqy.mapper.JBonusScjMapper;
 import com.jyss.yqy.mapper.ScoreBalanceMapper;
 import com.jyss.yqy.service.JBonusScjService;
@@ -25,101 +21,141 @@ public class JBonusScjServiceImpl implements JBonusScjService{
 	private JBonusScjMapper bonusScjMapper;
 	@Autowired
 	private ScoreBalanceMapper scoreBalanceMapper;
-	
-	
+
+
+	/**
+	 * 昨日数据
+	 */
+	@Override
+	public JRecordResult selectJBonusScjInfo() {
+		float amount = bonusScjMapper.selectScjTotal();
+		float cashScore = scoreBalanceMapper.selectCashScore(6);
+		float shoppingScore = scoreBalanceMapper.selectShoppingScore(6);
+		float elecScore = scoreBalanceMapper.selectElecScore(6);
+
+		JRecordResult result = new JRecordResult();
+		result.setAmount(amount);
+		result.setCashScore(cashScore);
+		result.setShoppingScore(shoppingScore);
+		result.setElecScore(elecScore);
+		return result;
+	}
+
 	/**
 	 * 昨日列表
 	 */
 	@Override
-	public Page<JBonusScj> selectJBonusScj(int page,int limit){
-		float amount = bonusScjMapper.selectScjTotal();
-		float cashScore = scoreBalanceMapper.selectTotalCashScore(7);
-		float shoppingScore = scoreBalanceMapper.selectTotalShoppingScore(7);
-		
+	public Page<JBonusScj> selectJBonusScj(Integer zjUid,int page,int limit){
+
 		PageHelper.startPage(page, limit);
-		List<JBonusScj> list = bonusScjMapper.selectJBonusScj();
-		PageInfo<JBonusScj> pageInfo = new PageInfo<JBonusScj>(list);		
-		//PageFooter pf = new PageFooter("总PV", amount);
-		PageFooter pf = new PageFooter("总PV", amount,"现金积分",cashScore,"购物积分",shoppingScore);
-		List<PageFooter> ptList = new ArrayList();
-		ptList.add(pf);
-		Page p = new Page(pageInfo);
-	    p.setFooter(ptList);	
-		return p;
+		List<JBonusScj> list = bonusScjMapper.selectJBonusScj(zjUid);
+		PageInfo<JBonusScj> pageInfo = new PageInfo<JBonusScj>(list);
+
+		return new Page(pageInfo);
 	}
-	
-	
+
+
+
+	/**
+	 * 本周数据
+	 */
+	@Override
+	public JRecordResult selectJBonusScjWekInfo() {
+		float amount = bonusScjMapper.selectScjTotalWek();
+		float cashScore = scoreBalanceMapper.selectCashScoreByWek(6);
+		float shoppingScore = scoreBalanceMapper.selectShoppingScoreByWek(6);
+		float elecScore = scoreBalanceMapper.selectElecScoreByWek(6);
+
+		JRecordResult result = new JRecordResult();
+		result.setAmount(amount);
+		result.setCashScore(cashScore);
+		result.setShoppingScore(shoppingScore);
+		result.setElecScore(elecScore);
+		return result;
+	}
+
 	/**
 	 * 本周列表总值
 	 */
 	@Override
-	public Page<JBonusScj> selectJBonusScjWek(int page,int limit){
-		float amount = bonusScjMapper.selectScjTotalWek();
-		float cashScore = scoreBalanceMapper.selectTotalCashScoreByWek(7);
-		float shoppingScore = scoreBalanceMapper.selectTotalShoppingScoreByWek(7);
-		
+	public Page<JBonusScj> selectJBonusScjWek(Integer zjUid,int page,int limit){
+
 		PageHelper.startPage(page, limit);
-		List<JBonusScj> list = bonusScjMapper.selectJBonusScjWek();
+		List<JBonusScj> list = bonusScjMapper.selectJBonusScjWek(zjUid);
 		PageInfo<JBonusScj> pageInfo = new PageInfo<JBonusScj>(list);
-			
-		//PageFooter pf = new PageFooter("总PV", amount);
-		PageFooter pf = new PageFooter("总PV", amount,"现金积分",cashScore,"购物积分",shoppingScore);
-		List<PageFooter> ptList = new ArrayList();
-		ptList.add(pf);
-		Page p = new Page(pageInfo);
-	    p.setFooter(ptList);	
-		return p;
+
+		return new Page(pageInfo);
 		
 	}
-	
-	
+
+
+
+	/**
+	 * 两个日期数据
+	 */
+	@Override
+	public JRecordResult selectJBonusScjByDayInfo(String beginTime, String endTime) {
+		float amount = bonusScjMapper.selectScjTotalByDay(beginTime, endTime);
+		float cashScore = scoreBalanceMapper.selectCashScoreByDay(6, beginTime, endTime);
+		float shoppingScore = scoreBalanceMapper.selectShoppingScoreByDay(6, beginTime, endTime);
+		float elecScore = scoreBalanceMapper.selectElecScoreByDay(6, beginTime, endTime);
+
+		JRecordResult result = new JRecordResult();
+		result.setAmount(amount);
+		result.setCashScore(cashScore);
+		result.setShoppingScore(shoppingScore);
+		result.setElecScore(elecScore);
+		return result;
+	}
+
 	/**
 	 * 按两个日期查询个人列表总值
 	 */
 	@Override
-	public Page<JBonusScj> selectJBonusScjByDay(int page,int limit,String beginTime,String endTime){
-		float amount = bonusScjMapper.selectScjTotalByDay(beginTime, endTime);
-		float cashScore = scoreBalanceMapper.selectTotalCashScoreByDay(7, beginTime, endTime);
-		float shoppingScore = scoreBalanceMapper.selectTotalShoppingScoreByDay(7, beginTime, endTime);
-		
+	public Page<JBonusScj> selectJBonusScjByDay(Integer zjUid,int page,int limit,String beginTime,String endTime){
+
 		PageHelper.startPage(page, limit);
-		List<JBonusScj> list = bonusScjMapper.selectJBonusScjByDay(beginTime, endTime);
+		List<JBonusScj> list = bonusScjMapper.selectJBonusScjByDay(zjUid, beginTime, endTime);
 		PageInfo<JBonusScj> pageInfo = new PageInfo<JBonusScj>(list);
-		
-		//PageFooter pf = new PageFooter("总PV", amount);
-		PageFooter pf = new PageFooter("总PV", amount,"现金积分",cashScore,"购物积分",shoppingScore);
-		List<PageFooter> ptList = new ArrayList();
-		ptList.add(pf);
-		Page p = new Page(pageInfo);
-	    p.setFooter(ptList);	
-		return p;
+
+		return new Page(pageInfo);
 	}
-	
-	
+
+
+	/**
+	 * 按月数据
+	 */
+	@Override
+	public JRecordResult selectJBonusScjByMonthInfo(String month) {
+		float amount = bonusScjMapper.selectScjTotalByMonth(month);
+		float cashScore = scoreBalanceMapper.selectCashScoreByMonth(6, month);
+		float shoppingScore = scoreBalanceMapper.selectShoppingScoreByMonth(6, month);
+		float elecScore = scoreBalanceMapper.selectElecScoreByMonth(6, month);
+
+		JRecordResult result = new JRecordResult();
+		result.setAmount(amount);
+		result.setCashScore(cashScore);
+		result.setShoppingScore(shoppingScore);
+		result.setElecScore(elecScore);
+		return result;
+	}
+
 	/**
 	 * 按月查询查询个人列表总值
 	 */
 	@Override
-	public Page<JBonusScj> selectJBonusScjByMonth(int page,int limit,String month){
-		float amount = bonusScjMapper.selectScjTotalByMonth(month);
-		float cashScore = scoreBalanceMapper.selectTotalCashScoreByMonth(7, month);
-		float shoppingScore = scoreBalanceMapper.selectTotalShoppingScoreByMonth(7, month);
-		
+	public Page<JBonusScj> selectJBonusScjByMonth(Integer zjUid,int page,int limit,String month){
+
 		PageHelper.startPage(page, limit);
-		List<JBonusScj> list = bonusScjMapper.selectJBonusScjByMonth(month);
+		List<JBonusScj> list = bonusScjMapper.selectJBonusScjByMonth(zjUid, month);
 		PageInfo<JBonusScj> pageInfo = new PageInfo<JBonusScj>(list);
-		
-		//PageFooter pf = new PageFooter("总PV", amount);
-		PageFooter pf = new PageFooter("总PV", amount,"现金积分",cashScore,"购物积分",shoppingScore);
-		List<PageFooter> ptList = new ArrayList();
-		ptList.add(pf);
-		Page p = new Page(pageInfo);
-	    p.setFooter(ptList);	
-		return p;
+
+		return new Page(pageInfo);
 	}
-	
-	
-	
+
+
+
+
 	/**
 	 * 按两个日期查询个人列表详情 
 	 */
