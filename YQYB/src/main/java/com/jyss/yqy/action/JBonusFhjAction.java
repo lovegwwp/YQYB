@@ -18,7 +18,7 @@ public class JBonusFhjAction {
 
 
 	/**
-	 * 查询昨日总金额
+	 * 查询当日总金额
 	 */
 	@RequestMapping("/showFhj/list")
 	@ResponseBody
