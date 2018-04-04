@@ -73,9 +73,9 @@
      
    
     <!--修改密码 --> 
-    <update id="upHtpassword" parameterType="String" >
+    <!--<update id="upHtpassword" parameterType="String" >
         update p_thd  set password = #{password},salt = #{salt}   where name = #{name} and  status = 1
-    </update>
+    </update>-->
     
     <!--禁用用户 --> 
     <update id="upThdStatus" parameterType="java.util.List" >
@@ -121,7 +121,7 @@
     </select>    
     
 
-  <select id="findThdByTel" parameterType="String" resultType="com.jyss.yqy.entity.Thd">
+  <select id="findThdByTel" parameterType="string" resultType="com.jyss.yqy.entity.Thd">
         select * from p_thd 
         <where>
         	<if test="tel != null and tel != ''">and tel = #{tel} and status = 1</if>

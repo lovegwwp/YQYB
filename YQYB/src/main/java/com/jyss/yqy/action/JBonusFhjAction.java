@@ -43,7 +43,7 @@ public class JBonusFhjAction {
 	@RequestMapping("/showFhj/listByDay")
 	@ResponseBody
 	public JRecordResult selectFhjTotalByDay(@RequestParam("beginTime") String beginTime,
-											@RequestParam("endTime") String endTime) {
+											 @RequestParam("endTime") String endTime) {
 		JRecordResult result = bonusFhjService.selectJBonusFhjByDay(beginTime,endTime);
 		return result;
 	}
