@@ -78,10 +78,6 @@ layui.config({
 
 
 
-
-
-
-
     ////////用户修改/页面回显//////////////
     function setValue(){
         var uid = getUrlParams("uid");
