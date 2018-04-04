@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jyss.yqy.mapper.JRecordZlMapper" >
+
+  	<resultMap id="BaseResultMap" type="com.jyss.yqy.entity.JRecordZl" >
+    	<id column="id" property="id" />
+    	<result column="u_id" property="uId" />
+    	<result column="zj_uid" property="zjUid" />
+		<result column="zj_code" property="zjCode" />
+		<result column="zj_name" property="zjName" />
+		<result column="status" property="status" />
+		<result column="create_time" property="createTime" />
+  	</resultMap>
+
+	<select id="selectJRecordZl" parameterType="int" resultMap="BaseResultMap">
+		select * from j_record_zl
+		<where>
+			<if test="uId != null">and u_id = #{uId}</if>
+			<if test="zjUid != null">and zj_uid = #{zjUid}</if>
+			and status = 1
+		</where>
+	</select>
+
+	<insert id="addJRecordZl" parameterType="com.jyss.yqy.entity.JRecordZl" useGeneratedKeys="true" keyProperty="id">                                                     <!-- ordersn -->
+		insert into j_record_zl(id,u_id,zj_uid,zj_code,zj_name,status,create_time)
+		values(null,#{uId},#{zjUid},#{zjCode},#{zjName},#{status},#{createTime})
+	</insert>
+
+	<update id="updateJRecordZl" parameterType="com.jyss.yqy.entity.JRecordZl">
+		update j_record_zl
+		<set>
+			<if test="uId != null"> u_id = #{uId},</if>
+			<if test="zjUid != null"> zj_uid = #{zjUid},</if>
+			<if test="zjCode != null"> zj_code = #{zjCode},</if>
+			<if test="zjName != null"> zj_name = #{zjName},</if>
+			<if test="createTime != null">create_time = #{createTime},</if>
+		</set>
+		where id = #{id}
+	</update>
+
+
+	<delete id="deleteJRecordZl" parameterType="int">
+		delete from j_record_zl where id = #{id}
+	</delete>
+
+	
+  
+</mapper>
