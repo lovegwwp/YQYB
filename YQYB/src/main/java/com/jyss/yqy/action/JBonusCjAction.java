@@ -37,6 +37,7 @@ public class JBonusCjAction {
 		return result;
 	}
 
+
 	/**
 	 * 按天查询总金额
 	 */
