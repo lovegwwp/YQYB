@@ -123,6 +123,16 @@ public class JBonusScjAction {
 	}
 
 
+	/**
+	 * 查询个人总值列表
+	 */
+	@RequestMapping("/showScj/total")
+	@ResponseBody
+	public Page<JBonusScj> selectTotalJBonusScj(@RequestParam(value = "page", required = true) int page,
+												@RequestParam(value = "rows", required = true) int rows) {
+		Page<JBonusScj> result = bonusScjService.selectTotalJBonusScj(page, rows);
+		return result;
+	}
 
 
 }

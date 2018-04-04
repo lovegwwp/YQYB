@@ -38,5 +38,8 @@ public interface JBonusScjMapper {
 	
 	//按月查询查询总pv
 	float selectScjTotalByMonth(@Param("month")String month);
+
+	//查询列表历史总值
+	List<JBonusScj> selectTotalJBonusScj();
 	
 }

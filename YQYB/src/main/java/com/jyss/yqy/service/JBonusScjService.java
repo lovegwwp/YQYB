@@ -29,6 +29,7 @@ public interface JBonusScjService {
 
 	Page<JBonusScj> selectJBonusScjByMonth(@Param("page")Integer zjUid,@Param("page")int page,
 										   @Param("limit")int limit, @Param("month")String month);
-	
+
+	Page<JBonusScj> selectTotalJBonusScj(int page,int limit);
 
 }

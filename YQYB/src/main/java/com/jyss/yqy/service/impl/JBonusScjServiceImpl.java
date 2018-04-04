@@ -155,6 +155,23 @@ public class JBonusScjServiceImpl implements JBonusScjService{
 
 
 
+	/**
+	 * 查询个人总值列表
+	 */
+	@Override
+	public Page<JBonusScj> selectTotalJBonusScj(int page,int limit){
+
+		PageHelper.startPage(page, limit);
+		List<JBonusScj> list = bonusScjMapper.selectTotalJBonusScj();
+		PageInfo<JBonusScj> pageInfo = new PageInfo<JBonusScj>(list);
+
+		return new Page(pageInfo);
+	}
+
+
+
+
+
 
 	/**
 	 * 按两个日期查询个人列表详情 
