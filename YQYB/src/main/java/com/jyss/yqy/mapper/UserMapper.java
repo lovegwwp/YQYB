@@ -37,7 +37,7 @@ public interface UserMapper {
 	/**
 	 * 通过id查询用户
 	 */
-	List<UserBean> getUserNameById(@Param("id") int id);
+	List<UserBean> getUserById(@Param("id") int id,@Param("isChuangke") int isChuangke);
 	
 	/**
 	 * 通过推荐码查询用户id

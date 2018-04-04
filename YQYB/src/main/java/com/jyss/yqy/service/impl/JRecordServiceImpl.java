@@ -215,4 +215,13 @@ public class JRecordServiceImpl implements JRecordService {
 		return new ResponseEntity("false", "删除失败！");
 	}
 
+
+	/**
+	 * 查询市场总监
+	 */
+	@Override
+	public List<JRecord> selectJRecordByFloor(int floor) {
+		return recordMapper.selectJRecordByFloor(floor);
+	}
+
 }

@@ -109,6 +109,7 @@ public class JRecordAction {
 		return entity;
 	}
 
+
 	/**
 	 * 删除市场用户
 	 */
@@ -118,5 +119,19 @@ public class JRecordAction {
 		ResponseEntity entity = recordService.deleteJRecord(strIds);
 		return entity;
 	}
+
+
+
+	/**
+	 * 查询市场总监
+	 */
+	@RequestMapping("/jrc/getRecord")
+	@ResponseBody
+	public List<JRecord> selectJRecordByFloor() {
+		List<JRecord> list = recordService.selectJRecordByFloor(4);
+		return list;
+	}
+
+
 
 }

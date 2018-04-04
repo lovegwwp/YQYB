@@ -75,33 +75,43 @@
 		#{depart},#{zjUid},#{floor},0.00,0.00,#{status},now(),now())
 	</insert>
 	
-  <!-- 修改市场用户 -->
-  <update id="updateJRecordById" parameterType="com.jyss.yqy.entity.JRecord" >
-	  update j_record 
-	  <set>
-	 	 <if test="uId != null and uId != ''">u_id = #{uId},</if>
-	 	 <if test="uAccount != null and uAccount != ''">u_account = #{uAccount},</if>
-	 	 created = now()
-	  </set>
-	  where id = #{id} and status = 1
-  </update>
+  	<!-- 修改市场用户 -->
+  	<update id="updateJRecordById" parameterType="com.jyss.yqy.entity.JRecord" >
+	  	update j_record
+	  	<set>
+			<if test="uId != null and uId != ''">u_id = #{uId},</if>
+			<if test="uAccount != null and uAccount != ''">u_account = #{uAccount},</if>
+			<if test="zjUid != null and zjUid != ''">zj_uid = #{zjUid},</if>
+	 	 	created = now()
+	  	</set>
+	  	where id = #{id} and status = 1
+  	</update>
 
 
     <!-- 修改父id -->
-  <update id="upJRecordById" >
-	  update j_record 
-	  <set>
-	 	 <if test="parentId != null and parentId != ''">parent_id = #{parentId},</if>
-	 	 created = now()
-	  </set>
-	  where id = #{id} and status = 1
-  </update>
+  	<update id="upJRecordById" >
+	  	update j_record
+	  	<set>
+	 	 	<if test="parentId != null and parentId != ''">parent_id = #{parentId},</if>
+	 	 	created = now()
+	  	</set>
+	  	where id = #{id} and status = 1
+  	</update>
 
 
-  <!-- 删除市场用户 -->
-  <delete id="deleteJRecordById" parameterType="int">
-  	delete from j_record where id = #{id}
-  </delete>
-	
+  	<!-- 删除市场用户 -->
+  	<delete id="deleteJRecordById" parameterType="int">
+  		delete from j_record where id = #{id}
+  	</delete>
+
+
+	<!--查询市场总监-->
+	<select id="selectJRecordByFloor" resultMap="BaseResultMap">
+		select id,u_id,u_account,parent_id,depart,zj_uid,floor
+		from j_record
+		where floor = #{floor} and status = 1 order by id
+	</select>
+
+
   
 </mapper>

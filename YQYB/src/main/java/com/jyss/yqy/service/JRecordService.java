@@ -25,6 +25,9 @@ public interface JRecordService {
 	
 	//删除市场用户
 	ResponseEntity deleteJRecord(@Param("id")int id);
+
+	//查询市场总监
+	List<JRecord> selectJRecordByFloor(@Param("floor")int floor);
 	
 
 }
