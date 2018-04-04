@@ -3,6 +3,7 @@ package com.jyss.yqy.service;
 import java.util.List;
 import java.util.Set;
 
+import com.jyss.yqy.entity.AccountLog;
 import org.apache.ibatis.annotations.Param;
 
 import com.jyss.yqy.entity.AccountUser;
@@ -201,6 +202,13 @@ public interface AccountUserService {
 	 *
 	 */
 	int addLog(@Param("username") String username,@Param("description") String description);
+
+	/**
+	 * 查询用户操作日志
+	 * @param username
+	 * @return
+	 */
+	List<AccountLog> getAccountLog(@Param("username") String username);
 
 
 }

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import com.jyss.yqy.utils.Utils;
+import com.jyss.yqy.entity.AccountLog;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,7 +22,7 @@ import com.jyss.yqy.utils.PasswordUtil;
 @Transactional
 public class AccountUserServiceImpl implements AccountUserService {
 	@Autowired
-	private AccountUserMapper auMapper;
+	private AccountUserMapper auMapper ;
 
 	@Override
 	public AccountUser getAuBy(String username) {
@@ -174,6 +174,12 @@ public class AccountUserServiceImpl implements AccountUserService {
 	public int addLog(@Param("username") String username, @Param("description") String description) {
 		return auMapper.addLog(username,description);
 	}
+
+	@Override
+	public List<AccountLog> getAccountLog(@Param("username") String username) {
+		return auMapper.getAccountLog(username);
+	}
+
 
 	@Override
 	public int upAccount(AccountUser au) {

@@ -47,6 +47,12 @@ public class AccountUserAction {
 		return "index";
 	}
 
+	@RequestMapping("/accountlog")
+	public String accountlogTz() {
+		return "accountlog";
+	}
+
+
 	// /用户列表页面跳转
 	@RequestMapping("/accountuser")
 	public String accuontsTz() {
@@ -372,6 +378,19 @@ public class AccountUserAction {
 			lName="异常用户";
 		}
 		auService.addLog(lName,"权限管理-角色列表");
+		return list;
+	}
+	@RequestMapping("/accountlogList")
+	@ResponseBody
+	public List<AccountLog> accountlogList() {
+		List<AccountLog> list = new ArrayList<AccountLog>();
+		list = auService.getAccountLog(null);
+		Subject us = SecurityUtils.getSubject();
+		String lName = us.getPrincipal().toString();
+		if (lName.equals("") || lName == null) {
+			lName="异常用户";
+		}
+		auService.addLog(lName,"日志管理-日志查询");
 		return list;
 	}
 

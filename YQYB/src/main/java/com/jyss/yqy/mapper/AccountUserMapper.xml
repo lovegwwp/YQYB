@@ -30,6 +30,18 @@
 
     </resultMap>
 
+    <resultMap type="com.jyss.yqy.entity.AccountLog" id="logMap">
+        <id property="id" column="id"  />
+        <result property="username" column="username"  />
+        <result property="description" column="description"  />
+        <result property="status" column="status"  />
+        <result property="createdAt" column="created_at"  />
+        <result property="cjsj" column="cjsj"  />
+    </resultMap>
+
+
+
+
 
     <select id="getAuBy" resultType="com.jyss.yqy.entity.AccountUser">
         select t.* from (
@@ -214,6 +226,16 @@
     <insert id="addLog" parameterType="String" >
         insert into p_account_log values(null,#{username},#{description},now(),1)
     </insert>
+
+    <!-- 查询用户操作日志 -->
+    <select id="getAccountLog" resultMap="logMap">
+        select  l.*,DATE_FORMAT(l.created_at, '%Y-%m-%d %H:%i:%s' ) cjsj from p_account_log l
+        <where>
+            1=1
+            <if test="username != null and username !=''"> and l.username = #{username} </if>
+        </where>
+        order by l.created_at DESC
+    </select>
 
 
 </mapper>
