@@ -6,6 +6,9 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import com.jyss.yqy.service.AccountUserService;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,6 +31,10 @@ import com.jyss.yqy.utils.Utils;
 public class ThdAction {
 	@Autowired
 	private ThdService thdService;
+	@Autowired
+	private AccountUserService auService;
+
+
 
 	// 提货点
 
@@ -40,6 +47,18 @@ public class ThdAction {
 	@RequestMapping("/thdSp")
 	public String thdSpTz() {
 		return "thdSp";
+	}
+
+	// 提货点
+
+	@RequestMapping("/thdinfo")
+	public String thdinfoTz() {
+		return "thdinfo";
+	}
+	// 提货点商品详情列表
+	@RequestMapping("/thdspinfo")
+	public String thdspinfoTz() {
+		return "thdspinfo";
 	}
 
 	// ///**==================提货点====================**////////
@@ -86,24 +105,7 @@ public class ThdAction {
 		}
 	}
 
-	@RequestMapping("/upThdPwd")
-	@ResponseBody
-	public ResponseEntity upHtPwd(@RequestParam("password") String password,
-			HttpServletRequest request) {
-		// TODO Auto-generated method stub
-		int count = 0;
-		String username = (String) request.getSession()
-				.getAttribute("username");
-		if (username.equals("") || username == null) {
-			return new ResponseEntity("false", "操作失败！");
-		}
-		String salt = CommTool.getSalt();
-		count = thdService.upHtPwd(username, password, salt);
-		if (count == 1) {
-			return new ResponseEntity("true", "操作成功！");
-		}
-		return new ResponseEntity("false", "操作失败！");
-	}
+
 
 	@RequestMapping("/addThd")
 	@ResponseBody
@@ -111,19 +113,27 @@ public class ThdAction {
 		// TODO Auto-generated method stub
 		int count = 0;
 		int isOnly = 0;
+		String bz="";
 		isOnly = thdService.getThdNum(thd.getTel());
 		if (thd.getId() == 0) {
 			if (isOnly >= 1) {
 				return new ResponseEntity("NO", "账号冲突！");
 			}
 			// 新增
+			bz ="提货端管理-提货点新增";
 			count = thdService.addThd(thd);
 		} else {
 			// 修改
+			bz ="提货端管理-提货点修改";
 			count = thdService.upThd(thd);
 		}
-
+		Subject us = SecurityUtils.getSubject();
+		String lName = us.getPrincipal().toString();
+		if (lName.equals("") || lName == null) {
+			lName= "异常用户";
+		}
 		if (count == 1) {
+			auService.addLog(lName,bz);
 			return new ResponseEntity("OK", "操作成功！");
 		}
 		return new ResponseEntity("NO", "操作失败！");
@@ -136,7 +146,15 @@ public class ThdAction {
 		int count = 0;
 		List<Long> ids = Utils.stringToLongList(strIds, ",");
 		count = thdService.deleteThds(ids);
+		Subject us = SecurityUtils.getSubject();
+		String lName = us.getPrincipal().toString();
+		if (lName.equals("") || lName == null) {
+			lName= "异常用户";
+		}
+		String bz="提货端管理-提货点删除";
+
 		if (count >= 1) {
+			auService.addLog(lName,bz);
 			return new ResponseEntity("true", "操作成功！");
 		}
 		return new ResponseEntity("false", "操作失败！");
@@ -150,7 +168,20 @@ public class ThdAction {
 		int count = 0;
 		List<Long> ids = Utils.stringToLongList(strIds, ",");
 		count = thdService.upThdStatus(ids, status);
+		Subject us = SecurityUtils.getSubject();
+		String lName = us.getPrincipal().toString();
+		if (lName.equals("") || lName == null) {
+			lName= "异常用户";
+		}
+		String bz="";
+		if(status.equals("1")){
+			bz ="提货端管理-提货点恢复";
+		} else if (status.equals("0")) {
+			bz ="提货端管理-提货点禁用";
+		}
+
 		if (count >= 1) {
+			auService.addLog(lName,bz);
 			return new ResponseEntity("true", "操作成功！");
 		}
 		return new ResponseEntity("false", "操作失败！");
@@ -181,7 +212,37 @@ public class ThdAction {
 		return new Page<Thd>(pageInfoBy);
 	}
 
+	@RequestMapping("/thdinfoCx")
+	@ResponseBody
+	public List<Thd> thdinfoCx() {
+		Subject us = SecurityUtils.getSubject();
+		String lName = us.getPrincipal().toString();
+		if (lName.equals("") || lName == null) {
+			lName= "异常用户";
+		}
+		List<Thd> list = new ArrayList<Thd>();
+		list = thdService.getThdBy("");
+		auService.addLog(lName,"提货端管理-提货点查询");
+		return list;
+	}
+
 	// ///**==================提货点==商品==================**////////
+
+	// 提货点用户列表
+	@RequestMapping("/thdSpInfoCx")
+	@ResponseBody
+	public List<ThOrders> thdSpInfoCx() {
+		Subject us = SecurityUtils.getSubject();
+		String lName = us.getPrincipal().toString();
+		if (lName.equals("") || lName == null) {
+			lName= "异常用户";
+		}
+		List<ThOrders> list = new ArrayList<ThOrders>();
+		list = thdService.getThSpBy(null);
+		auService.addLog(lName,"提货端管理-提货端商品查询");
+		return list;
+	}
+
 
 	// 提货点用户列表
 	@RequestMapping("/thdSpCx")
