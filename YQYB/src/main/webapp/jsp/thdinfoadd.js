@@ -9,73 +9,93 @@ layui.config({
 		$ = layui.jquery;
 
 	//创建一个编辑器
- 	var editIndex = layedit.build('thdinfo_content');
+ 	//var editIndex = layedit.build('thdinfo_content');
+    ///select加载
+    getProvince('../getBaCo.action?area='+'2');
 	setValue();
-	/*getSelect('../getBaCo.action?area='+'2',"2");
-	getSelect('../getBaCo.action?area='+'3',"3");
-	getSelect('../getBaCo.action?area='+'4',"4");*/
-/*
-   $.ajax({
-        url : '../getBaCo.action?area='+'2',
-        type : 'POST',
-        success : function(data) {
-            var roles = eval(data);
-            $(roles).each(
-                function(index) {
-                    var role = roles[index];
-                    var optionStr = "";
-                    optionStr += "<option value='" + role.id + "'>"
-                        + role.name + "</option>";
-                    //alert(optionStr);
-                    $("#province").append(optionStr);
-					setSelect();
-                    layui.form().render('select','provinceFilter');
-                    //setValue();
 
-                });
-        },
-        error : function(data) {
-            alert('数据加载错误，请重试！');
+    ///省份下拉监听
+    form.on('select(provinceFilter)', function(data){
+        var  province =data.value;
+        console.log($("#province").val());
+        getCity('../getBaCo.action?area='+'3&fid='+province);
+    });
+    ///城市下拉监听
+    form.on('select(cityFilter)', function(data){
+        if(!$("#province").val()){
+            layer.alert("请选择省份");
+        }
+        var  city =data.value;
+        getArea('../getBaCo.action?area='+'4&fid='+city);
+    });
+
+    ///城市下拉监听
+    form.on('select(areaFilter)', function(data){
+        if(!$("#province").val()){
+            layer.alert("请选择省份");
+        }
+        if(!$("#city").val()){
+            layer.alert("请选择城市");
         }
     });
-	$.ajax({
-		url : '../getBaCo.action?area='+'3',
-		type : 'POST',
-		success : function(data) {
-			var roles = eval(data);
-			$(roles).each(
-				function(index) {
-					var role = roles[index];
-					var optionStr = "";
-					optionStr += "<option value='" + role.id + "'>"
-						+ role.name + "</option>";
-					//alert(optionStr);
-					$("#city").append(optionStr);
-					setSelect();
-					layui.form().render('select','cityFilter');
-					//setValue();
 
-				});
-		},
-		error : function(data) {
-			alert('数据加载错误，请重试！');
-		}
-	});
-*/
-	//初始化  全部咨询/第一页
-	/*$.when(getSelect('../getBaCo.action?area='+'2',"2")).done(function (data) {
-		loadSelect(data,"2");
-		console.log(1111);
-		$.when(getSelect('../getBaCo.action?area='+'3',"3")).done(function (data) {
-			loadSelect(data,"3");
-			console.log(333);*/
-			$.when(getSelect('../getBaCo.action?area='+'4',"4")).done(function (data) {
-				loadSelect(data,"4");
-				console.log(1444);
-			});
-	/*	});
-	});*/
 
+    function getSelectOption(urld,Render){
+        var defer = $.Deferred();
+        $.ajax({
+            url : urld,
+            type : 'POST',
+            success : function(data) {
+                loadSelect(data,Render);
+            },
+            error : function(data) {
+                alert('数据加载错误，请重试！');
+            }
+        });
+        return defer.promise();
+    }
+
+    function getSelectData(urld,isRender){
+        $.ajax({
+            url : urld,
+            type : 'POST',
+            success : function(data) {
+                var roles = eval(data);
+                $(roles).each(
+                    function(index) {
+                        var role = roles[index];
+                        var optionStr = "";
+                        optionStr += "<option value='" + role.id + "'>"
+                            + role.name + "</option>";
+                        var uid = getUrlParams("uid");
+                        if(isRender=='2'){
+                            $("#province").append(optionStr);
+                            if(uid){
+                                $("#province").val(getUrlParams("provinceId"));
+                            }
+                            layui.form().render('select','provinceFilter');
+                        }else if(isRender=='3'){
+                            $("#city").append(optionStr);
+                            if(uid){
+                                $("#city").val(getUrlParams("cityId"));
+                            }
+                            layui.form().render('select','cityFilter');
+                        }else if(isRender=='4'){
+                            $("#area").append(optionStr);
+                            if(uid){
+                                $("#area").val(getUrlParams("areaId"));
+                            }
+                            layui.form().render('select','areaFilter');
+                        }
+
+                    });
+            },
+            error : function(data) {
+                alert('数据加载错误，请重试！');
+            }
+        });
+        return defer.promise();
+    }
 
 
     ////////用户修改/页面回显//////////////
@@ -88,24 +108,13 @@ layui.config({
 			$(".tel").val(getUrlParams("tel"));
 			$(".addr").val(getUrlParams("addr"));
             $(".id").val(uid);
+            getProvince('../getBaCo.action?area='+'2');
+            getCity('../getBaCo.action?area='+'3&fid='+ getUrlParams("provinceId"));
+            getArea('../getBaCo.action?area='+'4&fid='+ getUrlParams("cityId"));
         }
     }
 
-    function getSelect(urld,Render){
-		var defer = $.Deferred();
-		$.ajax({
-			url : urld,
-			type : 'POST',
-			success : function(data) {
-				console.log(data);
-				defer.resolve(data);
-			},
-			error : function(data) {
-				alert('数据加载错误，请重试！');
-			}
-		});
-		return defer.promise();
-	}
+
 
 	function  loadSelect(data,isRender){
 		var roles = eval(data);
@@ -117,11 +126,11 @@ layui.config({
 					+ role.name + "</option>";
 				var uid = getUrlParams("uid");
 				if(isRender=='2'){
-					$("#area").append(optionStr);
+					$("#province").append(optionStr);
 					if(uid){
-						$("#area").val(getUrlParams("areaId"));
+						$("#province").val(getUrlParams("provinceId"));
 					}
-					layui.form().render('select','areaFilter');
+					layui.form().render('select','provinceFilter');
 				}else if(isRender=='3'){
 					$("#city").append(optionStr);
 					if(uid){
@@ -139,6 +148,93 @@ layui.config({
 			});
 
 	}
+
+	function getProvince(urls){
+        $.ajax({
+            url : urls,
+            type : 'POST',
+            success : function(data) {
+                var roles = eval(data);
+                $(roles).each(
+                    function(index) {
+                        var role = roles[index];
+                        var optionStr = "";
+                        optionStr += "<option value='" + role.id + "'>"
+                            + role.name + "</option>";
+                        var uid = getUrlParams("uid");
+                        $("#province").append(optionStr);
+                        if(uid){
+                            $("#province").val(getUrlParams("provinceId"));
+                        }
+                        layui.form().render('select','provinceFilter');
+                    });
+            },
+            error : function(data) {
+                alert('数据加载错误，请重试！');
+            }
+        });
+
+
+    }
+
+    function getCity(urls){
+        $("#city").html('');
+        $.ajax({
+            url : urls,
+            type : 'POST',
+            success : function(data) {
+                var roles = eval(data);
+                $(roles).each(
+                    function(index) {
+                        var role = roles[index];
+                        var optionStr = "";
+                        optionStr += "<option value='" + role.id + "'>"
+                            + role.name + "</option>";
+                        var uid = getUrlParams("uid");
+                        $("#city").append(optionStr);
+                        if(uid){
+                            $("#city").val(getUrlParams("cityId"));
+                        }
+                        layui.form().render('select','cityFilter');
+                    });
+            },
+            error : function(data) {
+                alert('数据加载错误，请重试！');
+            }
+        });
+
+
+    }
+
+    function getArea(urls){
+        $("#area").html('');
+        $.ajax({
+            url : urls,
+            type : 'POST',
+            success : function(data) {
+                var roles = eval(data);
+                $(roles).each(
+                    function(index) {
+                        var role = roles[index];
+                        var optionStr = "";
+                        optionStr += "<option value='" + role.id + "'>"
+                            + role.name + "</option>";
+                        var uid = getUrlParams("uid");
+                        $("#area").append(optionStr);
+                        if(uid){
+                            $("#area").val(getUrlParams("areaId"));
+                        }
+                        layui.form().render('select','areaFilter');
+                    });
+            },
+            error : function(data) {
+                alert('数据加载错误，请重试！');
+            }
+        });
+
+
+    }
+
 
     /////////提交//////////////
  	form.on("submit(addthdinfo)",function(data){
