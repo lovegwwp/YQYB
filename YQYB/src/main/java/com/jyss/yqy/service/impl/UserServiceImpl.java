@@ -2,6 +2,7 @@ package com.jyss.yqy.service.impl;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -47,6 +48,11 @@ public class UserServiceImpl implements UserService {
 		// TODO Auto-generated method stub
 		return userMapper.upUserAllStatus(status, bCode, bIsPay, isChuangke,
 				isAuth, uuid);
+	}
+
+	@Override
+	public int upIsTransfer(@Param("ids") List<String> ids, @Param("isTransfer") String isTransfer) {
+		return userMapper.upIsTransfer(ids, isTransfer);
 	}
 
 }

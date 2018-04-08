@@ -51,6 +51,16 @@ public interface UserMapper {
 	
 	//更新积分
 	int updateScore(UserBean userBean);
+
+	/**
+	 * 设置转账
+	 *
+	 * @param isTransfer
+	 * @param ids
+	 * @return
+	 *
+	 */
+	int upIsTransfer(@Param("ids") List<String> ids,@Param("isTransfer") String isTransfer);
 	
 
 }

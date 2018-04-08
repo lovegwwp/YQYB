@@ -25,13 +25,16 @@
         <result property="city" column="city"/>
         <result property="areaId" column="area_id"  />
         <result property="area" column="area"/>
-        <result property="isChuangke" column="is_chuangke"  /><!--is_chuangke0普通会员1代言人2初级代理人 3中级代理人4高级代理人  -->
+        <result property="isChuangke" column="is_chuangke"  /><!--is_chuangke==1=成为代言人 2=一级代理人 3=二级代理人 4=三级代理人 5=经理人（虚拟）6=市场总监助理  -->
         <result property="isAuth" column="is_auth"  /><!--isAuth 1=已提交 2=审核通过3=审核不通过  -->
         <result property="bCode" column="b_code"  /> 
         <result property="token" column="token"  />
         <result property="payPwd" column="pay_pwd"  /> 
         <result property="cashScore" column="cash_score"  /> 
-        <result property="shoppingScore" column="shopping_score"  /> 
+        <result property="shoppingScore" column="shopping_score"  />
+        <result property="bdScore" column="bd_score"  />
+        <result property="electScore" column="elect_score"  />
+        <result property="borrow" column="borrow"  />
         <result property="totalPv" column="total_pv"  />
     </resultMap>
              
@@ -39,7 +42,8 @@
      <!-- 登录查询相关用户 -->   
      <!-- status  -1删除 1=正常2=禁用 isAuth 1=已提交 2=审核通过3=审核不通过  statusAuth 0=审核中 1=通过 2=未通过 -->
     <select id="getUserCount" resultMap="ubResultMap">           
-	    select is_chuangke,count(id) as id ,sum(cash_score) as cash_score ,sum(shopping_score)  as shopping_score
+	    select is_chuangke,count(id) as id ,sum(cash_score) as cash_score ,sum(shopping_score)  as shopping_score ,
+               sum(elect_score)  as elect_score,  sum(bd_score)  as bd_score, sum(borrow)  as borrow
 	     from u_user <!--  where is_chuangke =3  and status =1 and is_auth =2;	 -->		
          <where> 
               1 = 1
@@ -117,6 +121,14 @@
     	</set>
     	where id = #{id} 
     </update>
-    
+
+    <!-- 更新是否可以转账 -->
+    <update id="upIsTransfer" >
+        update u_user  set is_transfer = #{isTransfer} where uuid in
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+
 
 </mapper>

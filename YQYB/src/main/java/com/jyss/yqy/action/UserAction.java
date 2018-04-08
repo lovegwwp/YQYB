@@ -3,6 +3,12 @@ package com.jyss.yqy.action;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.jyss.yqy.constant.Constant;
+import com.jyss.yqy.entity.Thd;
+import com.jyss.yqy.service.AccountUserService;
+import com.jyss.yqy.utils.Utils;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +27,8 @@ import com.jyss.yqy.service.UserService;
 public class UserAction {
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private AccountUserService auService;
 
 	@RequestMapping("/dlrType")
 	public String DlrTypeTz() {
@@ -30,6 +38,38 @@ public class UserAction {
 	@RequestMapping("/dlrAuth")
 	public String DlrAuthTz() {
 		return "dlrAuth";
+	}
+
+	////合伙人统计
+	@RequestMapping("/hhrtj")
+	public String hhrtjTz() {
+		return "hhrtj";
+	}
+
+	////合伙人审核
+	@RequestMapping("/hhrsh")
+	public String hhrshTz() {
+		return "hhrsh";
+	}
+
+	// 代理人统计列表is_chuangke==1=成为代言人 2=一级代理人 3=二级代理人 4=三级代理人 5=经理人（虚拟）6=市场总监助理  -->
+	@RequestMapping("/hhrtjCx")
+	@ResponseBody
+	public List<UserBean> hhrtjCx() {
+		List<UserBean> list = new ArrayList<UserBean>();
+		List<UserBean> list1 = userService.getUserCount("2", "1", "2");
+		List<UserBean> list2 = userService.getUserCount("3", "1", "2");
+		List<UserBean> list3 = userService.getUserCount("4", "1", "2");
+		list.addAll(0,list1);
+		list.addAll(1,list2);
+		list.addAll(2,list3);
+		Subject us = SecurityUtils.getSubject();
+		String lName = us.getPrincipal().toString();
+		if (lName.equals("") || lName == null) {
+			lName= "异常用户";
+		}
+		auService.addLog(lName,"合伙人管理-合伙人统计查询");
+		return list;
 	}
 
 	// 代理人统计列表
@@ -82,6 +122,25 @@ public class UserAction {
 		PageInfo<UserAuth> pageInfoBy = new PageInfo<UserAuth>(list);
 		return new Page<UserAuth>(pageInfoBy);
 	}
+	// 代理人用户审核列表
+	@RequestMapping("/hhrshCx")
+	@ResponseBody
+	public List<UserAuth> hhrshCx() {
+		List<UserAuth> list = new ArrayList<UserAuth>();
+		list = userService.getUserAuth("", "", "");
+		Subject us = SecurityUtils.getSubject();
+		String lName = us.getPrincipal().toString();
+		if (lName.equals("") || lName == null) {
+			lName= "异常用户";
+		}
+		auService.addLog(lName,"合伙人管理-合伙人审核查询");
+		for(UserAuth ua:list){
+			ua.setCardPicture1(Constant.httpUrl+ua.getCardPicture1());
+			ua.setCardPicture2(Constant.httpUrl+ua.getCardPicture2());
+			ua.setCardPicture3(Constant.httpUrl+ua.getCardPicture3());
+		}
+		return list;
+	}
 
 	// ////0=审核中 1=通过 2=未通过
 	@RequestMapping("/dlrRefuse")
@@ -96,20 +155,25 @@ public class UserAction {
 		count = userService.upUserSh("2", "0", uuid);
 		if (count == 1) {
 			count = 0;
-			count = userService.upUserAllStatus("", "", "", "", "2", uuid);
+			count = userService.upUserAllStatus("", "", "", "", "3", uuid);
 		}
 		if (count == 1) {
+			Subject us = SecurityUtils.getSubject();
+			String lName = us.getPrincipal().toString();
+			if (lName.equals("") || lName == null) {
+				lName= "异常用户";
+			}
+			auService.addLog(lName,"合伙人管理-合伙人审核不通过");
 			return new ResponseEntity("true", "操作成功！");
 		}
 		return new ResponseEntity("false", "操作失败！");
 	}
 
-	// /ststus/0=审核中 1=通过 2=未通过
+	// /status/0=审核中 1=通过 2=未通过
 	// /isAuth=1=已提交 2=审核通过3=不通过'
 	@RequestMapping("/dlrAgree")
 	@ResponseBody
 	public ResponseEntity dlrAgree(@RequestParam("uuid") String uuid) {
-
 		List<UserAuth> uaulist = new ArrayList<UserAuth>();
 		uaulist = userService.getUserAuth(uuid, "", "0");
 		if (uaulist == null || uaulist.size() != 1) {
@@ -124,9 +188,56 @@ public class UserAction {
 				//计算管理奖
 				/*ResponseEntity entity = userRecordBService.insertJBonusGlj(uuid);
 				return entity;*/
+				Subject us = SecurityUtils.getSubject();
+				String lName = us.getPrincipal().toString();
+				if (lName.equals("") || lName == null) {
+					lName= "异常用户";
+				}
+				auService.addLog(lName,"合伙人管理-合伙人审核通过");
 				return new ResponseEntity("true", "操作成功！");
 			}
 		}
 		return new ResponseEntity("false", "操作失败！");
 	}
+
+
+	// ////1可转，2不可转（账户转账）
+	@RequestMapping("/transferNo")
+	@ResponseBody
+	public ResponseEntity transferNo(@RequestParam("uuid") String uuid) {
+		int count = 0;
+		List<String> uuids= Utils.stringToStringList(uuid, ",");
+		count = userService.upIsTransfer(uuids,"2");
+		if (count >= 1) {
+			Subject us = SecurityUtils.getSubject();
+			String lName = us.getPrincipal().toString();
+			if (lName.equals("") || lName == null) {
+				lName= "异常用户";
+			}
+			auService.addLog(lName,"合伙人管理-合伙人设置可以转账");
+			return new ResponseEntity("true", "操作成功！");
+		}
+		return new ResponseEntity("false", "操作失败！");
+	}
+
+	// ////1可转，2不可转（账户转账）
+	@RequestMapping("/transferOk")
+	@ResponseBody
+	public ResponseEntity transferOk(@RequestParam("uuid") String uuid) {
+		int count = 0;
+		List<String> uuids= Utils.stringToStringList(uuid, ",");
+		count = userService.upIsTransfer(uuids,"1");
+		if (count >= 1) {
+			Subject us = SecurityUtils.getSubject();
+			String lName = us.getPrincipal().toString();
+			if (lName.equals("") || lName == null) {
+				lName= "异常用户";
+			}
+			auService.addLog(lName,"合伙人管理-合伙人设置不可转账");
+			return new ResponseEntity("true", "操作成功！");
+		}
+		return new ResponseEntity("false", "操作失败！");
+	}
+
+
 }

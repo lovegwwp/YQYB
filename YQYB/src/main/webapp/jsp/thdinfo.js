@@ -183,7 +183,7 @@ layui.config({
 
 	$("body").on("click",".thdinfo_del",function(){  //删除
 		var _this = $(this);
-        layer.alert(_this.attr("data-id"));
+        //layer.alert(_this.attr("data-id"));
 		layer.confirm('确定删除此信息？',{icon:3, title:'提示信息'},function(index){
 		/*	//_this.parents("tr").remove();
 			for(var i=0;i<thdinfoData.length;i++){
@@ -196,6 +196,48 @@ layui.config({
 			layer.close(index);
 		});
 	})
+
+    $("body").on("click",".thd_jy",function(){  //禁用
+        var _this = $(this);
+        console.log(_this[0]+"======");
+        console.log(_this.attr("data-status")+"=========");
+        if(_this.attr("data-status")=='0'){
+            layer.alert("已禁用!");
+            return false;
+        }
+       // layer.alert(_this.attr("data-id"));
+        layer.confirm('确定禁用提货点？',{icon:3, title:'提示信息'},function(index){
+            /*	//_this.parents("tr").remove();
+             for(var i=0;i<thdinfoData.length;i++){
+             if(thdinfoData[i].id == _this.attr("data-id")){
+             thdinfoData.splice(i,1);
+             thdinfoList(thdinfoData);
+             }
+             }*/
+            ZtOption(_this.attr("data-id"),0);
+            layer.close(index);
+        });
+    })
+
+    $("body").on("click",".thd_hf",function(){  ///恢复
+        var _this = $(this);
+        if(_this.attr("data-status")=='1'){
+            layer.alert("已使用!");
+            return false;
+        }
+       // layer.alert(_this.attr("data-id"));
+        layer.confirm('确定恢复使用？',{icon:3, title:'提示信息'},function(index){
+            /*	//_this.parents("tr").remove();
+             for(var i=0;i<thdinfoData.length;i++){
+             if(thdinfoData[i].id == _this.attr("data-id")){
+             thdinfoData.splice(i,1);
+             thdinfoList(thdinfoData);
+             }
+             }*/
+            ZtOption(_this.attr("data-id"),1);
+            layer.close(index);
+        });
+    })
 
 	function thdinfoList(that){
 		//渲染数据
@@ -226,6 +268,8 @@ layui.config({
 					+'<td>'
 					+  '<a class="layui-btn layui-btn-mini thdinfo_edit" data-areaId="'+currData[i].areaId+'" data-addr="'+currData[i].addr+'"  data-provinceId="'+currData[i].provinceId+'" data-cityId="'+currData[i].cityId+'"   data-name="'+currData[i].name+'" data-telShow="'+currData[i].telShow+'"  data-tel="'+currData[i].tel+'" data-thName="'+currData[i].thName+'"  data-id="'+currData[i].id+'"><i class="iconfont icon-edit"></i> 编辑</a>'
 					+  '<a class="layui-btn layui-btn-danger layui-btn-mini thdinfo_del" data-id="'+currData[i].id+'"><i class="layui-icon">&#xe640;</i> 删除</a>'
+                    +  '<a class="layui-btn layui-btn-danger layui-btn-mini thd_jy" data-id="'+currData[i].id+'" data-status="'+currData[i].status+'" ><i class="layui-icon">&#x1006;</i> 禁用</a>'
+                    +  '<a class="layui-btn layui-btn-danger layui-btn-mini thd_hf" data-id="'+currData[i].id+'" data-status="'+currData[i].status+'"><i class="layui-icon">&#xe605;</i> 恢复</a>'
 			        +'</td>'
 			    	+'</tr>';
 				}
@@ -267,6 +311,30 @@ layui.config({
             url : 'delThd.action',
             data:{
                 strIds :ids
+            },
+            type : 'POST',
+            success:function(result){
+                layer.alert(result.message, function () {
+                    //刷新父页面
+                    parent.location.reload();
+                });
+            } ,
+            error:function(result){
+                layer.alert(result.message, function () {
+                    //刷新父页面
+                    parent.location.reload();
+                });
+            }
+        });
+    }
+
+    ///状态业务
+    function  ZtOption(ids,status){
+        $.ajax({
+            url : 'upThdZt.action',
+            data:{
+                strIds :ids,
+                status :status
             },
             type : 'POST',
             success:function(result){

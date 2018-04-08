@@ -18,8 +18,11 @@ public class UserBean {
 	private String bCode;// 推广码
 	private String token;//
 	private String payPwd;// 支付密码
-	private Float cashScore;// 现金积分
-	private Float shoppingScore;// 购物积分
+	private Float cashScore;//商城消费券
+	private Float bdScore;// 报单券
+	private Float electScore;// 电子券
+	private Float borrow;// 购物积分
+	private Float shoppingScore;// 股券（现金积分）
 	private String provinceId;//
 	private String province;//
 	private String cityId;//
@@ -28,6 +31,30 @@ public class UserBean {
 	private String area;//
 	private Float totalPv;    //剩余返还pv
 
+
+	public Float getBdScore() {
+		return bdScore;
+	}
+
+	public void setBdScore(Float bdScore) {
+		this.bdScore = bdScore;
+	}
+
+	public Float getBorrow() {
+		return borrow;
+	}
+
+	public void setBorrow(Float borrow) {
+		this.borrow = borrow;
+	}
+
+	public Float getElectScore() {
+		return electScore;
+	}
+
+	public void setElectScore(Float electScore) {
+		this.electScore = electScore;
+	}
 
 	public Integer getId() {
 		return id;

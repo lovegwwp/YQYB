@@ -20,7 +20,7 @@
     <meta http-equiv="pragma" content="no-cache">
     <meta http-equiv="cache-control" content="no-cache">
     <meta http-equiv="expires" content="0"> 
-	<title>培根登录界面</title>
+	<title>易起云登录界面</title>
 	<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
     <link href="css/default.css" rel="stylesheet" type="text/css" />
 	<!--必要样式-->
@@ -36,7 +36,7 @@
 		<div class="line"></div>
 		<div class="text">
 			<p class="hanyu">后台管理登陆</p>
-			<p class="yinyu">LOGIN MANAGEMENTA</p>
+			<p class="yinyu">LOGIN MANAGEMENT</p>
 		</div>
 	</div>
 	<form id="logFm" action="${pageContext.request.contextPath}/shiro-getLogin.action" method="post">
@@ -90,7 +90,7 @@
 		</div>
 	  </div>
 	  </form>
-	<p class="Itext">培根后台管理系统<span>(苏州聚源创世信息科技有限公司技术支持)</span></p>
+	<p class="Itext">易起云后台管理系统<span>(苏州聚源创世信息科技有限公司技术支持)</span></p>
 	<div class='success'></div>
 	<div class='authent'>
 	  <div class="loader" style="height: 80px;width: 80px;">

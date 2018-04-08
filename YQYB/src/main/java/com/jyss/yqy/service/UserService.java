@@ -48,4 +48,14 @@ public interface UserService {
 			@Param("bCode") String bCode, @Param("bIsPay") String bIsPay,
 			@Param("isChuangke") String isChuangke,
 			@Param("isAuth") String isAuth, @Param("uuid") String uuid);
+
+	/**
+	 * 设置转账
+	 *
+	 * @param isTransfer
+	 * @param ids
+	 * @return
+	 *
+	 */
+	int upIsTransfer(@Param("ids") List<String> ids,@Param("isTransfer") String isTransfer);
 }
