@@ -12,6 +12,7 @@ public interface ThdMapper {
 	/**
 	 * 获取提货点用户信息
 	 * 
+	 * @param name
 	 * @return
 	 */
 	List<Thd> getThdBy(@Param("name") String name);
@@ -19,6 +20,7 @@ public interface ThdMapper {
 	/**
 	 * 获取提货点商品信息
 	 * 
+	 * @param name
 	 * @return
 	 */
 	List<ThOrders> getThSpBy(@Param("name") String name);
@@ -26,12 +28,12 @@ public interface ThdMapper {
 	/**
 	 * 判断当前登录用户是否唯一
 	 * 
+	 * @param name
 	 * @return
 	 */
 	int getThdNum(@Param("name") String name);
 
-	int upHtPwd(@Param("name") String name, @Param("password") String password,
-			@Param("salt") String salt);
+
 
 	/**
 	 * 增加用户
@@ -73,13 +75,13 @@ public interface ThdMapper {
 	 * 根据电话查询用户
 	 */
 
-	List<Thd> findThdByTel(@Param("tel") String tel);
+	public List<Thd> findThdByTel(@Param("tel") String tel);
 
 	/**
 	 * 修改密码
 	 */
 
-	void updatePwd(@Param("tel") String tel,
+	public void updatePwd(@Param("tel") String tel,
 			@Param("password") String password, @Param("salt") String salt);
 
 }

@@ -50,11 +50,7 @@ public class ThdServiceImpl implements ThdService {
 		return thdMapper.getThdNum(name);
 	}
 
-	@Override
-	public int upHtPwd(String name, String password, String salt) {
-		// TODO Auto-generated method stub
-		return thdMapper.upHtPwd(name, password, salt);
-	}
+
 
 	public Thd thdCl(Thd t) {
 		t.setProvince(getValue("2", String.valueOf(t.getProvinceId())));

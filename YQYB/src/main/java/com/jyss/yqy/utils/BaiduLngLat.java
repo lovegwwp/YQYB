@@ -58,7 +58,7 @@ public class BaiduLngLat {
 		 * 把代码中的ak值（红色字部分）更改为你自己的ak值，在百度地图API中注册一下就有。 调用方式：
 		 */
 
-		Map<String, Double> map = BaiduLngLat.getLngAndLat("杭州市长河路");
+ 		Map<String, Double> map = BaiduLngLat.getLngAndLat("杭州式长河路");
 		System.out.println("经度：" + map.get("lng") + "---纬度：" + map.get("lat"));
 	}
 }
