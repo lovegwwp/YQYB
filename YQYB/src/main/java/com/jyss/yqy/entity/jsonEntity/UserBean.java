@@ -28,6 +28,7 @@ public class UserBean {
 	private String area;//
 	private Float totalPv;    //剩余返还pv
 
+
 	public Integer getId() {
 		return id;
 	}
