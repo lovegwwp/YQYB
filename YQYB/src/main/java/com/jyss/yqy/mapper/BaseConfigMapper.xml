@@ -75,7 +75,7 @@
   <!--查询所有-->
   <select id="getAllShare" resultMap="BsMap"><!-- nullif(CONCAT('${httpUrl}',new_pic), '${httpUrl}') as -->
 <!--     select *,DATE_FORMAT(b.modify_time, '%Y-%m-%d %H:%i:%s' ) as xgsj from  p_base_config b -->
-    select id,title,content,link_url,CONCAT('${httpUrl}',b.link_pic) as link_pic,share_key,status from  p_base_share b
+    select id,title,content,link_url,link_pic,share_key,status from  p_base_share b
     <where> 
         1=1	  
 		<if test="title != null and title !=''">and b.title  LIKE CONCAT('%',#{title},'%')  </if>

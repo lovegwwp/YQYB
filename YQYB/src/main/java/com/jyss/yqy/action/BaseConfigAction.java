@@ -4,6 +4,10 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.jyss.yqy.constant.Constant;
+import com.jyss.yqy.service.AccountUserService;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +29,100 @@ import com.jyss.yqy.utils.Utils;
 public class BaseConfigAction {
 	@Autowired
 	private BaseConfigService bcService;
+	@Autowired
+	private AccountUserService auService;
+
+
+	//注册协议//
+	@RequestMapping("/signagree")
+	public String signagreeTz() {
+		return "signagree";
+	}
+
+	//合伙人说明
+	@RequestMapping("/hhrsm")
+	public String hhrsmTz() {
+		return "hhrsm";
+	}
+
+	//常见问题
+	@RequestMapping("/issues")
+	public String issuesTz() {
+		return "issues";
+	}
+
+	//分享链接
+	@RequestMapping("/sharelink")
+	public String sharelinkTz() {
+		return "sharelink";
+	}
+
+
+
+    //////获取注册协议////////
+	@RequestMapping("/getSignagree")
+	@ResponseBody
+	public List<BaseConfig> getSignagree() {
+		List<BaseConfig> BaseConfigList = bcService.getAllConfig("",
+				"config.signup.b");
+		Subject us = SecurityUtils.getSubject();
+		String lName = us.getPrincipal().toString();
+		if (lName.equals("") || lName == null) {
+			lName= "异常用户";
+		}
+		auService.addLog(lName,"文字管理-注册协议查询");
+		return BaseConfigList;
+	}
+
+	//////获取合伙人说明////////
+	@RequestMapping("/getHhrsm")
+	@ResponseBody
+	public List<BaseConfig> getHhrsm() {
+		List<BaseConfig> BaseConfigList = bcService.getAllConfig("",
+				"config.dljb.b");
+		Subject us = SecurityUtils.getSubject();
+		String lName = us.getPrincipal().toString();
+		if (lName.equals("") || lName == null) {
+			lName= "异常用户";
+		}
+		auService.addLog(lName,"文字管理-合伙人说明查询");
+		return BaseConfigList;
+	}
+
+	//////常见问题////////
+	@RequestMapping("/getIssues")
+	@ResponseBody
+	public List<BaseConfig> getIssues() {
+
+		List<BaseConfig> BaseConfigListBy = bcService.getAllConfig(null,
+				"config.issue.b");
+		Subject us = SecurityUtils.getSubject();
+		String lName = us.getPrincipal().toString();
+		if (lName.equals("") || lName == null) {
+			lName= "异常用户";
+		}
+		auService.addLog(lName,"文字管理-常见问题查询");
+		return BaseConfigListBy;
+	}
+
+	//////用户分享////////
+	@RequestMapping("/getSharelink")
+	@ResponseBody
+	public List<BaseShare> getSharelink() {
+
+		List<BaseShare> BaseConfigList = bcService.getAllShare("", "",
+				"chunagke.sign", "1");
+		Subject us = SecurityUtils.getSubject();
+		String lName = us.getPrincipal().toString();
+		if (lName.equals("") || lName == null) {
+			lName= "异常用户";
+		}
+		auService.addLog(lName,"文字管理-用户分享查询");
+		return BaseConfigList;
+	}
+
+ ///////////////////旧版本接口//////////////////////////////
+
 
 	// //常见问题//////
 	@RequestMapping("/cjwt")
@@ -62,16 +160,25 @@ public class BaseConfigAction {
 	public ResponseEntity addCzxyInfo(BaseConfig baseConfig) {
 		// TODO Auto-generated method stub
 		int count = 0;
+		Subject us = SecurityUtils.getSubject();
+		String lName = us.getPrincipal().toString();
+		if (lName.equals("") || lName == null) {
+			lName= "异常用户";
+		}
+		String title="";
 		if (baseConfig.getId() == 0) {
 			// 新增
+			title ="文字管理-新增常见问题";
 			baseConfig.setKey("config.issue.b");
 			count = bcService.insertConfig(baseConfig);
 		} else {
 			// 修改
+			title ="文字管理-编辑常见问题";
 			count = bcService.updateByPrimaryKey(baseConfig);
 		}
 
 		if (count == 1) {
+			auService.addLog(lName,title);
 			return new ResponseEntity("OK", "操作成功！");
 		}
 		return new ResponseEntity("NO", "操作失败！");
@@ -126,16 +233,25 @@ public class BaseConfigAction {
 	public ResponseEntity addZcxyInfo(BaseConfig baseConfig) {
 		// TODO Auto-generated method stub
 		int count = 0;
+		Subject us = SecurityUtils.getSubject();
+		String lName = us.getPrincipal().toString();
+		if (lName.equals("") || lName == null) {
+			lName= "异常用户";
+		}
+		String title="";
 		if (baseConfig.getId() == 0) {
 			// 新增
+			title ="文字管理-新增注册协议";
 			baseConfig.setKey("config.signup.b");
 			count = bcService.insertConfig(baseConfig);
 		} else {
 			// 修改
+			title ="文字管理-编辑注册协议";
 			count = bcService.updateByPrimaryKey(baseConfig);
 		}
 
 		if (count == 1) {
+			auService.addLog(lName,title);
 			return new ResponseEntity("OK", "操作成功！");
 		}
 		return new ResponseEntity("NO", "操作失败！");
@@ -190,16 +306,25 @@ public class BaseConfigAction {
 	public ResponseEntity addDlsmInfo(BaseConfig baseConfig) {
 		// TODO Auto-generated method stub
 		int count = 0;
+		Subject us = SecurityUtils.getSubject();
+		String lName = us.getPrincipal().toString();
+		if (lName.equals("") || lName == null) {
+			lName= "异常用户";
+		}
+		String title="";
 		if (baseConfig.getId() == 0) {
 			// 新增
+			title ="文字管理-新增合伙人说明";
 			baseConfig.setKey("config.dljb.b");
 			count = bcService.insertConfig(baseConfig);
 		} else {
 			// 修改
+			title ="文字管理-编辑合伙人说明";
 			count = bcService.updateByPrimaryKey(baseConfig);
 		}
 
 		if (count == 1) {
+			auService.addLog(lName,title);
 			return new ResponseEntity("OK", "操作成功！");
 		}
 		return new ResponseEntity("NO", "操作失败！");
@@ -285,6 +410,57 @@ public class BaseConfigAction {
 			return new ResponseEntity("OK", "操作成功！");
 		}
 		return new ResponseEntity("NO", "操作失败！");
+	}
+
+	@RequestMapping("/addShareLink")
+	@ResponseBody
+	public ResponseEntity addShareLink(BaseShare bs) {
+		// TODO Auto-generated method stub
+		int count = 0;
+		Subject us = SecurityUtils.getSubject();
+		String lName = us.getPrincipal().toString();
+		if (lName.equals("") || lName == null) {
+			lName= "异常用户";
+		}
+		String title="";
+		if (bs.getId() == 0) {
+			// 新增
+			title ="文字管理-新增分享链接";
+			bs.setShareKey("chunagke.sign");
+			count = bcService.insertShare(bs);
+		} else {
+			// 修改
+			title ="文字管理-编辑分享链接";
+			auService.addLog(lName,title);
+			count = bcService.updateShare(bs);
+		}
+
+		if (count == 1) {
+			return new ResponseEntity("OK", "操作成功！");
+		}
+		return new ResponseEntity("NO", "操作失败！");
+	}
+
+	@RequestMapping("/upLoadImg")
+	@ResponseBody
+	public ResponseEntity upLoadImg(@RequestParam("imgFile") MultipartFile imgFile, HttpServletRequest request) {
+		// TODO Auto-generated method stub
+		int count = 0;
+		String filePath = request.getSession().getServletContext()
+				.getRealPath("/");
+		System.out.print("===================>"+filePath);
+		int index = filePath.lastIndexOf("YQYB");
+		filePath = filePath.substring(0, index) + "uploadShareImg/"
+				+ CommTool.getFileNameOnlyNum(imgFile.getOriginalFilename());
+		if (imgFile.getSize() > 5400000L) {
+			return new ResponseEntity("false", "文件过大，应不超过5M!");
+		}
+		if (!Utils.saveUpload(imgFile, filePath)) {
+			return new ResponseEntity("false", "文件上传失败！");
+		}
+		filePath = filePath.substring(filePath.indexOf("uploadShareImg"));
+        System.out.print("===================>"+filePath);
+		return new ResponseEntity("true",Constant.httpUrl+filePath);
 	}
 
 	@RequestMapping("/delYhfxInfo")
