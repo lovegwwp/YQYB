@@ -31,7 +31,7 @@ public class JRecordAction {
 
 
 	/**
-	 * 添加市场用户
+	 * 添加市场用户      zjUid = 总监id ，uAccount = 下级的推荐码 ，pAccount = 上级的推荐码
 	 */
 	@RequestMapping(value = "/jrc/addJRecord", method = RequestMethod.POST)
 	@ResponseBody
@@ -84,7 +84,7 @@ public class JRecordAction {
 
 
 	/**
-	 * 搜索展示市场用户
+	 * 搜索展示市场用户     account = 用户的推荐码 ，uId = 用户id
 	 */
 	@RequestMapping("/jrc/listByAccount")
 	@ResponseBody
@@ -111,7 +111,7 @@ public class JRecordAction {
 
 
 	/**
-	 * 删除市场用户
+	 * 删除市场用户      strIds = 数据库自增id
 	 */
 	@RequestMapping("/jrc/deleteJrc")
 	@ResponseBody
@@ -123,7 +123,7 @@ public class JRecordAction {
 
 
 	/**
-	 * 查询市场总监
+	 * 查询市场总监       第4层
 	 */
 	@RequestMapping("/jrc/getRecord")
 	@ResponseBody

@@ -31,7 +31,7 @@ public class JRecordZlAction {
 
 
     /**
-     * 添加市场助理
+     * 添加市场助理     uId = 总监助理id ，zjUid = 总监id ，zjCode = 总监的推荐码 ，zjName = 市场名称
      */
     @RequestMapping("/insertZl")
     @ResponseBody
