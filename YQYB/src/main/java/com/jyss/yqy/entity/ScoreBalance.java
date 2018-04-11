@@ -17,6 +17,10 @@ public class ScoreBalance {
 	private String orderSn;// 订单号
 	private String cjsj;// /格式化创建时间
 	private Integer status;// 1=收入 2=支出
+	private Integer secoCate;//1支付宝，2微信，3线下充值
+	private String zzCode;  //
+
+
 
 	public Integer getId() {
 		return id;
@@ -120,5 +124,21 @@ public class ScoreBalance {
 
 	public void setStatus(Integer status) {
 		this.status = status;
+	}
+
+	public Integer getSecoCate() {
+		return secoCate;
+	}
+
+	public void setSecoCate(Integer secoCate) {
+		this.secoCate = secoCate;
+	}
+
+	public String getZzCode() {
+		return zzCode;
+	}
+
+	public void setZzCode(String zzCode) {
+		this.zzCode = zzCode;
 	}
 }

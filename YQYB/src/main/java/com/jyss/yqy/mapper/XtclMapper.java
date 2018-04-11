@@ -6,7 +6,9 @@ import org.apache.ibatis.annotations.Param;
 
 import com.jyss.yqy.entity.BaseArea;
 import com.jyss.yqy.entity.Xtcl;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface XtclMapper {
 	/**
 	 * 根据标识符取得维护常量
@@ -45,15 +47,10 @@ public interface XtclMapper {
 	List<Xtcl> getClsCl(@Param("bz_type") String bz_type,
 			@Param("pid") String pid);
 
-	/**
-	 * 根据标识符取得标志对应常量值
-	 * 
-	 * @param bz_type
-	 * @param bz_id
-	 * @return
-	 */
-	Xtcl getClsValue(@Param("bz_type") String bz_type,
-			@Param("bz_id") String bz_id);
+
+	//根据标识符取得标志对应常量值
+	Xtcl getClsValue(@Param("bz_type") String bz_type,@Param("bz_id") String bz_id);
+
 
 	/**
 	 * 新增
@@ -65,9 +62,6 @@ public interface XtclMapper {
 
 	/**
 	 * 修改
-	 * 
-	 * @param cl
-	 * @return
 	 */
 	int updateCl(Xtcl cl);
 

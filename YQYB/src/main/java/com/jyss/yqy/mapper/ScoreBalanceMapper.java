@@ -38,8 +38,15 @@ public interface ScoreBalanceMapper {
 	 * @return
 	 */
 	int addShoppingScoreBalance(ScoreBalance sb);
-	
-	
+
+
+	//插入报单券充值记录
+	int insertEntryScore(ScoreBalance sb);
+
+	//查询充值记录
+	List<ScoreBalance> getEntryScoreBalance(@Param("secoCate") Integer secoCate);
+
+
 	//查询当天现金总积分(实际时间)
 	float selectTodayCashScore(@Param("category") int category);
 	

@@ -19,7 +19,9 @@
         <result property="title" column="title"  />
         <result property="cjsj" column="cjsj"  />
         <result property="status" column="status"  />
-         <result property="orderSn" column="order_sn"  />
+		<result property="orderSn" column="order_sn"  />
+		<result property="secoCate" column="seco_cate"  />
+		<result property="zzCode" column="zz_code"  />
 
     </resultMap>           
      
@@ -64,6 +66,28 @@
         insert into u_shopping_score_balance(id,end,u_uuid,category,type,score,jy_score,order_sn,created_at,js_time,status) 
         values(null,#{end},#{uUuid},#{category},#{type},#{score},#{jyScore},'B',#{createdAt},now(),#{status})              
     </insert>
+
+
+
+	<!--//////// 充值 ////////-->
+	<!--插入报单券充值记录-->
+	<insert id="insertEntryScore" parameterType="com.jyss.yqy.entity.ScoreBalance"
+			useGeneratedKeys="true" keyProperty="id">
+		insert into u_entry_score_balance(id,end,u_uuid,category,type,score,
+		jy_score,order_sn,created_at,js_time,status)
+		values(null,#{end},#{uUuid},#{category},#{type},#{score},
+		#{jyScore},#{orderSn},now(),now(),#{status})
+	</insert>
+
+	<!--查询充值记录-->
+	<select id="getEntryScoreBalance" parameterType="int" resultMap="sblResultMap">
+		select * from
+		<where>
+			<if test="">and seco_cate = #{secoCate}</if>
+			and category = 11 and status = 1
+		</where>
+		order by created_at
+	</select>
 
 
 	<!--////////现金积分（股券）////////-->

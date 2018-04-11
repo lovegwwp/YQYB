@@ -71,21 +71,21 @@
 
     <!-- 通过用户的uuid查询用户 -->
     <select id="getUserByUuid" resultMap="ubResultMap">           
-	      select u.id,a.real_name,u.is_chuangke,u.is_auth  from u_user u left join u_user_auth a on u.uuid = a.u_uuid					
-         <where> 
-              1 = 1
-              <if test="uuid != null and uuid !=''"> and u.uuid = #{uuid}  
-              and u.status = 1 
-              </if> 			  		
-		 </where> 
-    </select> 
+        select id,uuid,nick,pay_pwd,is_chuangke,shopping_score,cash_score,
+        is_auth,b_code,total_pv,elect_score,bd_score
+        from u_user
+        <where>
+            <if test="uuid != null and uuid !=''"> and uuid = #{uuid}</if>
+            and status = 1
+        </where>
+    </select>
     
     <!-- 通过用户的id查询用户 -->
     <select id="getUserById" resultMap="ubResultMap">
 	      select * from u_user
          <where> 
               <if test="id != null and id !=''"> and id = #{id}</if>
-              <if test="isChuangke != null and isChuangke !=''"> and is_chuangke = #{isChuangke}</if>
+              <if test="isChuangke != null and isChuangke != ''"> and is_chuangke = #{isChuangke}</if>
               and status = 1
          </where>
     </select> 
@@ -118,6 +118,9 @@
     		<if test="cashScore != null and cashScore != '' or cashScore == 0">cash_score = #{cashScore},</if>
     		<if test="shoppingScore != null and shoppingScore != ''or shoppingScore == 0">shopping_score = #{shoppingScore},</if>
     		<if test="totalPv != null and totalPv != ''or totalPv == 0">total_pv = #{totalPv}</if>
+            <if test="electScore != null and electScore != ''or electScore == 0">elect_score = #{electScore},</if>
+            <if test="bdScore != null and bdScore != ''or bdScore == 0">bd_score = #{bdScore},</if>
+            <if test="borrow != null and borrow != ''or borrow == 0">borrow = #{borrow},</if>
     	</set>
     	where id = #{id} 
     </update>
