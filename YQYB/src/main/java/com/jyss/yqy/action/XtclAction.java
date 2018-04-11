@@ -122,6 +122,15 @@ public class XtclAction {
 		auService.addLog(loginName,title);
 		return clListBy;
 	}
+
+	public List<Xtcl> getClsCommon2(String loginName,String title) {
+		if (loginName.equals("") || loginName == null) {
+			loginName ="异常用户";
+		}
+		List<Xtcl> clListBy = clService.getClsCl(null, "-1");
+		auService.addLog(loginName,title);
+		return clListBy;
+	}
 	/********************************/
 
 
@@ -311,7 +320,7 @@ public class XtclAction {
 		Subject us = SecurityUtils.getSubject();
 		String lName = us.getPrincipal().toString();
 		String title ="常量管理-其他比例查询";
-		return getClsCommon("gqsz_type",lName,title);
+		return getClsCommon2(lName,title);
 	}
 
 	@RequestMapping("/addotherbl")
