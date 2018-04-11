@@ -73,20 +73,21 @@
 	<!--插入报单券充值记录-->
 	<insert id="insertEntryScore" parameterType="com.jyss.yqy.entity.ScoreBalance"
 			useGeneratedKeys="true" keyProperty="id">
-		insert into u_entry_score_balance(id,end,u_uuid,category,type,score,
+		insert into u_entry_score_balance(id,end,u_uuid,category,seco_cate,type,score,
 		jy_score,order_sn,created_at,js_time,status)
-		values(null,#{end},#{uUuid},#{category},#{type},#{score},
+		values(null,#{end},#{uUuid},#{category},#{secoCate},#{type},#{score},
 		#{jyScore},#{orderSn},now(),now(),#{status})
 	</insert>
 
 	<!--查询充值记录-->
 	<select id="getEntryScoreBalance" parameterType="int" resultMap="sblResultMap">
-		select * from
+		select *,DATE_FORMAT(created_at, '%Y-%m-%d %H:%i:%s') cjsj
+		from u_entry_score_balance
 		<where>
-			<if test="">and seco_cate = #{secoCate}</if>
+			<if test="secoCate != null ">and seco_cate = #{secoCate}</if>
 			and category = 11 and status = 1
 		</where>
-		order by created_at
+		order by created_at desc
 	</select>
 
 
@@ -279,8 +280,7 @@
 	</select>
 
 
-
-	<!--////////电子券积分////////-->
+	<!--//////// 电子券积分 ////////-->
 	<!-- 查询当日购物总积分(实际时间) -->
 	<select id="selectTodayElecScore" parameterType="int" resultType="float">
 		select IFNULL(sum(score),0.00) from u_elec_score_balance

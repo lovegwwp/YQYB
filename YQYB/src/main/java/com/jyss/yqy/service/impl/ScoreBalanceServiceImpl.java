@@ -68,7 +68,7 @@ public class ScoreBalanceServiceImpl implements ScoreBalanceService {
                         double syMoney = double1 - payAmount;
                         Xtcl xtcl = new Xtcl();
                         xtcl.setId(xtcl1.getId());
-                        xtcl.setBz_type(syMoney + "");
+                        xtcl.setBz_value(syMoney + "");
                         xtclMapper.updateCl(xtcl);
 
                         return new ResponseEntity("true","购买成功！");
@@ -82,8 +82,8 @@ public class ScoreBalanceServiceImpl implements ScoreBalanceService {
     }
 
     @Override
-    public List<ScoreBalance> getEntryScoreBalance(Integer tjType) {
-        return scoreBalanceMapper.getEntryScoreBalance(tjType);
+    public List<ScoreBalance> getEntryScoreBalance(Integer secoCate) {
+        return scoreBalanceMapper.getEntryScoreBalance(secoCate);
     }
 
 

@@ -13,5 +13,5 @@ public interface ScoreBalanceService {
                                  @Param("zzCode")String zzCode);
 
 
-    List<ScoreBalance> getEntryScoreBalance(@Param("tjType")Integer tjType);
+    List<ScoreBalance> getEntryScoreBalance(@Param("secoCate")Integer secoCate);
 }

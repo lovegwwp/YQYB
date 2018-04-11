@@ -7,35 +7,24 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ScoreBalanceMapper {
+
 	/**
 	 * 现金积分查询
-	 * 
-	 * @param uUuid
-	 * @return
 	 */
 	List<ScoreBalance> getCashScoreBalance(@Param("uUuid") String uUuid);
 
 	/**
 	 * 购物积分查询
-	 * 
-	 * @param uUuid
-	 * @return
 	 */
 	List<ScoreBalance> getShoppingScoreBalance(@Param("uUuid") String uUuid);
 
 	/**
 	 * 现金积分插入
-	 * 
-	 * @param sb
-	 * @return
 	 */
 	int addCashScoreBalance(ScoreBalance sb);
 
 	/**
 	 * 购物积分插入
-	 * 
-	 * @param sb
-	 * @return
 	 */
 	int addShoppingScoreBalance(ScoreBalance sb);
 
@@ -47,6 +36,8 @@ public interface ScoreBalanceMapper {
 	List<ScoreBalance> getEntryScoreBalance(@Param("secoCate") Integer secoCate);
 
 
+
+	//////// 现金积分（股券）////////
 	//查询当天现金总积分(实际时间)
 	float selectTodayCashScore(@Param("category") int category);
 	
@@ -60,10 +51,12 @@ public interface ScoreBalanceMapper {
 	float selectCashScoreByWek1(@Param("category") int category);
 	
 	//查询时间段现金总积分
-	float selectCashScoreByDay(@Param("category") int category,@Param("beginTime")String beginTime,@Param("endTime")String endTime);
+	float selectCashScoreByDay(@Param("category") int category,@Param("beginTime")String beginTime,
+							   @Param("endTime")String endTime);
 
 	//查询时间段现金总积分(实际时间)
-	float selectCashScoreByDay1(@Param("category") int category,@Param("beginTime")String beginTime,@Param("endTime")String endTime);
+	float selectCashScoreByDay1(@Param("category") int category,@Param("beginTime")String beginTime,
+								@Param("endTime")String endTime);
 
 	//查询月份现金总积分
 	float selectCashScoreByMonth(@Param("category") int category, @Param("month")String month);
@@ -73,6 +66,7 @@ public interface ScoreBalanceMapper {
 
 
 
+	//////// 购物积分（消费券）////////
 	//查询当日购物总积分(实际时间)
 	float selectTodayShoppingScore(@Param("category") int category);
 	
@@ -86,10 +80,12 @@ public interface ScoreBalanceMapper {
 	float selectShoppingScoreByWek1(@Param("category") int category);
 		
 	//查询时间段现金总积分
-	float selectShoppingScoreByDay(@Param("category") int category,@Param("beginTime")String beginTime,@Param("endTime")String endTime);
+	float selectShoppingScoreByDay(@Param("category") int category,@Param("beginTime")String beginTime,
+								   @Param("endTime")String endTime);
 
 	//查询时间段现金总积分(实际时间)
-	float selectShoppingScoreByDay1(@Param("category") int category,@Param("beginTime")String beginTime,@Param("endTime")String endTime);
+	float selectShoppingScoreByDay1(@Param("category") int category,@Param("beginTime")String beginTime,
+									@Param("endTime")String endTime);
 
 	//查询月份现金总积分
 	float selectShoppingScoreByMonth(@Param("category") int category, @Param("month")String month);
@@ -99,6 +95,7 @@ public interface ScoreBalanceMapper {
 
 
 
+	//////// 电子券积分 ////////
 	//查询当日电子券总积分(实际时间)
 	float selectTodayElecScore(@Param("category") int category);
 
@@ -112,10 +109,12 @@ public interface ScoreBalanceMapper {
 	float selectElecScoreByWek1(@Param("category") int category);
 
 	//查询时间段电子券总积分
-	float selectElecScoreByDay(@Param("category") int category,@Param("beginTime")String beginTime,@Param("endTime")String endTime);
+	float selectElecScoreByDay(@Param("category") int category,@Param("beginTime")String beginTime,
+							   @Param("endTime")String endTime);
 
 	//查询时间段电子券总积分(实际时间)
-	float selectElecScoreByDay1(@Param("category") int category,@Param("beginTime")String beginTime,@Param("endTime")String endTime);
+	float selectElecScoreByDay1(@Param("category") int category,@Param("beginTime")String beginTime,
+								@Param("endTime")String endTime);
 
 	//查询月份电子券总积分
 	float selectElecScoreByMonth(@Param("category") int category, @Param("month")String month);

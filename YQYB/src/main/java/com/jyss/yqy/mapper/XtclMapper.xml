@@ -92,7 +92,7 @@
     
     <update id="updateCl" parameterType="com.jyss.yqy.entity.Xtcl" >
         update p_xt_cl set bz_value = #{bz_value}
-        where id=#{id}
+        where id = #{id}
     </update>
     
     <delete id="deleteCl" parameterType="java.util.List">
