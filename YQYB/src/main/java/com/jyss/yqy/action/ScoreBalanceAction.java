@@ -33,9 +33,6 @@ public class ScoreBalanceAction {
     }
 
 
-
-
-
     /**
      * 条件查询充值记录        tjType: 1支付宝，2微信，3财务充值
      */
@@ -65,8 +62,6 @@ public class ScoreBalanceAction {
         return scoreBalanceService.selectTotalBdScore(tjType, beginTime, endTime);
 
     }
-
-
 
 
 

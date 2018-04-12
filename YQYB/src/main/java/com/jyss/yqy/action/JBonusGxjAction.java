@@ -18,7 +18,7 @@ public class JBonusGxjAction {
 
 
 	/**
-	 * 查询当日总金额
+	 * 查询昨日总金额
 	 */
 	@RequestMapping("/showGxj/list")
 	@ResponseBody

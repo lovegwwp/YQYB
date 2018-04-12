@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 public interface JBonusGxjMapper {
 
 
-	//查询当日总金额
+	//查询昨日总金额
 	float selectGxjTotal();
 
 	//查询本周总金额
