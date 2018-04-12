@@ -39,9 +39,12 @@ public interface UserService {
 	/**
 	 * 修改个人。。。等等。。状态
 	 * 
-	 * @param pwd
-	 * @param salt
-	 * @param salt
+	 * @param status
+	 * @param bIsPay
+	 * @param bCode
+	 * @param isChuangke
+	 * @param isAuth
+	 * @param uuid
 	 * @return
 	 */
 	int upUserAllStatus(@Param("status") String status,
@@ -58,4 +61,12 @@ public interface UserService {
 	 *
 	 */
 	int upIsTransfer(@Param("ids") List<String> ids,@Param("isTransfer") String isTransfer);
+
+	/**
+	 * //查询是否重复，根据bcode和uuid
+	 * @param uuid
+	 * @param bCode
+	 * @return
+	 */
+	List<UserBean> getUserIsOnlyBy(@Param("uuid") String uuid,@Param("bCode") String bCode);
 }

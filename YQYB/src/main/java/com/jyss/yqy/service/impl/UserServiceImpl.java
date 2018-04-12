@@ -55,4 +55,16 @@ public class UserServiceImpl implements UserService {
 		return userMapper.upIsTransfer(ids, isTransfer);
 	}
 
+	/**
+	 * //查询是否重复，根据bcode和uuid
+	 * @param uuid
+	 * @param bCode
+	 * @return
+	 */
+
+	@Override
+	public List<UserBean> getUserIsOnlyBy(@Param("uuid") String uuid, @Param("bCode") String bCode) {
+		return userMapper.getUserIsOnlyBy( uuid,  bCode);
+	}
+
 }

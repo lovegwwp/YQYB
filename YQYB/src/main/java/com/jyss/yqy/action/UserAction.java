@@ -6,6 +6,7 @@ import java.util.List;
 import com.jyss.yqy.constant.Constant;
 import com.jyss.yqy.entity.Thd;
 import com.jyss.yqy.service.AccountUserService;
+import com.jyss.yqy.utils.FirstLetterUtil;
 import com.jyss.yqy.utils.Utils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
@@ -169,8 +170,8 @@ public class UserAction {
 		return new ResponseEntity("false", "操作失败！");
 	}
 
-	// /status/0=审核中 1=通过 2=未通过
-	// /isAuth=1=已提交 2=审核通过3=不通过'
+	// /status/0=审核中 1=通过 2=未通过 u_user_auth
+	// /isAuth=1=已提交 2=审核通过3=不通过'u_user
 	@RequestMapping("/dlrAgree")
 	@ResponseBody
 	public ResponseEntity dlrAgree(@RequestParam("uuid") String uuid) {
@@ -181,9 +182,19 @@ public class UserAction {
 		}
 		int count = 0;
 		count = userService.upUserSh("1", "0", uuid);
+		String realName ="";
+		if(uaulist.get(0)!=null&&uaulist.get(0).getRealName()!=null){
+			realName = uaulist.get(0).getRealName();
+		}
+		String bcode = FirstLetterUtil.getFirstLetter(realName);
+		//判断一次重复
+		List<UserBean> ull = userService.getUserIsOnlyBy(null,bcode);
+		if(ull!=null&&ull.size()>0){
+			bcode = FirstLetterUtil.getFirstLetter(realName);
+		}
 		if (count == 1) {
 			count = 0;
-			count = userService.upUserAllStatus("", "", "", "", "2", uuid);
+			count = userService.upUserAllStatus("", bcode, "", "", "2", uuid);
 			if (count == 1) {
 				//计算管理奖
 				/*ResponseEntity entity = userRecordBService.insertJBonusGlj(uuid);

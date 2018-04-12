@@ -63,6 +63,14 @@ public interface UserMapper {
 	 *
 	 */
 	int upIsTransfer(@Param("ids") List<String> ids,@Param("isTransfer") String isTransfer);
+
+	/**
+	 * //查询是否重复，根据bcode和uuid
+	 * @param uuid
+	 * @param bCode
+	 * @return
+	 */
+	List<UserBean> getUserIsOnlyBy(@Param("uuid") String uuid,@Param("bCode") String bCode);
 	
 
 }

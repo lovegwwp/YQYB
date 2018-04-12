@@ -132,6 +132,15 @@
             #{id}
         </foreach>
     </update>
+    <!--查询是否重复，根据bcode和uuid  -->
+    <select id="getUserIsOnlyBy" resultMap="ubResultMap">
+        select * from u_user
+        <where>
+            1 = 1
+            <if test="bCode != null and bCode !=''">and b_code = #{bCode} </if>
+            <if test="uuid != null and uuid !=''"> and uuid = #{uuid} </if>
+        </where>
+    </select>
 
 
 </mapper>
