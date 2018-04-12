@@ -7,8 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import com.jyss.yqy.mapper.JBonusScjMapper;
 import com.jyss.yqy.mapper.ScoreBalanceMapper;
 import com.jyss.yqy.service.JBonusScjService;
@@ -45,13 +43,12 @@ public class JBonusScjServiceImpl implements JBonusScjService{
 	 * 昨日列表
 	 */
 	@Override
-	public Page<JBonusScj> selectJBonusScj(Integer zjUid,int page,int limit){
-
-		PageHelper.startPage(page, limit);
+	public List<JBonusScj> selectJBonusScj(Integer zjUid){
+		//PageHelper.startPage(page, limit);
 		List<JBonusScj> list = bonusScjMapper.selectJBonusScj(zjUid);
-		PageInfo<JBonusScj> pageInfo = new PageInfo<JBonusScj>(list);
-
-		return new Page(pageInfo);
+		//PageInfo<JBonusScj> pageInfo = new PageInfo<JBonusScj>(list);
+		//return new Page(pageInfo);
+		return list;
 	}
 
 
@@ -78,13 +75,11 @@ public class JBonusScjServiceImpl implements JBonusScjService{
 	 * 本周列表总值
 	 */
 	@Override
-	public Page<JBonusScj> selectJBonusScjWek(Integer zjUid,int page,int limit){
-
-		PageHelper.startPage(page, limit);
+	public List<JBonusScj> selectJBonusScjWek(Integer zjUid){
+		//PageHelper.startPage(page, limit);
 		List<JBonusScj> list = bonusScjMapper.selectJBonusScjWek(zjUid);
-		PageInfo<JBonusScj> pageInfo = new PageInfo<JBonusScj>(list);
-
-		return new Page(pageInfo);
+		//PageInfo<JBonusScj> pageInfo = new PageInfo<JBonusScj>(list);
+		return list;
 		
 	}
 
@@ -112,13 +107,11 @@ public class JBonusScjServiceImpl implements JBonusScjService{
 	 * 按两个日期查询个人列表总值
 	 */
 	@Override
-	public Page<JBonusScj> selectJBonusScjByDay(Integer zjUid,int page,int limit,String beginTime,String endTime){
-
-		PageHelper.startPage(page, limit);
+	public List<JBonusScj> selectJBonusScjByDay(Integer zjUid,String beginTime,String endTime){
+		//PageHelper.startPage(page, limit);
 		List<JBonusScj> list = bonusScjMapper.selectJBonusScjByDay(zjUid, beginTime, endTime);
-		PageInfo<JBonusScj> pageInfo = new PageInfo<JBonusScj>(list);
-
-		return new Page(pageInfo);
+		//PageInfo<JBonusScj> pageInfo = new PageInfo<JBonusScj>(list);
+		return list;
 	}
 
 
@@ -144,13 +137,11 @@ public class JBonusScjServiceImpl implements JBonusScjService{
 	 * 按月查询查询个人列表总值
 	 */
 	@Override
-	public Page<JBonusScj> selectJBonusScjByMonth(Integer zjUid,int page,int limit,String month){
-
-		PageHelper.startPage(page, limit);
+	public List<JBonusScj> selectJBonusScjByMonth(Integer zjUid,String month){
+		//PageHelper.startPage(page, limit);
 		List<JBonusScj> list = bonusScjMapper.selectJBonusScjByMonth(zjUid, month);
-		PageInfo<JBonusScj> pageInfo = new PageInfo<JBonusScj>(list);
-
-		return new Page(pageInfo);
+		//PageInfo<JBonusScj> pageInfo = new PageInfo<JBonusScj>(list);
+		return list;
 	}
 
 
@@ -159,13 +150,11 @@ public class JBonusScjServiceImpl implements JBonusScjService{
 	 * 查询个人总值列表
 	 */
 	@Override
-	public Page<JBonusScj> selectTotalJBonusScj(int page,int limit){
-
-		PageHelper.startPage(page, limit);
+	public List<JBonusScj> selectTotalJBonusScj(){
+		//PageHelper.startPage(page, limit);
 		List<JBonusScj> list = bonusScjMapper.selectTotalJBonusScj();
-		PageInfo<JBonusScj> pageInfo = new PageInfo<JBonusScj>(list);
-
-		return new Page(pageInfo);
+		//PageInfo<JBonusScj> pageInfo = new PageInfo<JBonusScj>(list);
+		return list;
 	}
 
 

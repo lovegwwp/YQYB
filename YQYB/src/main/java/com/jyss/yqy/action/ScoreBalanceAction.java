@@ -1,10 +1,6 @@
 package com.jyss.yqy.action;
 
 
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
-import com.jyss.yqy.entity.JRecord;
-import com.jyss.yqy.entity.Page;
 import com.jyss.yqy.entity.ResponseEntity;
 import com.jyss.yqy.entity.ScoreBalance;
 import com.jyss.yqy.service.ScoreBalanceService;
@@ -45,15 +41,14 @@ public class ScoreBalanceAction {
      */
     @RequestMapping("/ht/bill")
     @ResponseBody
-    public Page<ScoreBalance> selectBdScore(@RequestParam("tjType") Integer tjType,
+    public List<ScoreBalance> selectBdScore(@RequestParam("tjType") Integer tjType,
                                             @RequestParam("beginTime") String beginTime,
-                                            @RequestParam("endTime") String endTime,
-                                            @RequestParam(value = "page", required = true) int page,
-                                            @RequestParam(value = "rows", required = true) int rows){
-        PageHelper.startPage(page, rows);
+                                            @RequestParam("endTime") String endTime){
+        //PageHelper.startPage(page, rows);
         List<ScoreBalance> list = scoreBalanceService.getEntryScoreBalance(tjType,beginTime,endTime);
-        PageInfo<ScoreBalance> pageInfo = new PageInfo<ScoreBalance>(list);
-        return new Page<ScoreBalance>(pageInfo);
+        //PageInfo<ScoreBalance> pageInfo = new PageInfo<ScoreBalance>(list);
+        //return new Page<ScoreBalance>(pageInfo);
+        return list;
 
     }
 

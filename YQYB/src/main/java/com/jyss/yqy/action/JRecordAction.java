@@ -11,10 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import com.jyss.yqy.entity.JRecord;
-import com.jyss.yqy.entity.Page;
 import com.jyss.yqy.entity.ResponseEntity;
 import com.jyss.yqy.service.JRecordService;
 
@@ -70,16 +67,14 @@ public class JRecordAction {
 	 */
 	@RequestMapping("/jrc/user/list")
 	@ResponseBody
-	public Page getUserList(@RequestParam("zjUid") Integer zjUid,
-							@RequestParam(value = "page", required = true) int page,
-							@RequestParam(value = "rows", required = true) int rows) {
-		PageHelper.startPage(page, rows);
+	public List<JRecord> getUserList(@RequestParam("zjUid") Integer zjUid) {
+		//PageHelper.startPage(page, rows);
 		List<JRecord> list = recordService.getJRecordList(zjUid);
-		PageInfo<JRecord> pageInfo = new PageInfo<JRecord>(list);
-		Page<JRecord> result = new Page<JRecord>();
-		result.setTotal(pageInfo.getTotal());
-		result.setRows(list);
-		return result;
+		//PageInfo<JRecord> pageInfo = new PageInfo<JRecord>(list);
+		//Page<JRecord> result = new Page<JRecord>();
+		//result.setTotal(pageInfo.getTotal());
+		//result.setRows(list);
+		return list;
 	}
 
 

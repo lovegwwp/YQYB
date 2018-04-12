@@ -8,8 +8,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.jyss.yqy.entity.JBonusScj;
-import com.jyss.yqy.entity.Page;
 import com.jyss.yqy.service.JBonusScjService;
+
+import java.util.List;
 
 @Controller
 public class JBonusScjAction {
@@ -39,10 +40,8 @@ public class JBonusScjAction {
 	 */
 	@RequestMapping("/showScj/list")
 	@ResponseBody
-	public Page<JBonusScj> selectJBonusScj(@RequestParam(value = "zjUid") Integer zjUid,
-										   @RequestParam(value = "page", required = true) int page,
-										   @RequestParam(value = "rows", required = true) int rows) {
-		Page<JBonusScj> result = bonusScjService.selectJBonusScj(zjUid, page, rows);
+	public List<JBonusScj> selectJBonusScj(@RequestParam(value = "zjUid") Integer zjUid) {
+		List<JBonusScj> result = bonusScjService.selectJBonusScj(zjUid);
 		return result;
 	}
 
@@ -63,10 +62,8 @@ public class JBonusScjAction {
 	 */
 	@RequestMapping("/showScj/listByWek")
 	@ResponseBody
-	public Page<JBonusScj> selectJBonusScjWek(@RequestParam(value = "zjUid") Integer zjUid,
-											  @RequestParam(value = "page", required = true) int page,
-											  @RequestParam(value = "rows", required = true) int rows) {
-		Page<JBonusScj> result = bonusScjService.selectJBonusScjWek(zjUid, page, rows);
+	public List<JBonusScj> selectJBonusScjWek(@RequestParam(value = "zjUid") Integer zjUid) {
+		List<JBonusScj> result = bonusScjService.selectJBonusScjWek(zjUid);
 		return result;
 	}
 
@@ -88,12 +85,10 @@ public class JBonusScjAction {
 	 */
 	@RequestMapping("/showScj/listByDay")
 	@ResponseBody
-	public Page<JBonusScj> selectJBonusScjByDay(@RequestParam(value = "zjUid") Integer zjUid,
-												@RequestParam(value = "page", required = true) int page,
-												@RequestParam(value = "rows", required = true) int rows,
+	public List<JBonusScj> selectJBonusScjByDay(@RequestParam(value = "zjUid") Integer zjUid,
 												@RequestParam("beginTime") String beginTime,
 												@RequestParam("endTime") String endTime) {
-		Page<JBonusScj> result = bonusScjService.selectJBonusScjByDay(zjUid, page, rows, beginTime, endTime);
+		List<JBonusScj> result = bonusScjService.selectJBonusScjByDay(zjUid, beginTime, endTime);
 		return result;
 	}
 
@@ -114,11 +109,9 @@ public class JBonusScjAction {
 	 */
 	@RequestMapping("/showScj/listByMonth")
 	@ResponseBody
-	public Page<JBonusScj> selectJBonusScjByMonth(@RequestParam(value = "zjUid") Integer zjUid,
-												  @RequestParam(value = "page", required = true) int page,
-												  @RequestParam(value = "rows", required = true) int rows,
+	public List<JBonusScj> selectJBonusScjByMonth(@RequestParam(value = "zjUid") Integer zjUid,
 												  @RequestParam("month") String month) {
-		Page<JBonusScj> result = bonusScjService.selectJBonusScjByMonth(zjUid, page, rows, month);
+		List<JBonusScj> result = bonusScjService.selectJBonusScjByMonth(zjUid, month);
 		return result;
 	}
 
@@ -128,9 +121,8 @@ public class JBonusScjAction {
 	 */
 	@RequestMapping("/showScj/total")
 	@ResponseBody
-	public Page<JBonusScj> selectTotalJBonusScj(@RequestParam(value = "page", required = true) int page,
-												@RequestParam(value = "rows", required = true) int rows) {
-		Page<JBonusScj> result = bonusScjService.selectTotalJBonusScj(page, rows);
+	public List<JBonusScj> selectTotalJBonusScj() {
+		List<JBonusScj> result = bonusScjService.selectTotalJBonusScj();
 		return result;
 	}
 
