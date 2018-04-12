@@ -41,19 +41,39 @@ public class ScoreBalanceAction {
 
 
     /**
-     * 财务统计  tjType: 1支付宝，2微信，3财务充值
+     * 条件查询充值记录        tjType: 1支付宝，2微信，3财务充值
      */
     @RequestMapping("/ht/bill")
     @ResponseBody
     public Page<ScoreBalance> selectBdScore(@RequestParam("tjType") Integer tjType,
+                                            @RequestParam("beginTime") String beginTime,
+                                            @RequestParam("endTime") String endTime,
                                             @RequestParam(value = "page", required = true) int page,
                                             @RequestParam(value = "rows", required = true) int rows){
         PageHelper.startPage(page, rows);
-        List<ScoreBalance> list = scoreBalanceService.getEntryScoreBalance(tjType);
+        List<ScoreBalance> list = scoreBalanceService.getEntryScoreBalance(tjType,beginTime,endTime);
         PageInfo<ScoreBalance> pageInfo = new PageInfo<ScoreBalance>(list);
         return new Page<ScoreBalance>(pageInfo);
 
     }
+
+
+    /**
+     * 条件查询充值总值        tjType: 1支付宝，2微信，3财务充值
+     */
+    @RequestMapping("/ht/total")
+    @ResponseBody
+    public double selectTotalBdScore(@RequestParam("tjType") Integer tjType,
+                                     @RequestParam("beginTime") String beginTime,
+                                     @RequestParam("endTime") String endTime){
+
+        return scoreBalanceService.selectTotalBdScore(tjType, beginTime, endTime);
+
+    }
+
+
+
+
 
 
 }

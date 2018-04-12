@@ -82,8 +82,13 @@ public class ScoreBalanceServiceImpl implements ScoreBalanceService {
     }
 
     @Override
-    public List<ScoreBalance> getEntryScoreBalance(Integer secoCate) {
-        return scoreBalanceMapper.getEntryScoreBalance(secoCate);
+    public List<ScoreBalance> getEntryScoreBalance(Integer secoCate,String beginTime,String endTime) {
+        return scoreBalanceMapper.getEntryScoreBalance(secoCate,beginTime,endTime);
+    }
+
+    @Override
+    public double selectTotalBdScore(Integer secoCate, String beginTime, String endTime) {
+        return scoreBalanceMapper.getTotalEntryScore(secoCate,beginTime,endTime);
     }
 
 

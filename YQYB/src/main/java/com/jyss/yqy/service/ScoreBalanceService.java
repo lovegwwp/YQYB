@@ -12,6 +12,10 @@ public interface ScoreBalanceService {
     ResponseEntity insertBdScore(@Param("")String uuid,@Param("payAmount")Float payAmount,
                                  @Param("zzCode")String zzCode);
 
+    List<ScoreBalance> getEntryScoreBalance(@Param("secoCate")Integer secoCate,@Param("beginTime")String beginTime,
+                                            @Param("endTime")String endTime);
 
-    List<ScoreBalance> getEntryScoreBalance(@Param("secoCate")Integer secoCate);
+    double selectTotalBdScore(@Param("secoCate")Integer secoCate,@Param("beginTime")String beginTime,
+                              @Param("endTime")String endTime);
+
 }

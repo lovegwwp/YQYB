@@ -79,16 +79,38 @@
 		#{jyScore},#{orderSn},now(),now(),#{status})
 	</insert>
 
-	<!--查询充值记录-->
-	<select id="getEntryScoreBalance" parameterType="int" resultMap="sblResultMap">
+	<!--条件查询充值记录-->
+	<select id="getEntryScoreBalance"  resultMap="sblResultMap">
 		select *,DATE_FORMAT(created_at, '%Y-%m-%d %H:%i:%s') cjsj
 		from u_entry_score_balance
 		<where>
 			<if test="secoCate != null ">and seco_cate = #{secoCate}</if>
+			<if test="beginTime != null and beginTime != ''">
+				and date_format(created_at, '%Y-%m-%d') &gt;= #{beginTime}
+			</if>
+			<if test="endTime != null and endTime != ''">
+				and date_format(created_at, '%Y-%m-%d') &lt;= #{endTime}
+			</if>
 			and category = 11 and status = 1
 		</where>
 		order by created_at desc
 	</select>
+
+	<!--条件查询充值总值-->
+	<select id="getTotalEntryScore" resultType="double">
+		select ifnull(sum(score),0.0) from u_entry_score_balance
+		<where>
+			<if test="secoCate != null ">and seco_cate = #{secoCate}</if>
+			<if test="beginTime != null and beginTime != ''">
+				and date_format(created_at, '%Y-%m-%d') &gt;= #{beginTime}
+			</if>
+			<if test="endTime != null and endTime != ''">
+				and date_format(created_at, '%Y-%m-%d') &lt;= #{endTime}
+			</if>
+			and category = 11 and status = 1
+		</where>
+	</select>
+
 
 
 	<!--////////现金积分（股券）////////-->

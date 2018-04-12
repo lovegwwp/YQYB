@@ -32,8 +32,13 @@ public interface ScoreBalanceMapper {
 	//插入报单券充值记录
 	int insertEntryScore(ScoreBalance sb);
 
-	//查询充值记录
-	List<ScoreBalance> getEntryScoreBalance(@Param("secoCate") Integer secoCate);
+	//条件查询充值记录
+	List<ScoreBalance> getEntryScoreBalance(@Param("secoCate") Integer secoCate, @Param("beginTime")String beginTime,
+											@Param("endTime")String endTime);
+
+	//条件查询充值总值
+	double getTotalEntryScore(@Param("secoCate") Integer secoCate, @Param("beginTime")String beginTime,
+							  @Param("endTime")String endTime);
 
 
 
