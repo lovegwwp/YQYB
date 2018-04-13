@@ -34,7 +34,23 @@ public class ScoreBalanceAction {
 
 
     /**
-     * 条件查询充值记录        tjType: 1支付宝，2微信，3财务充值
+     * 借贷充值报单券
+     */
+    @RequestMapping("/ht/borrow")
+    @ResponseBody
+    public ResponseEntity updateUserBorrow(@RequestParam("uuid") String uuid, @RequestParam("payAmount") Float payAmount,
+                                           @RequestParam("zzCode") String zzCode){
+
+        ResponseEntity result = scoreBalanceService.updateUserBorrow(uuid, payAmount, zzCode);
+
+        return result;
+    }
+
+
+
+
+    /**
+     * 条件查询充值记录        tjType: 1支付宝，2微信，3线下充值，4借贷充值
      */
     @RequestMapping("/ht/bill")
     @ResponseBody
