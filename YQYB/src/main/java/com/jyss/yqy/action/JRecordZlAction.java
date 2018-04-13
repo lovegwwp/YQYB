@@ -1,8 +1,12 @@
 package com.jyss.yqy.action;
 
+import com.jyss.yqy.entity.AccountUser;
 import com.jyss.yqy.entity.JRecordZl;
 import com.jyss.yqy.entity.ResponseEntity;
+import com.jyss.yqy.service.AccountUserService;
 import com.jyss.yqy.service.JRecordZlService;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +21,8 @@ public class JRecordZlAction {
 
     @Autowired
     private JRecordZlService jRecordZlService;
+    @Autowired
+    private AccountUserService auService;
 
 
     /**
@@ -24,8 +30,14 @@ public class JRecordZlAction {
      */
     @RequestMapping("/selectZl")
     @ResponseBody
-    public List<JRecordZl> selectJRecordZl(@RequestParam("uId")Integer uId){
+    public List<JRecordZl> selectJRecordZl(){
+       /* @RequestParam("uId")Integer uId*/
+        Subject us = SecurityUtils.getSubject();
+        String lName = us.getPrincipal().toString();
+        AccountUser au = auService.getAuBy(lName);
+        Integer uId = au.getId();
         List<JRecordZl> list = jRecordZlService.selectJRecordZl(uId);
+        auService.addLog(lName,"总监助理管理-对应市场查询");
         return list;
     }
 

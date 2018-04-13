@@ -2,7 +2,10 @@ package com.jyss.yqy.action;
 
 
 import com.jyss.yqy.entity.JRecordResult;
+import com.jyss.yqy.service.AccountUserService;
 import com.jyss.yqy.service.JBonusCjService;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +21,8 @@ public class JBonusCjAction {
 
 	@Autowired
 	private JBonusCjService bonusCjService;
+	@Autowired
+	private AccountUserService auService;
 
 	//层奖统计
 	@RequestMapping("/hhrcjtj")
@@ -34,6 +39,9 @@ public class JBonusCjAction {
 		List<JRecordResult> ll = new ArrayList<JRecordResult>();
 		JRecordResult result = bonusCjService.selectJBonusCj();
 		ll.add(result);
+		Subject us = SecurityUtils.getSubject();
+		String lName = us.getPrincipal().toString();
+		auService.addLog(lName,"奖项统计-层奖当日查询");
 		return ll;
 	}
 

@@ -1,6 +1,9 @@
 package com.jyss.yqy.action;
 
 import com.jyss.yqy.entity.JRecordResult;
+import com.jyss.yqy.service.AccountUserService;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.jyss.yqy.entity.JBonusScj;
 import com.jyss.yqy.service.JBonusScjService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -17,6 +21,8 @@ public class JBonusScjAction {
 
 	@Autowired
 	private JBonusScjService bonusScjService;
+	@Autowired
+	private AccountUserService auService;
 
 	@RequestMapping("/scjtj")
 	public String scjtjTz() {
@@ -25,20 +31,35 @@ public class JBonusScjAction {
 
 	@RequestMapping("/hhrljtj")
 	public String hhrljtjTz() {
-		return "hhrljtjTz";
+		return "hhrljtj";
+	}
+
+	@RequestMapping("/hhrljtjzjzl")
+	public String hhrljtjzjzlTz() {
+		return "hhrljtjzjzl";
+	}
+
+	@RequestMapping("/hhrlj")
+	public String hhrljTz() {
+		return "hhrlj";
 	}
 
 
 
 
 	/**
-	 * 昨日数据
+	 * 昨日数据===统计
 	 */
 	@RequestMapping("/showScj/info")
 	@ResponseBody
-	public JRecordResult selectJBonusScjInfo() {
+	public List<JRecordResult> selectJBonusScjInfo() {
+		Subject us = SecurityUtils.getSubject();
+		String lName = us.getPrincipal().toString();
+		List<JRecordResult> ll = new ArrayList<JRecordResult>();
 		JRecordResult result = bonusScjService.selectJBonusScjInfo();
-		return result;
+		ll.add(result);
+		auService.addLog(lName,"奖项统计-市场奖昨日统计");
+		return ll;
 	}
 
 	/**
@@ -48,19 +69,27 @@ public class JBonusScjAction {
 	@ResponseBody
 	public List<JBonusScj> selectJBonusScj(@RequestParam(value = "zjUid") Integer zjUid) {
 		List<JBonusScj> result = bonusScjService.selectJBonusScj(zjUid);
+		Subject us = SecurityUtils.getSubject();
+		String lName = us.getPrincipal().toString();
+		auService.addLog(lName,"奖项统计-市场奖昨日查询");
 		return result;
 	}
 
 
 
 	/**
-	 * 本周数据
+	 * 本周数据===统计
 	 */
 	@RequestMapping("/showScj/wekInfo")
 	@ResponseBody
-	public JRecordResult selectJBonusScjWekInfo() {
+	public List<JRecordResult> selectJBonusScjWekInfo() {
+		List<JRecordResult> llw = new ArrayList<JRecordResult>();
 		JRecordResult result = bonusScjService.selectJBonusScjWekInfo();
-		return result;
+		llw.add(result);
+		Subject us = SecurityUtils.getSubject();
+		String lName = us.getPrincipal().toString();
+		auService.addLog(lName,"奖项统计-市场奖本周统计");
+		return llw;
 	}
 
 	/**
@@ -70,20 +99,28 @@ public class JBonusScjAction {
 	@ResponseBody
 	public List<JBonusScj> selectJBonusScjWek(@RequestParam(value = "zjUid") Integer zjUid) {
 		List<JBonusScj> result = bonusScjService.selectJBonusScjWek(zjUid);
+		Subject us = SecurityUtils.getSubject();
+		String lName = us.getPrincipal().toString();
+		auService.addLog(lName,"奖项统计-市场奖本周查询");
 		return result;
 	}
 
 
 
 	/**
-	 * 两个日期数据
+	 * 两个日期数据===统计
 	 */
 	@RequestMapping("/showScj/dayInfo")
 	@ResponseBody
-	public JRecordResult selectJBonusScjByDayInfo(@RequestParam("beginTime") String beginTime,
+	public List<JRecordResult> selectJBonusScjByDayInfo(@RequestParam("beginTime") String beginTime,
 												  @RequestParam("endTime") String endTime) {
+		List<JRecordResult> lld = new ArrayList<JRecordResult>();
 		JRecordResult result = bonusScjService.selectJBonusScjByDayInfo(beginTime, endTime);
-		return result;
+		lld.add(result);
+		Subject us = SecurityUtils.getSubject();
+		String lName = us.getPrincipal().toString();
+		auService.addLog(lName,"奖项统计-市场奖日期统计");
+		return lld;
 	}
 
 	/**
@@ -95,19 +132,27 @@ public class JBonusScjAction {
 												@RequestParam("beginTime") String beginTime,
 												@RequestParam("endTime") String endTime) {
 		List<JBonusScj> result = bonusScjService.selectJBonusScjByDay(zjUid, beginTime, endTime);
+		Subject us = SecurityUtils.getSubject();
+		String lName = us.getPrincipal().toString();
+		auService.addLog(lName,"奖项统计-市场奖日期查询");
 		return result;
 	}
 
 
 
 	/**
-	 * 按月数据
+	 * 按月数据===统计
 	 */
 	@RequestMapping("/showScj/monthInfo")
 	@ResponseBody
-	public JRecordResult selectJBonusScjByMonthInfo(@RequestParam("month") String month) {
+	public List<JRecordResult> selectJBonusScjByMonthInfo(@RequestParam("month") String month) {
+		List<JRecordResult> llm = new ArrayList<JRecordResult>();
 		JRecordResult result = bonusScjService.selectJBonusScjByMonthInfo(month);
-		return result;
+		llm.add(result);
+		Subject us = SecurityUtils.getSubject();
+		String lName = us.getPrincipal().toString();
+		auService.addLog(lName,"奖项统计-市场奖按月统计");
+		return llm;
 	}
 
 	/**
@@ -118,6 +163,9 @@ public class JBonusScjAction {
 	public List<JBonusScj> selectJBonusScjByMonth(@RequestParam(value = "zjUid") Integer zjUid,
 												  @RequestParam("month") String month) {
 		List<JBonusScj> result = bonusScjService.selectJBonusScjByMonth(zjUid, month);
+		Subject us = SecurityUtils.getSubject();
+		String lName = us.getPrincipal().toString();
+		auService.addLog(lName,"奖项统计-市场奖按月查询");
 		return result;
 	}
 
@@ -129,6 +177,9 @@ public class JBonusScjAction {
 	@ResponseBody
 	public List<JBonusScj> selectTotalJBonusScj() {
 		List<JBonusScj> result = bonusScjService.selectTotalJBonusScj();
+		Subject us = SecurityUtils.getSubject();
+		String lName = us.getPrincipal().toString();
+		auService.addLog(lName,"奖项统计-市场奖历史查询");
 		return result;
 	}
 
