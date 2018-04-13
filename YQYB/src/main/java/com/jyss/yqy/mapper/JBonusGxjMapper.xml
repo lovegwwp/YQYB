@@ -4,11 +4,11 @@
 <mapper namespace="com.jyss.yqy.mapper.JBonusGxjMapper" >
 
 
- 	<!-- 查询当日总金额 -->
+ 	<!-- 查询昨日总金额 -->
  	<select id="selectGxjTotal"  resultType="float">
 		SELECT IFNULL(SUM(amount),0.00)
 		FROM j_bonus_gxj
-		where status = 1 and to_days(now()) = to_days(create_time)
+		where status = 1 and to_days(now()) - to_days(create_time) = 1
 	</select>
 
 
