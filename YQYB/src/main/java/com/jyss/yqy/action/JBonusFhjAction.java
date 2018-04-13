@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 @Controller
 public class JBonusFhjAction {
@@ -16,15 +19,22 @@ public class JBonusFhjAction {
 	@Autowired
 	private JBonusFhjService bonusFhjService;
 
+	//分红奖统计
+	@RequestMapping("/hhrfhjtj")
+	public String hhrfhjtjTz() {
+		return "hhrfhjtj";
+	}
 
 	/**
 	 * 查询当日总金额
 	 */
 	@RequestMapping("/showFhj/list")
 	@ResponseBody
-	public JRecordResult selectFhjTotal() {
+	public List<JRecordResult> selectFhjTotal() {
+		List<JRecordResult> ll = new ArrayList<JRecordResult>();
 		JRecordResult result = bonusFhjService.selectJBonusFhj();
-		return result;
+		ll.add(result);
+		return ll;
 	}
 
 	/**
@@ -32,9 +42,11 @@ public class JBonusFhjAction {
 	 */
 	@RequestMapping("/showFhj/listByWek")
 	@ResponseBody
-	public JRecordResult selectFhjTotalByWek() {
+	public List<JRecordResult> selectFhjTotalByWek() {
+		List<JRecordResult> llw = new ArrayList<JRecordResult>();
 		JRecordResult result = bonusFhjService.selectJBonusFhjWek();
-		return result;
+		llw.add(result);
+		return llw;
 	}
 
 	/**
@@ -42,10 +54,12 @@ public class JBonusFhjAction {
 	 */
 	@RequestMapping("/showFhj/listByDay")
 	@ResponseBody
-	public JRecordResult selectFhjTotalByDay(@RequestParam("beginTime") String beginTime,
+	public List<JRecordResult> selectFhjTotalByDay(@RequestParam("beginTime") String beginTime,
 											 @RequestParam("endTime") String endTime) {
+		List<JRecordResult> lld = new ArrayList<JRecordResult>();
 		JRecordResult result = bonusFhjService.selectJBonusFhjByDay(beginTime,endTime);
-		return result;
+		lld.add(result);
+		return lld;
 	}
 
 	/**
@@ -53,9 +67,11 @@ public class JBonusFhjAction {
 	 */
 	@RequestMapping("/showFhj/listByMonth")
 	@ResponseBody
-	public JRecordResult selectFhjTotalByMonth(@RequestParam("month") String month) {
+	public List<JRecordResult> selectFhjTotalByMonth(@RequestParam("month") String month) {
+		List<JRecordResult> llm = new ArrayList<JRecordResult>();
 		JRecordResult result = bonusFhjService.selectJBonusFhjByMonth(month);
-		return result;
+		llm.add(result);
+		return llm;
 	}
 
 }

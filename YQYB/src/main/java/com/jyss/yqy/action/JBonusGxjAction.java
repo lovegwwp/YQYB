@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 @Controller
 public class JBonusGxjAction {
@@ -16,15 +19,22 @@ public class JBonusGxjAction {
 	@Autowired
 	private JBonusGxjService bonusGxjService;
 
+	//共享奖统计
+	@RequestMapping("/hhrgxjtj")
+	public String hhrgxjtjTz() {
+		return "hhrgxjtj";
+	}
 
 	/**
 	 * 查询当日总金额
 	 */
 	@RequestMapping("/showGxj/list")
 	@ResponseBody
-	public JRecordResult selectGxjTotal() {
+	public List<JRecordResult> selectGxjTotal() {
+		List<JRecordResult> ll = new ArrayList<JRecordResult>();
 		JRecordResult result = bonusGxjService.selectJBonusGxj();
-		return result;
+		ll.add(result);
+		return ll;
 	}
 
 	/**
@@ -32,9 +42,11 @@ public class JBonusGxjAction {
 	 */
 	@RequestMapping("/showGxj/listByWek")
 	@ResponseBody
-	public JRecordResult selectGxjTotalByWek() {
+	public List<JRecordResult> selectGxjTotalByWek() {
+		List<JRecordResult> llw = new ArrayList<JRecordResult>();
 		JRecordResult result = bonusGxjService.selectJBonusGxjWek();
-		return result;
+		llw.add(result);
+		return llw;
 	}
 
 	/**
@@ -42,10 +54,12 @@ public class JBonusGxjAction {
 	 */
 	@RequestMapping("/showGxj/listByDay")
 	@ResponseBody
-	public JRecordResult selectGxjTotalByDay(@RequestParam("beginTime") String beginTime,
+	public List<JRecordResult> selectGxjTotalByDay(@RequestParam("beginTime") String beginTime,
 											 @RequestParam("endTime") String endTime) {
+		List<JRecordResult> lld = new ArrayList<JRecordResult>();
 		JRecordResult result = bonusGxjService.selectJBonusGxjByDay(beginTime, endTime);
-		return result;
+		lld.add(result);
+		return lld;
 	}
 
 	/**
@@ -53,9 +67,11 @@ public class JBonusGxjAction {
 	 */
 	@RequestMapping("/showGxj/listByMonth")
 	@ResponseBody
-	public JRecordResult selectGxjTotalByMonth(@RequestParam("month") String month) {
+	public List<JRecordResult> selectGxjTotalByMonth(@RequestParam("month") String month) {
+		List<JRecordResult> llm = new ArrayList<JRecordResult>();
 		JRecordResult result = bonusGxjService.selectJBonusGxjByMonth(month);
-		return result;
+		llm.add(result);
+		return llm;
 	}
 
 }
