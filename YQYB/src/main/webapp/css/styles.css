@@ -185,12 +185,12 @@ body .login_fields__submit .forgot a {
 }
 body .login_fields__submit input {
   border-radius: 10px;
-  background: linear-gradient(to bottom, #fd8a97 0%,#f55b67 100%);
-  background: -moz-linear-gradient(top, #fd8a97 0%, #f55b67 100%);
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#fd8a97), color-stop(100%,#f55b67));
-  background: -webkit-linear-gradient(top, #fd8a97 0%,#f55b67 100%);
-  background: -o-linear-gradient(top, #fd8a97 0%,#f55b67 100%);
-  background: -ms-linear-gradient(top, #fd8a97 0%,#f55b67 100%);
+  background: linear-gradient(to bottom, #7CC4F6 0%,#19A0FF 100%);
+  background: -moz-linear-gradient(top, #7CC4F6 0%, #19A0FF 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#7CC4F6), color-stop(100%,#19A0FF));
+  background: -webkit-linear-gradient(top, #7CC4F6 0%,#19A0FF 100%);
+  background: -o-linear-gradient(top, #7CC4F6 0%,#19A0FF 100%);
+  background: -ms-linear-gradient(top, #7CC4F6 0%,#19A0FF 100%);
   padding: 10px 50px;
   height: 50px;
   color: #fff;

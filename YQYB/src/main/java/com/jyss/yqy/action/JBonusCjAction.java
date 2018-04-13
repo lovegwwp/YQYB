@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 @Controller
 public class JBonusCjAction {
@@ -16,15 +19,22 @@ public class JBonusCjAction {
 	@Autowired
 	private JBonusCjService bonusCjService;
 
+	//层奖统计
+	@RequestMapping("/hhrcjtj")
+	public String hhrcjtjTz() {
+		return "hhrcjtj";
+	}
 
 	/**
 	 * 查询当日总金额
 	 */
 	@RequestMapping("/showCj/list")
 	@ResponseBody
-	public JRecordResult selectCjTotal() {
+	public List<JRecordResult> selectCjTotal() {
+		List<JRecordResult> ll = new ArrayList<JRecordResult>();
 		JRecordResult result = bonusCjService.selectJBonusCj();
-		return result;
+		ll.add(result);
+		return ll;
 	}
 
 	/**
@@ -32,9 +42,11 @@ public class JBonusCjAction {
 	 */
 	@RequestMapping("/showCj/listByWek")
 	@ResponseBody
-	public JRecordResult selectCjTotalByWek() {
+	public List<JRecordResult> selectCjTotalByWek() {
+		List<JRecordResult> llw = new ArrayList<JRecordResult>();
 		JRecordResult result = bonusCjService.selectJBonusCjWek();
-		return result;
+		llw.add(result);
+		return llw;
 	}
 
 
@@ -43,10 +55,12 @@ public class JBonusCjAction {
 	 */
 	@RequestMapping("/showCj/listByDay")
 	@ResponseBody
-	public JRecordResult selectCjTotalByDay(@RequestParam("beginTime") String beginTime,
+	public List<JRecordResult> selectCjTotalByDay(@RequestParam("beginTime") String beginTime,
 											@RequestParam("endTime") String endTime) {
+		List<JRecordResult> lld = new ArrayList<JRecordResult>();
 		JRecordResult result = bonusCjService.selectJBonusCjByDay(beginTime,endTime);
-		return result;
+		lld.add(result);
+		return lld;
 	}
 
 	/**
@@ -54,9 +68,11 @@ public class JBonusCjAction {
 	 */
 	@RequestMapping("/showCj/listByMonth")
 	@ResponseBody
-	public JRecordResult selectCjTotalByMonth(@RequestParam("month") String month) {
+	public List<JRecordResult> selectCjTotalByMonth(@RequestParam("month") String month) {
+		List<JRecordResult> llm = new ArrayList<JRecordResult>();
 		JRecordResult result = bonusCjService.selectJBonusCjByMonth(month);
-		return result;
+		llm.add(result);
+		return llm;
 	}
 
 }
