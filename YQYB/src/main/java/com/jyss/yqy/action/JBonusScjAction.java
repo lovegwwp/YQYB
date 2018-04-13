@@ -23,6 +23,12 @@ public class JBonusScjAction {
 		return "scjtj";
 	}
 
+	@RequestMapping("/hhrljtj")
+	public String hhrljtjTz() {
+		return "hhrljtjTz";
+	}
+
+
 
 
 	/**
