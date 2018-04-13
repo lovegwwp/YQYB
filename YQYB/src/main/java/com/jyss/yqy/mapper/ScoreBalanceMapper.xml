@@ -74,9 +74,9 @@
 	<insert id="insertEntryScore" parameterType="com.jyss.yqy.entity.ScoreBalance"
 			useGeneratedKeys="true" keyProperty="id">
 		insert into u_entry_score_balance(id,end,u_uuid,category,seco_cate,type,score,
-		jy_score,order_sn,created_at,js_time,status)
+		jy_score,order_sn,created_at,js_time,status,zz_code)
 		values(null,#{end},#{uUuid},#{category},#{secoCate},#{type},#{score},
-		#{jyScore},#{orderSn},now(),now(),#{status})
+		#{jyScore},#{orderSn},now(),now(),#{status},#{zzCode})
 	</insert>
 
 	<!--条件查询充值记录-->
