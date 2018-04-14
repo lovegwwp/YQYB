@@ -223,9 +223,17 @@ public class AccountUserAction {
 		if (au.getId() == 0) {
 			// 新增
 			description = "权限管理-新增用户";
+			////判断是总监助理
+			if(au.getRoleId()==22){
+				////u_user新增记录（ischuangke istransfer不可提现不可转账）
+			}
 			count = auService.addAccount(au);
 		} else {
 			// 修改
+			////判断是总监助理
+			if(au.getRoleId()==22){
+				return new ResponseEntity("false", "总监助理身份不可修改，只能删除重新添加！");
+			}
 			description = "权限管理-修改用户";
 			count = auService.upAccount(au);
 		}
@@ -365,6 +373,15 @@ public class AccountUserAction {
 		}
 		auService.addLog(lName,"权限管理-用户列表");
 		return list;
+	}
+
+	@RequestMapping("/getaccountsZl")
+	@ResponseBody
+	public List<AccountUser> getaccountsZl() {
+		List<AccountUser> list = new ArrayList<AccountUser>();
+		/////查询总监助理对应的人 roleID=22
+		list = auService.getPermissionAndName(null,"22");
+	    return list;
 	}
 
 	@RequestMapping("/roleList")

@@ -105,6 +105,16 @@
 
     </select>
 
+    <select id="getZlRole" resultMap="auResultMap">
+        select  * from p_account_users_b
+        <where>
+            1=1
+            <if test="id != null and id !=''"> and id = #{id} </if>
+            <if test="roleId != null and roleId !=''"> and role_id = #{roleId} </if>
+        </where>
+
+    </select>
+
     <!--菜单列表-->
     <select id="getMennuTree" resultMap="auResultMap">
         select *  from  p_permission

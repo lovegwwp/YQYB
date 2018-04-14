@@ -160,6 +160,14 @@ public interface AccountUserMapper {
 
 	List<AccountUser> getPermissionAndName(@Param("username") String username,@Param("roleId") String roleId);
 
+	/**
+	 * 总监助理获取信息
+	 * @param id
+	 * @param roleId
+     * @return
+     */
+	List<AccountUser> getZlRole(@Param("id") String id,@Param("roleId") String roleId);
+
 
 	/**
 	 * 修改角色

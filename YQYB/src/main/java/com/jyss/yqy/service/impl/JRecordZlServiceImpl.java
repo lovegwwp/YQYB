@@ -1,9 +1,11 @@
 package com.jyss.yqy.service.impl;
 
+import com.jyss.yqy.entity.AccountUser;
 import com.jyss.yqy.entity.JRecord;
 import com.jyss.yqy.entity.JRecordZl;
 import com.jyss.yqy.entity.ResponseEntity;
 import com.jyss.yqy.entity.jsonEntity.UserBean;
+import com.jyss.yqy.mapper.AccountUserMapper;
 import com.jyss.yqy.mapper.JRecordMapper;
 import com.jyss.yqy.mapper.JRecordZlMapper;
 import com.jyss.yqy.mapper.UserMapper;
@@ -25,6 +27,9 @@ public class JRecordZlServiceImpl implements JRecordZlService {
     private JRecordMapper jRecordMapper;
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private AccountUserMapper accountMapper;
+
 
 
     /**
@@ -43,7 +48,7 @@ public class JRecordZlServiceImpl implements JRecordZlService {
     public ResponseEntity insertJRecordZl(Integer uId, Integer zjUid, String zjCode, String zjName) {
         List<JRecordZl> zlList = jRecordZlMapper.selectJRecordZl(null, zjUid);
         if(zlList == null || zlList.size() == 0){
-            List<UserBean> userBeans = userMapper.getUserById(uId, 6);
+            List<AccountUser> userBeans = accountMapper.getZlRole(uId.toString(), "22");
             if(userBeans != null && userBeans.size() == 1){
                 List<JRecord> jRecords = jRecordMapper.selectJRecordByAccount(null, zjUid + "");
                 if(jRecords != null && jRecords.size() == 1){
@@ -77,7 +82,7 @@ public class JRecordZlServiceImpl implements JRecordZlService {
      */
     @Override
     public ResponseEntity updateJRecordZl(Integer id, Integer uId, Integer zjUid, String zjCode, String zjName) {
-        List<UserBean> userBeans = userMapper.getUserById(uId, 6);
+        List<AccountUser> userBeans = accountMapper.getZlRole(uId.toString(), "22");
         if(userBeans != null && userBeans.size() == 1){
             JRecordZl recordZl = new JRecordZl();
             recordZl.setuId(uId);

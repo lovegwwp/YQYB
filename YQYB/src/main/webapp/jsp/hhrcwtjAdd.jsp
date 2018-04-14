@@ -21,39 +21,30 @@ String basePath = request.getScheme() + "://"
 </head>
 <body class="childrenBody">
 	<form class="layui-form" style="width:80%;">
-		<div class="layui-form-item" style="display:none">
-			<label class="layui-form-label">用户ID</label>
-			<div class="layui-input-block">
-				<input type="text" class="layui-input id" lay-verify="" placeholder="" value="0">
-			</div>
-		</div>
 		<div class="layui-form-item">
-			<label class="layui-form-label">权限类别</label>
+			<label class="layui-form-label">充值用户</label>
 			<div class="layui-input-inline" >
 				<%--<input type="text" class="layui-input roleId" lay-verify="required" placeholder="请选择权限类别">--%>
-				<select name="roleId" lay-verify="required" id="roleId" lay-search  lay-filter="roleFilter">
+				<select name="uId" lay-verify="required" id="uId" lay-search  lay-filter="userFilter">
 					<option value=""></option>
 				</select>
 			</div>
 		</div>
 		<div class="layui-form-item">
-			<label class="layui-form-label">用户名称</label>
+			<label class="layui-form-label">充值金额</label>
 			<div class="layui-input-block">
 				<%--<input type="tel" class="layui-input linksUrl" lay-verify="required|url" placeholder="请输入用户名称">--%>
-				<input type="text" class="layui-input username" lay-verify="required" placeholder="请输入用户名称">
-			</div>
-			<div class="layui-input-block">
-				<label class="layui-form-label">总监助理应填写[手机号]</label>
+				<input type="text" class="layui-input payAmount" lay-verify="required|number" placeholder="请输入充值金额">
 			</div>
 		</div>
 		<div class="layui-form-item">
 			<div class="layui-input-block">
-				<button class="layui-btn" lay-submit="" lay-filter="addAccounts">立即提交</button>
+				<button class="layui-btn" lay-submit="" lay-filter="addhhrcwtj">立即提交</button>
 				<button type="reset" class="layui-btn layui-btn-primary">重置</button>
 		    </div>
 		</div>
 	</form>
 	<script type="text/javascript" src="../layui/layui.js"></script>
-	<script type="text/javascript" src="accountAdd.js"></script>
+	<script type="text/javascript" src="hhrcwtjAdd.js"></script>
 </body>
 </html>
