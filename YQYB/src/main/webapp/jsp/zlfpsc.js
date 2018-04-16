@@ -129,6 +129,7 @@ layui.config({
         var zjUid =$(this).attr("data-zjUid") ;
 		var uuid =$(this).attr("data-id") ;
         var uId =$(this).attr("data-uId") ;
+		console.log("1111"+uuid);
         var index = layui.layer.open({
             title : "修改市场助理",
             type : 2,
