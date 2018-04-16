@@ -90,6 +90,7 @@ public class JRecordZlServiceImpl implements JRecordZlService {
             recordZl.setZjCode(zjCode);
             recordZl.setZjName(zjName);
             recordZl.setCreateTime(new Date());
+            recordZl.setId(id);
             int count = jRecordZlMapper.updateJRecordZl(recordZl);
             if(count == 1){
                 return new ResponseEntity("true","修改成功！");

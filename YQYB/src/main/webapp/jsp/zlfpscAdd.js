@@ -24,8 +24,6 @@ layui.config({
 						+ zj.uAccount + "</option>";
 					$("#zjUid").append(optionStr);
 					layui.form().render('select','zjFilter');
-					///助理select
-					//getRoles();
                     ////编辑回显
 					setValue();
 					//layui.form().render('select','uIdFilter');
@@ -49,6 +47,7 @@ layui.config({
         var zjName = getUrlParams("zjName");
         var uuid = getUrlParams("uuid");
 		var zjUid = getUrlParams("zjUid");
+		console.log("222"+uuid);
         if(uuid){
             $(".zjName").val(zjName);
             $(".id").val(uuid);
@@ -89,7 +88,7 @@ layui.config({
  		var flag =false;
 		var zjCode = $("#zjUid").find("option:selected").text();
 		//alert(zjCode);\
-		console.log($("#roleId").val());
+		console.log($(".id").val());
 		$.ajax({
 			async:true,
 			url: urls ,
