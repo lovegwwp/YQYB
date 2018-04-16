@@ -87,6 +87,7 @@ public class JRecordZlServiceImpl implements JRecordZlService {
             List<AccountUser> userBeans = accountMapper.getZlRole(uId.toString(), "22");
             if(userBeans != null && userBeans.size() == 1){
                 JRecordZl recordZl = new JRecordZl();
+                recordZl.setId(id);
                 recordZl.setuId(uId);
                 recordZl.setZjUid(zjUid);
                 recordZl.setZjCode(zjCode);
