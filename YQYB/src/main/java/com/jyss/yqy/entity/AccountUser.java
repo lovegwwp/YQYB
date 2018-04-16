@@ -26,6 +26,7 @@ public class AccountUser {
 	private Date createdAt;// 创建时间
 	private String cjsj;// 创建时间
 	private String dlsj;// 登录时间
+	private Integer userId;   //对应app端用户id
 
 	public String getPermissionId() {
 		return permissionId;
@@ -175,7 +176,11 @@ public class AccountUser {
 		this.dlsj = dlsj;
 	}
 
+	public Integer getUserId() {
+		return userId;
+	}
 
-
-
+	public void setUserId(Integer userId) {
+		this.userId = userId;
+	}
 }

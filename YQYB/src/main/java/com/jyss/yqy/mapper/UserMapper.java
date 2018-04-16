@@ -2,6 +2,7 @@ package com.jyss.yqy.mapper;
 
 import java.util.List;
 
+import com.jyss.yqy.entity.User;
 import org.apache.ibatis.annotations.Param;
 
 import com.jyss.yqy.entity.jsonEntity.UserBean;
@@ -76,6 +77,11 @@ public interface UserMapper {
 	 * @return
 	 */
 	List<UserBean> getUserIsOnlyBy(@Param("uuid") String uuid,@Param("bCode") String bCode);
-	
+
+	//用户账号查询
+	List<UserBean> getUserBy(@Param("account") String account,@Param("status") String status);
+
+	//用户注册
+	int addUser(User user);
 
 }

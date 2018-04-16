@@ -36,6 +36,7 @@
         <result property="electScore" column="elect_score"  />
         <result property="borrow" column="borrow"  />
         <result property="totalPv" column="total_pv"  />
+        <result property="isTransfer" column="is_transfer"  />
     </resultMap>
              
      <!-- B端 -->        
@@ -153,6 +154,29 @@
             <if test="uuid != null and uuid !=''"> and uuid = #{uuid} </if>
         </where>
     </select>
+
+    <!--用户账号查询-->
+    <select id="getUserBy" parameterType="string" resultMap="ubResultMap">
+        select * from u_user
+        <where>
+            <if test="account != null and account !=''"> and account = #{account}</if>
+            <if test="status != null and status !=''"> and status = #{status}</if>
+        </where>
+    </select>
+
+    <!-- 用户注册 -->
+    <insert id="addUser" parameterType="com.jyss.yqy.entity.User" useGeneratedKeys="true" keyProperty="id">
+        insert into u_user (id,uuid,account,pwd,salt,nick,status,created_at,integral,currency,avatar,r_uuid_1,province_id,province,city_id,
+        city,area_id,area,sex,age,last_modify_time,real_name,uid,last_login_time,pay_pwd,is_chuangke,birth_date,is_auth,r_uuid_2,r_uuid_3,
+        is_pay,b_is_pay,qr_code,money,chuangke_money,chuangke_r_1,chuangke_r_2,chuangke_r_3,chuangke_r_1_money,chuangke_r_2_money,chuangke_r_3_money,
+        code,b_code,d_uuid_1,d_uuid_2,d_uuid_3,d_r_1_money,d_r_2_money,d_r_3_money,d_money,d_r_money,d_r_1,d_r_2,d_r_3,r_shop_money,ali_account,
+        ali_name,cash_score,shopping_score,consume,total_pv,is_transfer)
+        values(null,#{uuid},#{account},#{pwd},#{salt},'','1',now(),'0','0','','','0','',
+        '0','','0','','1','0',now(),'','0',now(),'',#{isChuangke},now(),'0','','','0','0','','0','0','0',
+        '0','0','0','0','0','','','','','','0','0','0','0','0','0','0','0','0','','','0','0','0','0',#{isTransfer})
+
+    </insert>
+
 
 
 </mapper>

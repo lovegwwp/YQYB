@@ -27,6 +27,7 @@
         <result property="lastLoginTime" column="last_login_time"  />
         <result property="cjsj" column="cjsj"  />
         <result property="dlsj" column="dlsj"  />
+        <result property="userId" column="user_id"  />
 
     </resultMap>
 
@@ -223,7 +224,7 @@
     <!-- 增加用户 -->
     <insert id="addAccount" parameterType="com.jyss.yqy.entity.AccountUser"
             useGeneratedKeys="true" keyProperty="id">
-        insert into p_account_users_b values(null,#{roleId},#{name},#{username},#{password},#{salt},now(),now(),#{status})
+        insert into p_account_users_b values(null,#{roleId},#{name},#{username},#{password},#{salt},now(),now(),#{status},#{userId})
     </insert>
 
     <!--修改用户 -->

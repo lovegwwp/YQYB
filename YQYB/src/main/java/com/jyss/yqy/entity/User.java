@@ -60,6 +60,8 @@ public class User {
 	private String aliAccount;// 支付宝账号
 	private String aliName;// 支付宝姓名
 
+	private Integer isTransfer;
+
 	public int getId() {
 		return id;
 	}
@@ -508,4 +510,11 @@ public class User {
 		this.aliName = aliName;
 	}
 
+	public Integer getIsTransfer() {
+		return isTransfer;
+	}
+
+	public void setIsTransfer(Integer isTransfer) {
+		this.isTransfer = isTransfer;
+	}
 }

@@ -30,6 +30,7 @@ public class UserBean {
 	private String areaId;//
 	private String area;//
 	private Float totalPv;    //剩余返还pv
+	private Integer isTransfer;
 
 
 	public Float getBdScore() {
@@ -262,5 +263,13 @@ public class UserBean {
 
 	public void setTotalPv(Float totalPv) {
 		this.totalPv = totalPv;
+	}
+
+	public Integer getIsTransfer() {
+		return isTransfer;
+	}
+
+	public void setIsTransfer(Integer isTransfer) {
+		this.isTransfer = isTransfer;
 	}
 }

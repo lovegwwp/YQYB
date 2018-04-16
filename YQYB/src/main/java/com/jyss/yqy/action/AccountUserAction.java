@@ -17,6 +17,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.jyss.yqy.entity.*;
+import com.jyss.yqy.entity.jsonEntity.UserBean;
+import com.jyss.yqy.service.UserService;
 import com.jyss.yqy.utils.PasswordUtil;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
@@ -39,6 +41,8 @@ import com.jyss.yqy.utils.Utils;
 public class AccountUserAction {
 	@Autowired
 	private AccountUserService auService;
+	@Autowired
+	private UserService userService;
 
 	// private String yzm;
 
@@ -226,6 +230,20 @@ public class AccountUserAction {
 			////判断是总监助理
 			if(au.getRoleId()==22){
 				////u_user新增记录（ischuangke istransfer不可提现不可转账）
+				//添加u_user用户   is_chuangke = 6,is_transfer = 2
+				List<UserBean> ulist = userService.getUserBy(au.getName(), "1");
+				if(ulist != null && ulist.size() > 0){
+					return new ResponseEntity("false", "该手机号已经注册，不可成为总监助理");
+				}
+				User user = new User();
+				user.setAccount(au.getName());
+				user.setSalt(CommTool.getSalt());
+				user.setPwd(PasswordUtil.generate("666666", user.getSalt()));
+				user.setIsChuangke(6);
+				user.setIsTransfer(2);
+				userService.addUser(user);
+
+				au.setUserId(user.getId());
 			}
 			count = auService.addAccount(au);
 		} else {

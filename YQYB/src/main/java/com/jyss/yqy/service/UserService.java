@@ -2,6 +2,7 @@ package com.jyss.yqy.service;
 
 import java.util.List;
 
+import com.jyss.yqy.entity.User;
 import org.apache.ibatis.annotations.Param;
 
 import com.jyss.yqy.entity.UserAuth;
@@ -73,4 +74,11 @@ public interface UserService {
 
 	//通过推荐码查询推荐人信息
 	List<UserBean> getUserByBCode(@Param("bCode") String bCode);
+
+	//用户账号查询
+	List<UserBean> getUserBy(@Param("account") String account,@Param("status") String status);
+
+	//添加app用户
+	int addUser(User user);
+
 }

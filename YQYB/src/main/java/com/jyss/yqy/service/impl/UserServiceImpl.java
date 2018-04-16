@@ -2,6 +2,8 @@ package com.jyss.yqy.service.impl;
 
 import java.util.List;
 
+import com.jyss.yqy.entity.User;
+import com.jyss.yqy.utils.CommTool;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -71,6 +73,24 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public List<UserBean> getUserByBCode(String bCode) {
 		return userMapper.getUserByBCode(bCode);
+	}
+
+	//用户账号查询
+	@Override
+	public List<UserBean> getUserBy(String account, String status) {
+		return userMapper.getUserBy(account,status);
+	}
+
+	@Override
+	public int addUser(User user) {
+		String uuidStr = CommTool.getMyUUID();
+		///判断uuid是否重复
+		List<UserBean> lls = userMapper.getUserIsOnlyBy(uuidStr,null);
+		if(lls!=null&&lls.size()!=0){
+			uuidStr = CommTool.getMyUUID();
+		}
+		user.setUuid(uuidStr);
+		return userMapper.addUser(user);
 	}
 
 }
