@@ -69,4 +69,8 @@ public interface UserService {
 	 * @return
 	 */
 	List<UserBean> getUserIsOnlyBy(@Param("uuid") String uuid,@Param("bCode") String bCode);
+
+
+	//通过推荐码查询推荐人信息
+	List<UserBean> getUserByBCode(@Param("bCode") String bCode);
 }

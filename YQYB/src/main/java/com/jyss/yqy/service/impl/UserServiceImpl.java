@@ -67,4 +67,10 @@ public class UserServiceImpl implements UserService {
 		return userMapper.getUserIsOnlyBy( uuid,  bCode);
 	}
 
+	//通过推荐码查询推荐人信息
+	@Override
+	public List<UserBean> getUserByBCode(String bCode) {
+		return userMapper.getUserByBCode(bCode);
+	}
+
 }

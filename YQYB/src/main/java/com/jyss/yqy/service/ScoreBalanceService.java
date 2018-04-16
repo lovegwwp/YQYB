@@ -9,10 +9,10 @@ import java.util.List;
 
 public interface ScoreBalanceService {
 
-    ResponseEntity insertBdScore(@Param("")String uuid,@Param("payAmount")Float payAmount,
+    ResponseEntity insertBdScore(@Param("uuid")String uuid,@Param("payAmount")Float payAmount,
                                  @Param("zzCode")String zzCode);
 
-    ResponseEntity updateUserBorrow(@Param("")String uuid,@Param("payAmount")Float payAmount,
+    ResponseEntity updateUserBorrow(@Param("uuid")String uuid,@Param("payAmount")Float payAmount,
                                     @Param("zzCode")String zzCode);
 
     List<ScoreBalance> getEntryScoreBalance(@Param("secoCate")Integer secoCate,@Param("beginTime")String beginTime,

@@ -1,11 +1,14 @@
 package com.jyss.yqy.action;
 
 
+import com.jyss.yqy.constant.Constant;
 import com.jyss.yqy.entity.AccountUser;
 import com.jyss.yqy.entity.ResponseEntity;
 import com.jyss.yqy.entity.ScoreBalance;
+import com.jyss.yqy.entity.jsonEntity.UserBean;
 import com.jyss.yqy.service.AccountUserService;
 import com.jyss.yqy.service.ScoreBalanceService;
+import com.jyss.yqy.service.UserService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,11 +29,32 @@ public class ScoreBalanceAction {
     private ScoreBalanceService scoreBalanceService;
     @Autowired
     private AccountUserService auService;
+    @Autowired
+    private UserService userService;
 
     @RequestMapping("/hhrcwtj")
     public String hhrcwtjTz() {
         return "hhrcwtj";
     }
+
+
+    /**
+     * 根据推荐码查询用户
+     */
+    @RequestMapping("/ht/userInfo")
+    @ResponseBody
+    public UserBean selectUserBy(@RequestParam("bCode")String bCode){
+        List<UserBean> list = userService.getUserByBCode(bCode);
+        if(list != null && list.size() == 1){
+            UserBean userBean = list.get(0);
+            if(!userBean.getAvatar().equals("")){
+                userBean.setAvatar(Constant.httpUrl + userBean.getAvatar());
+            }
+            return userBean;
+        }
+        return null;
+    }
+
 
 
     /**

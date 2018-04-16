@@ -10,23 +10,23 @@ public interface JBonusScjService {
 
 	JRecordResult selectJBonusScjInfo();
 
-	List<JBonusScj> selectJBonusScj(@Param("page")Integer zjUid);
+	List<JBonusScj> selectJBonusScj(@Param("zjUid")Integer zjUid);
 
 
 	JRecordResult selectJBonusScjWekInfo();
 
-	List<JBonusScj> selectJBonusScjWek(@Param("page")Integer zjUid);
+	List<JBonusScj> selectJBonusScjWek(@Param("zjUid")Integer zjUid);
 
 
 	JRecordResult selectJBonusScjByDayInfo(@Param("beginTime")String beginTime,@Param("endTime")String endTime);
 
-	List<JBonusScj> selectJBonusScjByDay(@Param("page")Integer zjUid,@Param("beginTime")String beginTime,
+	List<JBonusScj> selectJBonusScjByDay(@Param("zjUid")Integer zjUid,@Param("beginTime")String beginTime,
 										 @Param("endTime")String endTime);
 
 
 	JRecordResult selectJBonusScjByMonthInfo(@Param("month")String month);
 
-	List<JBonusScj> selectJBonusScjByMonth(@Param("page")Integer zjUid,@Param("month")String month);
+	List<JBonusScj> selectJBonusScjByMonth(@Param("zjUid")Integer zjUid,@Param("month")String month);
 
 	List<JBonusScj> selectTotalJBonusScj();
 

@@ -82,21 +82,25 @@ public class JRecordZlServiceImpl implements JRecordZlService {
      */
     @Override
     public ResponseEntity updateJRecordZl(Integer id, Integer uId, Integer zjUid, String zjCode, String zjName) {
-        List<AccountUser> userBeans = accountMapper.getZlRole(uId.toString(), "22");
-        if(userBeans != null && userBeans.size() == 1){
-            JRecordZl recordZl = new JRecordZl();
-            recordZl.setuId(uId);
-            recordZl.setZjUid(zjUid);
-            recordZl.setZjCode(zjCode);
-            recordZl.setZjName(zjName);
-            recordZl.setCreateTime(new Date());
-            int count = jRecordZlMapper.updateJRecordZl(recordZl);
-            if(count == 1){
-                return new ResponseEntity("true","修改成功！");
+        List<JRecordZl> zlList = jRecordZlMapper.selectJRecordZl(null, zjUid);
+        if(zlList == null || zlList.size() == 0){
+            List<AccountUser> userBeans = accountMapper.getZlRole(uId.toString(), "22");
+            if(userBeans != null && userBeans.size() == 1){
+                JRecordZl recordZl = new JRecordZl();
+                recordZl.setuId(uId);
+                recordZl.setZjUid(zjUid);
+                recordZl.setZjCode(zjCode);
+                recordZl.setZjName(zjName);
+                recordZl.setCreateTime(new Date());
+                int count = jRecordZlMapper.updateJRecordZl(recordZl);
+                if(count == 1){
+                    return new ResponseEntity("true","修改成功！");
+                }
+                return new ResponseEntity("false","修改失败！");
             }
-            return new ResponseEntity("false","修改失败！");
+            return new ResponseEntity("false","该助理不可用！");
         }
-        return new ResponseEntity("false","该助理不可用！");
+        return new ResponseEntity("false","该市场已有助理！");
     }
 
 
