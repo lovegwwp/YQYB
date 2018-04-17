@@ -9,8 +9,6 @@ import com.jyss.yqy.entity.jsonEntity.UserBean;
 import com.jyss.yqy.service.AccountUserService;
 import com.jyss.yqy.service.ScoreBalanceService;
 import com.jyss.yqy.service.UserService;
-import com.jyss.yqy.utils.CommTool;
-import org.apache.commons.lang.time.DateFormatUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,42 +65,13 @@ public class ScoreBalanceAction {
     @RequestMapping("/ht/topup")
     @ResponseBody
     public ResponseEntity insertBdScore(@RequestParam("uuid") String uuid, @RequestParam("payAmount") Float payAmount,
-                                        MultipartFile picture,HttpServletRequest request){
-       // @RequestParam("zzCode") String zzCode
+                                        @RequestParam("uploadPic") String uploadPic){
         Subject us = SecurityUtils.getSubject();
         String lName = us.getPrincipal().toString();
         AccountUser au = auService.getAuBy(lName);
         String zzCode = au.getUsername();
 
-
-        //图片上传
-        String filePath = request.getSession().getServletContext().getRealPath("/");
-        int index = filePath.indexOf("YQYB");
-        filePath = filePath.substring(0, index) + "uploadCzPic" + "/";
-        /*File file = new File(filePath);
-        CommTool.judeDirExists(file);*/
-
-        String uploadCzPic = "";
-        if(!StringUtils.isEmpty(picture)){
-            String filename = picture.getOriginalFilename();
-            String extName = filename.substring(filename.lastIndexOf("."));
-            String imgPath = filePath + System.currentTimeMillis() + (long) (Math.random() * 1000L) + extName;
-            //上传图片
-            File file = new File(imgPath);
-            if(!file.exists()){
-                file.mkdirs();
-            }
-            //向磁盘写文件
-            try {
-                picture.transferTo(file);
-            } catch (IOException e) {
-                return new ResponseEntity("false","图片上传失败！");
-            }
-
-            uploadCzPic = imgPath.substring(imgPath.indexOf("uploadCzPic"));
-        }
-
-        ResponseEntity result = scoreBalanceService.insertBdScore(uuid, payAmount, zzCode, uploadCzPic);
+        ResponseEntity result = scoreBalanceService.insertBdScore(uuid, payAmount, zzCode, uploadPic);
         auService.addLog(lName,"财务管理-充值报单券");
         return result;
     }
@@ -114,41 +83,13 @@ public class ScoreBalanceAction {
     @RequestMapping("/ht/borrow")
     @ResponseBody
     public ResponseEntity updateUserBorrow(@RequestParam("uuid") String uuid,@RequestParam("payAmount") Float payAmount,
-                                           MultipartFile picture,HttpServletRequest request){
-       // @RequestParam("zzCode") String zzCode
+                                           @RequestParam("uploadPic") String uploadPic){
         Subject us = SecurityUtils.getSubject();
         String lName = us.getPrincipal().toString();
         AccountUser au = auService.getAuBy(lName);
         String zzCode = au.getUsername();
 
-        //图片上传
-        String filePath = request.getSession().getServletContext().getRealPath("/");
-        int index = filePath.indexOf("YQYB");
-        filePath = filePath.substring(0, index) + "uploadCzPic" + "/";
-        /*File file = new File(filePath);
-        CommTool.judeDirExists(file);*/
-
-        String uploadCzPic = "";
-        if(!StringUtils.isEmpty(picture)){
-            String filename = picture.getOriginalFilename();
-            String extName = filename.substring(filename.lastIndexOf("."));
-            String imgPath = filePath + System.currentTimeMillis() + (long) (Math.random() * 1000L) + extName;
-            //上传图片
-            File file = new File(imgPath);
-            if(!file.exists()){
-                file.mkdirs();
-            }
-            //向磁盘写文件
-            try {
-                picture.transferTo(file);
-            } catch (IOException e) {
-                return new ResponseEntity("false","图片上传失败！");
-            }
-
-            uploadCzPic = imgPath.substring(imgPath.indexOf("uploadCzPic"));
-        }
-
-        ResponseEntity result = scoreBalanceService.updateUserBorrow(uuid, payAmount, zzCode, uploadCzPic);
+        ResponseEntity result = scoreBalanceService.updateUserBorrow(uuid, payAmount, zzCode, uploadPic);
         auService.addLog(lName,"财务管理-借贷充值报单券");
         return result;
     }

@@ -151,7 +151,6 @@ public class ScoreBalanceServiceImpl implements ScoreBalanceService {
                         }
                     }
                     return new ResponseEntity("false","购买失败！");
-
                 }
                 return new ResponseEntity("false","用户不存在！");
             }
