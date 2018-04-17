@@ -31,7 +31,7 @@ public class ScoreBalanceServiceImpl implements ScoreBalanceService {
 
 
     @Override
-    public ResponseEntity insertBdScore(String uuid, Float payAmount, String zzCode) {
+    public ResponseEntity insertBdScore(String uuid, Float payAmount, String zzCode, String uploadPic) {
         if(payAmount > 0 ){
 
             //后台报单券总池余额
@@ -55,7 +55,8 @@ public class ScoreBalanceServiceImpl implements ScoreBalanceService {
                     scoreBalance.setEnd(2);
                     scoreBalance.setuUuid(uuid);
                     scoreBalance.setCategory(11);
-                    scoreBalance.setSecoCate(3);    //1支付宝，2微信，3线下充值，4借贷充值
+                    scoreBalance.setSecoCate(3);      //1支付宝，2微信，3线下充值，4借贷充值
+                    scoreBalance.setDetail(uploadPic);    //图片
                     scoreBalance.setType(1);
                     scoreBalance.setScore(payAmount);
                     scoreBalance.setJyScore(userBean.getBdScore() + payAmount);
@@ -93,7 +94,7 @@ public class ScoreBalanceServiceImpl implements ScoreBalanceService {
     }
 
     @Override
-    public ResponseEntity updateUserBorrow(String uuid, Float payAmount, String zzCode) {
+    public ResponseEntity updateUserBorrow(String uuid, Float payAmount, String zzCode, String uploadPic) {
         if(payAmount > 0){
 
             //后台报单券总池余额
@@ -121,6 +122,7 @@ public class ScoreBalanceServiceImpl implements ScoreBalanceService {
                     scoreBalance.setuUuid(uuid);
                     scoreBalance.setCategory(11);
                     scoreBalance.setSecoCate(4);    //1支付宝，2微信，3线下充值，4借贷充值
+                    scoreBalance.setDetail(uploadPic);    //图片
                     scoreBalance.setType(1);
                     scoreBalance.setScore(payAmount);
                     scoreBalance.setJyScore(userBean.getBdScore() + payAmount);

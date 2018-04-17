@@ -22,6 +22,7 @@
 		<result property="orderSn" column="order_sn"  />
 		<result property="secoCate" column="seco_cate"  />
 		<result property="zzCode" column="zz_code"  />
+		<result property="detail" column="detail"  />
 
     </resultMap>           
      
@@ -73,9 +74,9 @@
 	<!--插入报单券充值记录-->
 	<insert id="insertEntryScore" parameterType="com.jyss.yqy.entity.ScoreBalance"
 			useGeneratedKeys="true" keyProperty="id">
-		insert into u_entry_score_balance(id,end,u_uuid,category,seco_cate,type,score,
+		insert into u_entry_score_balance(id,end,u_uuid,category,seco_cate,detail,type,score,
 		jy_score,order_sn,created_at,js_time,status,zz_code)
-		values(null,#{end},#{uUuid},#{category},#{secoCate},#{type},#{score},
+		values(null,#{end},#{uUuid},#{category},#{secoCate},#{detail},#{type},#{score},
 		#{jyScore},#{orderSn},now(),now(),#{status},#{zzCode})
 	</insert>
 
