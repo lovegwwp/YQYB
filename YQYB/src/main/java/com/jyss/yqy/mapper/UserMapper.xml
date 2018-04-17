@@ -83,10 +83,11 @@
 
     <!-- 通过推荐码查询推荐人信息 -->
     <select id="getUserByBCode" resultMap="ubResultMap">
-        select a.id,a.uuid,a.nick,a.avatar,a.is_chuangke,a.b_code,a.is_transfer
+        select a.id,a.uuid,a.nick,a.avatar,a.is_chuangke,a.b_code,a.is_transfer,a.account,
         b.real_name as real_name
         from u_user a left join u_user_auth b on a.uuid = b.u_uuid
         <where>
+            a.is_chuangke in (2,3,4)
             <if test="bCode != null and bCode !=''"> and a.b_code = #{bCode}</if>
             and a.status = 1 and a.is_auth = 2
         </where>

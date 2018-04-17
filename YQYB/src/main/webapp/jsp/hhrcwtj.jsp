@@ -28,12 +28,13 @@ String basePath = request.getScheme() + "://"
 			<div class="layui-input-inline">
 				<label class="layui-form-label">充值方式:</label>
 				<select name="czId" lay-verify="required" id="czId" lay-search  lay-filter="czFilter">
+					<option value=""></option>
 					<option value="1">支付宝</option>
 					<option value="2">微信</option>
 					<option value="3">线下充值</option>
 					<option value="4">借贷充值</option>
 				</select>
-		   </div>
+		   </div>&nbsp;&nbsp;
 			<div class="layui-input-inline">
 				<input type="text" name="start_time" class="layui-input" id="start_time"
 					   placeholder="开始时间">

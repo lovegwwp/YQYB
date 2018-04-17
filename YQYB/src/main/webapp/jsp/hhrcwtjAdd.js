@@ -1,37 +1,59 @@
 layui.config({
 	base : "js/"
-}).use(['form','layer','jquery','layedit','laydate'],function(){
+}).use(['form','upload','layer','jquery','layedit','laydate'],function(){
 	var form = layui.form(),
 		layer = parent.layer === undefined ? layui.layer : parent.layer,
 		laypage = layui.laypage,
 		layedit = layui.layedit,
 		laydate = layui.laydate,
+		upload = layui.upload ,// 获取upload模块
 		$ = layui.jquery;
 
+	upload({
+		url : '../upLoadPzImg.action',
+		ext : 'png|jpg|jpeg',
+		title : '请选择图片',
+		before : function(input) {
+			// 返回的参数item，即为当前的input DOM对象
+			console.log('图片上传中');
+		},
+		success : function(res) {
+			$("#linkPic").attr('src',res.message);
+			//layer.msg(res.msg);
+		}
+	});
 
-    $.ajax({
-        url : '../roleList.action',
-        type : 'POST',
-        success : function(data) {
-            var roles = eval(data);
-            $(roles).each(
-                function(index) {
-                    var role = roles[index];
-                    var optionStr = "";
-                    optionStr += "<option value='" + role.id + "'>"
-                        + role.roleSign + "</option>";
-                    //alert(optionStr);
-                    $("#uId").append(optionStr);
-                    setValue();
-                    layui.form().render('select','roleFilter');
-                    //setValue();
+	///bcode查询
+	$(".bcode_btn").click(function(){
+		var bcode = $(".bCode").val();
+		if(!bcode){
+			layer.alert('请填写对应推荐码！');
+			return;
+		}
+		$.ajax({
+			url : '../ht/userInfo.action',
+			data:{
+				bCode :bcode
+		    },
+			type : 'POST',
+			success : function(data) {
+		    	console.log(data);
+		    	if(!data){
+					layer.alert('查无数据，请重试！');
+				}else{
+					$(".uuid").val(data.uuid);
+					$(".realName").val(data.realName);
+					$(".account").val(data.account);
+				}
+				layui.form().render();
+			},
+			error : function(data) {
+				alert('数据加载错误，请重试！');
+			}
+		});
+	})
 
-                });
-        },
-        error : function(data) {
-            alert('数据加载错误，请重试！');
-        }
-    });
+
 
 	var urls ="../ht/topup.action";
 	var bz = getUrlParams("bz");
@@ -47,7 +69,8 @@ layui.config({
 			url: urls ,
 			data:{
 				payAmount : $(".payAmount").val(),
-				uuid :$("#uId").val()
+				uuid :$(".uuid").val(),
+				uploadPic : $("#linkPic").attr('src'),
 			},
 			cache:false ,
 			type: "post" ,

@@ -90,7 +90,7 @@ layui.config({
 		var index = layui.layer.open({
 			title : title,
 			type : 2,
-			area : ['400px' , '320px'],
+			area : ['500px' , '620px'],
 			maxmin: true,
 			content : content,
 			success : function(layero, index){

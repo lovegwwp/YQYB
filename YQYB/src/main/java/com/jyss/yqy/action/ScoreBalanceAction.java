@@ -9,6 +9,8 @@ import com.jyss.yqy.entity.jsonEntity.UserBean;
 import com.jyss.yqy.service.AccountUserService;
 import com.jyss.yqy.service.ScoreBalanceService;
 import com.jyss.yqy.service.UserService;
+import com.jyss.yqy.utils.CommTool;
+import com.jyss.yqy.utils.Utils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,9 +51,9 @@ public class ScoreBalanceAction {
         List<UserBean> list = userService.getUserByBCode(bCode);
         if(list != null && list.size() == 1){
             UserBean userBean = list.get(0);
-            if(!userBean.getAvatar().equals("")){
+            /*if(!userBean.getAvatar().equals("")){
                 userBean.setAvatar(Constant.httpUrl + userBean.getAvatar());
-            }
+            }*/
             return userBean;
         }
         return null;
@@ -70,7 +72,7 @@ public class ScoreBalanceAction {
         String lName = us.getPrincipal().toString();
         AccountUser au = auService.getAuBy(lName);
         String zzCode = au.getUsername();
-
+        uploadPic = uploadPic.substring(uploadPic.lastIndexOf("uploadPzImg"));
         ResponseEntity result = scoreBalanceService.insertBdScore(uuid, payAmount, zzCode, uploadPic);
         auService.addLog(lName,"财务管理-充值报单券");
         return result;
@@ -88,7 +90,7 @@ public class ScoreBalanceAction {
         String lName = us.getPrincipal().toString();
         AccountUser au = auService.getAuBy(lName);
         String zzCode = au.getUsername();
-
+        uploadPic = uploadPic.substring(uploadPic.lastIndexOf("uploadPzImg"));
         ResponseEntity result = scoreBalanceService.updateUserBorrow(uuid, payAmount, zzCode, uploadPic);
         auService.addLog(lName,"财务管理-借贷充值报单券");
         return result;
@@ -132,6 +134,29 @@ public class ScoreBalanceAction {
         auService.addLog(lName,"财务管理-财务统计查询");
         return ld;
 
+    }
+
+
+    @RequestMapping("/upLoadPzImg")
+    @ResponseBody
+    public ResponseEntity upLoadImg(@RequestParam("imgFile") MultipartFile imgFile, HttpServletRequest request) {
+        // TODO Auto-generated method stub
+        int count = 0;
+        String filePath = request.getSession().getServletContext()
+                .getRealPath("/");
+        System.out.print("===================>"+filePath);
+        int index = filePath.lastIndexOf("YQYB");
+        filePath = filePath.substring(0, index) + "uploadPzImg/"
+                + CommTool.getFileNameOnlyNum(imgFile.getOriginalFilename());
+        if (imgFile.getSize() > 5400000L) {
+            return new ResponseEntity("false", "文件过大，应不超过5M!");
+        }
+        if (!Utils.saveUpload(imgFile, filePath)) {
+            return new ResponseEntity("false", "文件上传失败！");
+        }
+        filePath = filePath.substring(filePath.indexOf("uploadPzImg"));
+        System.out.print("===================>"+filePath);
+        return new ResponseEntity("true",Constant.httpUrl+filePath);
     }
 
 

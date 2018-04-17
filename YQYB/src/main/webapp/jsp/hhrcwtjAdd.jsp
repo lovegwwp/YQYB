@@ -24,17 +24,47 @@ String basePath = request.getScheme() + "://"
 		<div class="layui-form-item">
 			<label class="layui-form-label">充值用户</label>
 			<div class="layui-input-inline" >
-				<%--<input type="text" class="layui-input roleId" lay-verify="required" placeholder="请选择权限类别">--%>
-				<select name="uId" lay-verify="required" id="uId" lay-search  lay-filter="userFilter">
+				<input type="text" class="layui-input bCode" lay-verify="required" placeholder="请输入推荐码">
+			    <%--	<select name="uId" lay-verify="required" id="uId" lay-search  lay-filter="userFilter">
 					<option value=""></option>
-				</select>
+				</select>--%>
+			</div>
+			<a class="layui-btn bcode_btn">查询</a>
+		</div>
+		<div class="layui-form-item"  style="display:none">
+			<label class="layui-form-label">充值UUID</label>
+			<div class="layui-input-block">
+				<input type="text" class="layui-input uuid" lay-verify="required" placeholder="请输入充值UUID">
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">充值姓名</label>
+			<div class="layui-input-block">
+				<input type="text" class="layui-input layui-disabled realName" lay-verify="required" placeholder="请输入充值姓名">
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">充值账号</label>
+			<div class="layui-input-block">
+				<input type="text" class="layui-input layui-disabled account" lay-verify="required"  placeholder="请输入充值账号">
 			</div>
 		</div>
 		<div class="layui-form-item">
 			<label class="layui-form-label">充值金额</label>
 			<div class="layui-input-block">
-				<%--<input type="tel" class="layui-input linksUrl" lay-verify="required|url" placeholder="请输入用户名称">--%>
 				<input type="text" class="layui-input payAmount" lay-verify="required|number" placeholder="请输入充值金额">
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">凭证上传</label>
+			<div class="layui-input-block">
+				<input id="imgFile" type="file" name="imgFile" lay-type="file"  class="layui-upload-file" >
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">预览</label>
+			<div class="layui-input-block">
+				<img  id="linkPic" style="width:150px; height:120px" src=""/>
 			</div>
 		</div>
 		<div class="layui-form-item">
