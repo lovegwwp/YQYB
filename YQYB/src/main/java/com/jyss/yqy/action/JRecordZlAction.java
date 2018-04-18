@@ -9,6 +9,7 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -73,8 +74,8 @@ public class JRecordZlAction {
        // AccountUser au = auService.getAuBy(lName);
         //Integer uId = au.getId();
 
-        if(uId == null || zjUid == null){
-            return new ResponseEntity("false","助理或市场不能为空");
+        if(uId == null || zjUid == null || StringUtils.isEmpty(zjName)){
+            return new ResponseEntity("false","助理或市场名称不能为空");
         }
         ResponseEntity result = jRecordZlService.insertJRecordZl(uId, zjUid, zjCode, zjName);
         auService.addLog(lName,"总监助理管理-添加市场助理");
@@ -97,8 +98,8 @@ public class JRecordZlAction {
        // AccountUser au = auService.getAuBy(lName);
         //Integer uId = au.getId();
 
-        if(uId == null || zjUid == null){
-            return new ResponseEntity("false","助理或市场不能为空");
+        if(uId == null || zjUid == null || StringUtils.isEmpty(zjName)){
+            return new ResponseEntity("false","助理或市场名称不能为空");
         }
         ResponseEntity result = jRecordZlService.updateJRecordZl(id, uId, zjUid, zjCode, zjName);
         auService.addLog(lName,"总监助理管理-修改市场助理");
