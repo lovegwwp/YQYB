@@ -158,8 +158,13 @@ public class JBonusScjServiceImpl implements JBonusScjService{
 	}
 
 
-
-
+	/**
+	 * 总收益列表
+	 */
+	@Override
+	public List<JRecordTotal> selectScjTotalList() {
+		return bonusScjMapper.selectScjTotalList();
+	}
 
 
 	/**

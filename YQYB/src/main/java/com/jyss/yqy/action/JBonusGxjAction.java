@@ -2,6 +2,7 @@ package com.jyss.yqy.action;
 
 
 import com.jyss.yqy.entity.JRecordResult;
+import com.jyss.yqy.entity.JRecordTotal;
 import com.jyss.yqy.service.JBonusGxjService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -72,6 +73,16 @@ public class JBonusGxjAction {
 		JRecordResult result = bonusGxjService.selectJBonusGxjByMonth(month);
 		llm.add(result);
 		return llm;
+	}
+
+	/**
+	 * 总收益列表
+	 */
+	@RequestMapping("/showGxj/totalList")
+	@ResponseBody
+	public List<JRecordTotal> selectGxjTotalList() {
+		List<JRecordTotal> list = bonusGxjService.selectGxjTotalList();
+		return list;
 	}
 
 }

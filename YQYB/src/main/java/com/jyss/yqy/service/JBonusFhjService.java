@@ -2,7 +2,10 @@ package com.jyss.yqy.service;
 
 
 import com.jyss.yqy.entity.JRecordResult;
+import com.jyss.yqy.entity.JRecordTotal;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface JBonusFhjService {
 
@@ -14,5 +17,6 @@ public interface JBonusFhjService {
 
     JRecordResult selectJBonusFhjByMonth(@Param("month") String month);
 
-
+    //总收益列表
+    List<JRecordTotal> selectFhjTotalList();
 }

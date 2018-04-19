@@ -3,6 +3,14 @@
 
 <mapper namespace="com.jyss.yqy.mapper.JBonusCjMapper" >
 
+	<resultMap type="com.jyss.yqy.entity.JRecordTotal" id="BaseResultMap">
+		<result property="amount" column="amount"  />
+		<result property="cashScore" column="cashScore"  />
+		<result property="shoppingScore" column="shoppingScore"  />
+		<result property="elecScore" column="elecScore"  />
+		<result property="showTime" column="showTime"  />
+	</resultMap>
+
 
  	<!-- 查询当日总金额 -->
  	<select id="selectCjTotal"  resultType="float">
@@ -48,7 +56,32 @@
 			</if>
 			AND status = 1 
 		</where>
-	</select> 
+	</select>
+
+
+	<!--总收益列表-->
+	<select id="selectCjTotalList"  resultMap="BaseResultMap">
+		select a.amount,b.cashScore,c.shoppingScore,d.elecScore,a.showTime from
+		(select ifnull(sum(amount),0.00) as amount,date_format(create_time, '%Y-%m-%d') as showTime
+		from j_bonus_cj where status = 1 group by date_format(create_time, '%Y-%m-%d')) a
+
+		left join
+		(select ifnull(sum(score),0.00) as cashScore,date_format(created_at, '%Y-%m-%d') as showTime
+		from u_cash_score_balance where category = 5 and type = 1 and status = 1 and end = 2
+		group by date_format(created_at, '%Y-%m-%d')) b on a.showTime = b.showTime
+
+		left join
+		(select ifnull(sum(score),0.00) as shoppingScore,date_format(created_at, '%Y-%m-%d') as showTime
+		from u_shopping_score_balance where category = 5 and type = 1 and status = 1 and end = 2
+		group by date_format(created_at, '%Y-%m-%d')) c on a.showTime = c.showTime
+
+		left join
+		(select ifnull(sum(score),0.00) as elecScore,date_format(created_at, '%Y-%m-%d') as showTime
+		from u_elec_score_balance where category = 5 and type = 1 and status = 1 and end = 2
+		group by date_format(created_at, '%Y-%m-%d')) d on a.showTime = d.showTime
+
+		order by a.showTime desc
+	</select>
 	
 	
 </mapper>

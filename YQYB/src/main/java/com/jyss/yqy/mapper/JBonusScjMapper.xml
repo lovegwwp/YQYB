@@ -175,6 +175,32 @@
 		left join u_user d on a.b_id  = d.id left join j_record e on a.u_id  = e.u_id
 		where a.status = 1 group by a.u_id
 	</select>
+
+
+	<!--总收益列表-->
+	<select id="selectScjTotalList"  resultMap="BaseResultMap">
+		select a.amount,b.cashScore,c.shoppingScore,d.elecScore,a.showTime from
+		(select ifnull(sum(pv),0.00) as amount,date_format(created, '%Y-%m-%d') as showTime
+		from j_bonus_scj where status = 1 group by date_format(created, '%Y-%m-%d')) a
+
+		left join
+		(select ifnull(sum(score),0.00) as cashScore,date_format(js_time, '%Y-%m-%d') as showTime
+		from u_cash_score_balance where category = 6 and type = 1 and status = 1 and end = 2
+		group by date_format(js_time, '%Y-%m-%d')) b on a.showTime = b.showTime
+
+		left join
+		(select ifnull(sum(score),0.00) as shoppingScore,date_format(js_time, '%Y-%m-%d') as showTime
+		from u_shopping_score_balance where category = 6 and type = 1 and status = 1 and end = 2
+		group by date_format(js_time, '%Y-%m-%d')) c on a.showTime = c.showTime
+
+		left join
+		(select ifnull(sum(score),0.00) as elecScore,date_format(js_time, '%Y-%m-%d') as showTime
+		from u_elec_score_balance where category = 6 and type = 1 and status = 1 and end = 2
+		group by date_format(js_time, '%Y-%m-%d')) d on a.showTime = d.showTime
+
+		order by a.showTime desc
+	</select>
+
 	
  
 </mapper>

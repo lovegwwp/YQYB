@@ -1,6 +1,7 @@
 package com.jyss.yqy.service;
 
 import com.jyss.yqy.entity.JRecordResult;
+import com.jyss.yqy.entity.JRecordTotal;
 import org.apache.ibatis.annotations.Param;
 import com.jyss.yqy.entity.JBonusScj;
 import java.util.List;
@@ -29,5 +30,8 @@ public interface JBonusScjService {
 	List<JBonusScj> selectJBonusScjByMonth(@Param("zjUid")Integer zjUid,@Param("month")String month);
 
 	List<JBonusScj> selectTotalJBonusScj();
+
+	//总收益列表
+	List<JRecordTotal> selectScjTotalList();
 
 }

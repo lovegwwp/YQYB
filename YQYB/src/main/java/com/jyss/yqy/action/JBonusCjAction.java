@@ -2,6 +2,7 @@ package com.jyss.yqy.action;
 
 
 import com.jyss.yqy.entity.JRecordResult;
+import com.jyss.yqy.entity.JRecordTotal;
 import com.jyss.yqy.service.AccountUserService;
 import com.jyss.yqy.service.JBonusCjService;
 import org.apache.shiro.SecurityUtils;
@@ -81,6 +82,17 @@ public class JBonusCjAction {
 		JRecordResult result = bonusCjService.selectJBonusCjByMonth(month);
 		llm.add(result);
 		return llm;
+	}
+
+
+	/**
+	 * 总收益列表
+	 */
+	@RequestMapping("/showCj/totalList")
+	@ResponseBody
+	public List<JRecordTotal> selectCjTotalList() {
+		List<JRecordTotal> list = bonusCjService.selectCjTotalList();
+		return list;
 	}
 
 }

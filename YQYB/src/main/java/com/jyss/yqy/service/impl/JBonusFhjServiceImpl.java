@@ -2,12 +2,15 @@ package com.jyss.yqy.service.impl;
 
 
 import com.jyss.yqy.entity.JRecordResult;
+import com.jyss.yqy.entity.JRecordTotal;
 import com.jyss.yqy.mapper.JBonusFhjMapper;
 import com.jyss.yqy.mapper.ScoreBalanceMapper;
 import com.jyss.yqy.service.JBonusFhjService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @Transactional
@@ -92,6 +95,15 @@ public class JBonusFhjServiceImpl implements JBonusFhjService {
         result.setShoppingScore(shoppingScore);
         result.setElecScore(elecScore);
         return result;
+    }
+
+
+    /**
+     * 总收益列表
+     */
+    @Override
+    public List<JRecordTotal> selectFhjTotalList() {
+        return bonusFhjMapper.selectFhjTotalList();
     }
 
 

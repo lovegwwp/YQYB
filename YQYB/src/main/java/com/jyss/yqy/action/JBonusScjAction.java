@@ -1,6 +1,7 @@
 package com.jyss.yqy.action;
 
 import com.jyss.yqy.entity.JRecordResult;
+import com.jyss.yqy.entity.JRecordTotal;
 import com.jyss.yqy.service.AccountUserService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
@@ -181,6 +182,17 @@ public class JBonusScjAction {
 		String lName = us.getPrincipal().toString();
 		auService.addLog(lName,"奖项统计-市场奖历史查询");
 		return result;
+	}
+
+
+	/**
+	 * 总收益列表
+	 */
+	@RequestMapping("/showScj/totalList")
+	@ResponseBody
+	public List<JRecordTotal> selectScjTotalList() {
+		List<JRecordTotal> list = bonusScjService.selectScjTotalList();
+		return list;
 	}
 
 

@@ -2,6 +2,8 @@ package com.jyss.yqy.mapper;
 
 import com.jyss.yqy.entity.JBonusScj;
 import java.util.List;
+
+import com.jyss.yqy.entity.JRecordTotal;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -41,5 +43,8 @@ public interface JBonusScjMapper {
 
 	//查询列表历史总值
 	List<JBonusScj> selectTotalJBonusScj();
+
+	//总收益列表
+	List<JRecordTotal> selectScjTotalList();
 	
 }
