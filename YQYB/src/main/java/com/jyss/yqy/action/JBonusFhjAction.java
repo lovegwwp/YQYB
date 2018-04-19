@@ -3,7 +3,10 @@ package com.jyss.yqy.action;
 
 import com.jyss.yqy.entity.JRecordResult;
 import com.jyss.yqy.entity.JRecordTotal;
+import com.jyss.yqy.service.AccountUserService;
 import com.jyss.yqy.service.JBonusFhjService;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,11 +22,18 @@ public class JBonusFhjAction {
 
 	@Autowired
 	private JBonusFhjService bonusFhjService;
+	@Autowired
+	private AccountUserService auService;
 
 	//分红奖统计
 	@RequestMapping("/hhrfhjtj")
 	public String hhrfhjtjTz() {
 		return "hhrfhjtj";
+	}
+
+	@RequestMapping("/hhrfhjtjhz")
+	public String hhrfhjtjhzTz() {
+		return "hhrfhjtjhz";
 	}
 
 	/**
@@ -35,6 +45,9 @@ public class JBonusFhjAction {
 		List<JRecordResult> ll = new ArrayList<JRecordResult>();
 		JRecordResult result = bonusFhjService.selectJBonusFhj();
 		ll.add(result);
+		Subject us = SecurityUtils.getSubject();
+		String lName = us.getPrincipal().toString();
+		auService.addLog(lName,"奖项统计-分红奖当日查询");
 		return ll;
 	}
 
@@ -47,6 +60,9 @@ public class JBonusFhjAction {
 		List<JRecordResult> llw = new ArrayList<JRecordResult>();
 		JRecordResult result = bonusFhjService.selectJBonusFhjWek();
 		llw.add(result);
+		Subject us = SecurityUtils.getSubject();
+		String lName = us.getPrincipal().toString();
+		auService.addLog(lName,"奖项统计-分红奖本周查询");
 		return llw;
 	}
 
@@ -60,6 +76,9 @@ public class JBonusFhjAction {
 		List<JRecordResult> lld = new ArrayList<JRecordResult>();
 		JRecordResult result = bonusFhjService.selectJBonusFhjByDay(beginTime,endTime);
 		lld.add(result);
+		Subject us = SecurityUtils.getSubject();
+		String lName = us.getPrincipal().toString();
+		auService.addLog(lName,"奖项统计-分红奖按天查询");
 		return lld;
 	}
 
@@ -72,6 +91,9 @@ public class JBonusFhjAction {
 		List<JRecordResult> llm = new ArrayList<JRecordResult>();
 		JRecordResult result = bonusFhjService.selectJBonusFhjByMonth(month);
 		llm.add(result);
+		Subject us = SecurityUtils.getSubject();
+		String lName = us.getPrincipal().toString();
+		auService.addLog(lName,"奖项统计-分红奖按月查询");
 		return llm;
 	}
 
@@ -82,6 +104,9 @@ public class JBonusFhjAction {
 	@ResponseBody
 	public List<JRecordTotal> selectFhjTotalList(@RequestParam("month") String month) {
 		List<JRecordTotal> list = bonusFhjService.selectFhjTotalList(month);
+		Subject us = SecurityUtils.getSubject();
+		String lName = us.getPrincipal().toString();
+		auService.addLog(lName,"奖项统计-分红奖汇总统计");
 		return list;
 	}
 

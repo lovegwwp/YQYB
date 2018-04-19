@@ -31,6 +31,12 @@ public class JBonusCjAction {
 		return "hhrcjtj";
 	}
 
+	//层奖统计汇总
+	@RequestMapping("/hhrcjtjhz")
+	public String hhrcjtjhzTz() {
+		return "hhrcjtjhz";
+	}
+
 	/**
 	 * 查询当日总金额
 	 */
@@ -55,6 +61,9 @@ public class JBonusCjAction {
 		List<JRecordResult> llw = new ArrayList<JRecordResult>();
 		JRecordResult result = bonusCjService.selectJBonusCjWek();
 		llw.add(result);
+		Subject us = SecurityUtils.getSubject();
+		String lName = us.getPrincipal().toString();
+		auService.addLog(lName,"奖项统计-层奖本周查询");
 		return llw;
 	}
 
@@ -69,6 +78,9 @@ public class JBonusCjAction {
 		List<JRecordResult> lld = new ArrayList<JRecordResult>();
 		JRecordResult result = bonusCjService.selectJBonusCjByDay(beginTime,endTime);
 		lld.add(result);
+		Subject us = SecurityUtils.getSubject();
+		String lName = us.getPrincipal().toString();
+		auService.addLog(lName,"奖项统计-层奖按天查询");
 		return lld;
 	}
 
@@ -81,6 +93,9 @@ public class JBonusCjAction {
 		List<JRecordResult> llm = new ArrayList<JRecordResult>();
 		JRecordResult result = bonusCjService.selectJBonusCjByMonth(month);
 		llm.add(result);
+		Subject us = SecurityUtils.getSubject();
+		String lName = us.getPrincipal().toString();
+		auService.addLog(lName,"奖项统计-层奖按月查询");
 		return llm;
 	}
 
@@ -92,6 +107,9 @@ public class JBonusCjAction {
 	@ResponseBody
 	public List<JRecordTotal> selectCjTotalList(@RequestParam("month") String month) {
 		List<JRecordTotal> list = bonusCjService.selectCjTotalList(month);
+		Subject us = SecurityUtils.getSubject();
+		String lName = us.getPrincipal().toString();
+		auService.addLog(lName,"奖项统计-层奖汇总统计");
 		return list;
 	}
 

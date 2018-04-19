@@ -15,6 +15,14 @@
     <result column="status" property="status" jdbcType="TINYINT" />
     <result column="created" property="created" jdbcType="TIMESTAMP" />
   </resultMap>
+
+	<resultMap type="com.jyss.yqy.entity.JRecordTotal" id="BResultMap">
+		<result property="amount" column="amount"  />
+		<result property="cashScore" column="cashScore"  />
+		<result property="shoppingScore" column="shoppingScore"  />
+		<result property="elecScore" column="elecScore"  />
+		<result property="showTime" column="showTime"  />
+	</resultMap>
   
 	<!-- 查询昨日列表详情 -->
 	<select id="selectJBonusScj" parameterType="int" resultMap="BaseResultMap">
@@ -178,7 +186,7 @@
 
 
 	<!--总收益列表-->
-	<select id="selectScjTotalList" parameterType="string" resultMap="BaseResultMap">
+	<select id="selectScjTotalList" parameterType="string" resultMap="BResultMap">
 		select a.amount,b.cashScore,c.shoppingScore,d.elecScore,a.showTime from
 		(select ifnull(sum(pv),0.00) as amount,date_format(created, '%Y-%m-%d') as showTime
 		from j_bonus_scj where status = 1 group by date_format(created, '%Y-%m-%d')) a

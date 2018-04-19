@@ -44,7 +44,10 @@ public class JBonusScjAction {
 	public String hhrljTz() {
 		return "hhrlj";
 	}
-
+	@RequestMapping("/hhrljtjhz")
+	public String hhrljtjhzTz() {
+		return "hhrljtjhz";
+	}
 
 
 
@@ -192,6 +195,9 @@ public class JBonusScjAction {
 	@ResponseBody
 	public List<JRecordTotal> selectScjTotalList(@RequestParam("month") String month) {
 		List<JRecordTotal> list = bonusScjService.selectScjTotalList(month);
+		Subject us = SecurityUtils.getSubject();
+		String lName = us.getPrincipal().toString();
+		auService.addLog(lName,"奖项统计-市场奖汇总统计");
 		return list;
 	}
 

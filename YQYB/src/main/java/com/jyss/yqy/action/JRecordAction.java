@@ -3,6 +3,9 @@ package com.jyss.yqy.action;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.jyss.yqy.service.AccountUserService;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
@@ -19,6 +22,8 @@ import com.jyss.yqy.service.JRecordService;
 public class JRecordAction {
 	@Autowired
 	private JRecordService recordService;
+	@Autowired
+	private AccountUserService auService;
 
 	//
 	@RequestMapping("/scjry")
@@ -44,6 +49,7 @@ public class JRecordAction {
 									 @RequestParam("depart") Integer depart) {
 		ResponseEntity entity = new ResponseEntity("false", "操作失败！");
 		System.out.println("id======>" + id);
+
 		// /新增
 		if (id == 0) {
 			if (StringUtils.isEmpty(depart)) {
@@ -53,6 +59,9 @@ public class JRecordAction {
 				return new ResponseEntity("false", "请选择大区域市场！");
 			}
 			entity = recordService.insertJRecord(uAccount, pAccount, zjUid, depart);
+			Subject us = SecurityUtils.getSubject();
+			String lName = us.getPrincipal().toString();
+			auService.addLog(lName,"总监助理管理-添加市场用户");
 			// //修改
 		} else {
 			entity = updateJRecord2(id, uAccount);
@@ -79,6 +88,9 @@ public class JRecordAction {
 		//Page<JRecord> result = new Page<JRecord>();
 		//result.setTotal(pageInfo.getTotal());
 		//result.setRows(list);
+		Subject us = SecurityUtils.getSubject();
+		String lName = us.getPrincipal().toString();
+		auService.addLog(lName,"总监助理管理-市场用户查询");
 		return list;
 	}
 
@@ -117,6 +129,9 @@ public class JRecordAction {
 	@ResponseBody
 	public ResponseEntity deleteJRecord(@RequestParam("strIds") int strIds) {
 		ResponseEntity entity = recordService.deleteJRecord(strIds);
+		Subject us = SecurityUtils.getSubject();
+		String lName = us.getPrincipal().toString();
+		auService.addLog(lName,"总监助理管理-删除市场用户");
 		return entity;
 	}
 
