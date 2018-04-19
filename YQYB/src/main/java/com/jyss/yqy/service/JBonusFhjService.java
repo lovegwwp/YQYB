@@ -18,5 +18,5 @@ public interface JBonusFhjService {
     JRecordResult selectJBonusFhjByMonth(@Param("month") String month);
 
     //总收益列表
-    List<JRecordTotal> selectFhjTotalList();
+    List<JRecordTotal> selectFhjTotalList(@Param("month") String month);
 }

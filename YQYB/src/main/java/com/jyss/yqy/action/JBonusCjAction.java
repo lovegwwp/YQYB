@@ -90,8 +90,8 @@ public class JBonusCjAction {
 	 */
 	@RequestMapping("/showCj/totalList")
 	@ResponseBody
-	public List<JRecordTotal> selectCjTotalList() {
-		List<JRecordTotal> list = bonusCjService.selectCjTotalList();
+	public List<JRecordTotal> selectCjTotalList(@RequestParam("month") String month) {
+		List<JRecordTotal> list = bonusCjService.selectCjTotalList(month);
 		return list;
 	}
 

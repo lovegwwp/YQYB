@@ -102,8 +102,8 @@ public class JBonusFhjServiceImpl implements JBonusFhjService {
      * 总收益列表
      */
     @Override
-    public List<JRecordTotal> selectFhjTotalList() {
-        return bonusFhjMapper.selectFhjTotalList();
+    public List<JRecordTotal> selectFhjTotalList(String month) {
+        return bonusFhjMapper.selectFhjTotalList(month);
     }
 
 

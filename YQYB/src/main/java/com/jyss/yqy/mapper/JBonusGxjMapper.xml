@@ -59,7 +59,7 @@
 
 
 	<!--总收益列表-->
-	<select id="selectGxjTotalList"  resultMap="BaseResultMap">
+	<select id="selectGxjTotalList" parameterType="string" resultMap="BaseResultMap">
 		select a.amount,b.cashScore,c.shoppingScore,d.elecScore,a.showTime from
 		(select ifnull(sum(amount),0.00) as amount,date_format(create_time, '%Y-%m-%d') as showTime
 		from j_bonus_gxj where status = 1 group by date_format(create_time, '%Y-%m-%d')) a
@@ -79,6 +79,7 @@
 		from u_elec_score_balance where category = 7 and type = 1 and status = 1 and end = 2
 		group by date_format(js_time, '%Y-%m-%d')) d on a.showTime = d.showTime
 
+		where date_format(a.showTime, '%Y-%m') = #{month}
 		order by a.showTime desc
 	</select>
 	

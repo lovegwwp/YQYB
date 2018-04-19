@@ -80,8 +80,8 @@ public class JBonusFhjAction {
 	 */
 	@RequestMapping("/showFhj/totalList")
 	@ResponseBody
-	public List<JRecordTotal> selectFhjTotalList() {
-		List<JRecordTotal> list = bonusFhjService.selectFhjTotalList();
+	public List<JRecordTotal> selectFhjTotalList(@RequestParam("month") String month) {
+		List<JRecordTotal> list = bonusFhjService.selectFhjTotalList(month);
 		return list;
 	}
 

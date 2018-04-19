@@ -101,8 +101,8 @@ public class JBonusGxjServiceImpl implements JBonusGxjService {
      * 总收益列表
      */
     @Override
-    public List<JRecordTotal> selectGxjTotalList() {
-        return bonusGxjMapper.selectGxjTotalList();
+    public List<JRecordTotal> selectGxjTotalList(String month) {
+        return bonusGxjMapper.selectGxjTotalList(month);
     }
 
 

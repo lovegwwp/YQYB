@@ -101,8 +101,8 @@ public class JBonusCjServiceImpl implements JBonusCjService {
      * 总收益列表
      */
     @Override
-    public List<JRecordTotal> selectCjTotalList() {
-        return bonusCjMapper.selectCjTotalList();
+    public List<JRecordTotal> selectCjTotalList(String month) {
+        return bonusCjMapper.selectCjTotalList(month);
     }
 
 

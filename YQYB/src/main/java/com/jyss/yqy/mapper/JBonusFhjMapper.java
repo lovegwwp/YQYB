@@ -24,5 +24,5 @@ public interface JBonusFhjMapper {
     float selectFhjTotalByMonth(@Param("month") String month);
 
     //总收益列表
-    List<JRecordTotal> selectFhjTotalList();
+    List<JRecordTotal> selectFhjTotalList(@Param("month") String month);
 }

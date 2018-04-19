@@ -24,6 +24,6 @@ public interface JBonusGxjMapper {
     float selectGxjTotalByMonth(@Param("month") String month);
 
     //总收益列表
-	List<JRecordTotal> selectGxjTotalList();
+	List<JRecordTotal> selectGxjTotalList(@Param("month") String month);
     
 }

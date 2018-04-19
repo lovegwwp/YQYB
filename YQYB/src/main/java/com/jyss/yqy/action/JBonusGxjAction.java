@@ -80,8 +80,8 @@ public class JBonusGxjAction {
 	 */
 	@RequestMapping("/showGxj/totalList")
 	@ResponseBody
-	public List<JRecordTotal> selectGxjTotalList() {
-		List<JRecordTotal> list = bonusGxjService.selectGxjTotalList();
+	public List<JRecordTotal> selectGxjTotalList(@RequestParam("month") String month) {
+		List<JRecordTotal> list = bonusGxjService.selectGxjTotalList(month);
 		return list;
 	}
 

@@ -32,6 +32,6 @@ public interface JBonusScjService {
 	List<JBonusScj> selectTotalJBonusScj();
 
 	//总收益列表
-	List<JRecordTotal> selectScjTotalList();
+	List<JRecordTotal> selectScjTotalList(@Param("month")String month);
 
 }
