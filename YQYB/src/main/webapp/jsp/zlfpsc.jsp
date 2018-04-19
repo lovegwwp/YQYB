@@ -31,7 +31,7 @@ String basePath = request.getScheme() + "://"
 		    <a class="layui-btn search_btn">查询</a>
 		</div>
 		<div class="layui-inline">
-			<a class="layui-btn zlfpscAdd_btn" style="background-color:#5FB878">添加用户</a>
+			<a class="layui-btn zlfpscAdd_btn" style="background-color:#5FB878">分配市场</a>
 		</div>
 	</blockquote>
 	<div class="layui-form zlfpsc_list">

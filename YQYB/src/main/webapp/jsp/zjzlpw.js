@@ -8,28 +8,75 @@ layui.config({
 
 	//加载页面数据
 	var zjzlpwData = '';
+
+
+	//////可选择市场
 	$.ajax({
-		url : "zjzlpwSx.action",
-		type : "get",
-		dataType : "json",
-		success : function(data){
-			zjzlpwData = data;
-			if(window.sessionStorage.getItem("addzjzlpw")){
-				var addzjzlpw = window.sessionStorage.getItem("addzjzlpw");
-				zjzlpwData = JSON.parse(addzjzlpw).concat(zjzlpwData);
-			}
-			//执行加载数据的方法
-			zjzlpwList();
+		url : 'zl/selectZl.action',
+		type : 'POST',
+		success : function(data) {
+			var scs = eval(data);
+			$(scs).each(
+				function(index) {
+					var sc = scs[index];
+					var optionStr = "";
+					optionStr += "<option value='" + sc.zjUid + "'>"
+						+ sc.zjName + "</option>";
+					//alert(optionStr);
+					$("#scId").append(optionStr);
+					layui.form().render('select','scFilter');
+					//setValue();
+
+				});
+		},
+		error : function(data) {
+			alert('数据加载错误，请重试！');
 		}
+	});
+
+	//查询市场
+	$(".search_btn").click(function(){
+		var  sc = $("#scId").val();
+		if(!sc){
+			layer.alert("请选择市场!");
+			return;
+		}
+		$.ajax({
+				url : "jrc/user/list.action",
+				data:{
+					zjUid:sc
+				},
+				type : "get",
+				dataType : "json",
+				success : function(data){
+					if(window.sessionStorage.getItem("addzjzlpw")){
+						var addzjzlpw = window.sessionStorage.getItem("addzjzlpw");
+						zjzlpwData = JSON.parse(addzjzlpw).concat(data);
+					}else{
+						zjzlpwData = data;
+					}
+					zjzlpwList(zjzlpwData);
+				}
+			});
+			//layer.close(index);
 	})
 
-	//查询
-	$(".search_btn").click(function(){
+
+	//模糊查询
+	$(".like_btn").click(function(){
+		var  sc = $("#scId").val();
+		if(!sc){
+			layer.alert("请选择市场!");
+			return;
+		}
 		var newArray = [];
 		if($(".search_input").val() != ''){
 			var index = layer.msg('查询中，请稍候',{icon: 16,time:false,shade:0.8});
             	$.ajax({
-					url : "zjzlpwSx.action",
+					url : "jrc/user/list.action",
+					data:{
+						zjUid:sc
+					},
 					type : "get",
 					dataType : "json",
 					success : function(data){
@@ -56,15 +103,11 @@ layui.config({
 		            				return dataStr;
 		            			}
 		            		}
-		            		//网站名称
-		            		if(zjzlpwStr.roleName.indexOf(selectStr) > -1){
-								zjzlpwStr["roleName"] = changeStr(zjzlpwStr.roleName);
-		            		}
 
-		            		if(zjzlpwStr.username.indexOf(selectStr) > -1){
-								zjzlpwStr["username"] = changeStr(zjzlpwStr.username);
+		            		if(zjzlpwStr.uAccount.indexOf(selectStr) > -1){
+								zjzlpwStr["uAccount"] = changeStr(zjzlpwStr.uAccount);
 		            		}
-		            		if(zjzlpwStr.roleName.indexOf(selectStr)>-1 || zjzlpwStr.username.indexOf(selectStr)>-1 ){
+		            		if(zjzlpwStr.uAccount.indexOf(selectStr)>-1 ){
 		            			newArray.push(zjzlpwStr);
 		            		}
 		            	}
@@ -81,12 +124,18 @@ layui.config({
 
 	//添加用户
 	$(".zjzlpwAdd_btn").click(function(){
+		var zjName = $("#scId").find("option:selected").text();
+		var zjUid = $("#scId").val();
+		if(!zjUid){
+			layer.alert("请选择市场！");
+			return;
+		}
 		var index = layui.layer.open({
-			title : "添加账号",
+			title : "添加市场",
 			type : 2,
-			area : ['400px' , '320px'],
+			area : ['400px' , '420px'],
 			maxmin: true,
-			content : "jsp/accountAdd.jsp",
+			content : "jsp/zjzlpwAdd.jsp?zjUid="+zjUid+"&zjName="+zjName,
 			success : function(layero, index){
 				setTimeout(function(){
 				},500)
@@ -96,40 +145,8 @@ layui.config({
 		$(window).resize(function(){
 			//layui.layer.full(index);
 		})
-		//layui.layer.full(index);
 	})
 
-	//批量删除
-	$(".batchDel").click(function(){
-		var $checkbox = $('.zjzlpw_list tbody input[type="checkbox"][name="checked"]');
-		var $checked = $('.zjzlpw_list tbody input[type="checkbox"][name="checked"]:checked');
-		if($checkbox.is(":checked")){
-			layer.confirm('确定删除选中的信息？',{icon:3, title:'提示信息'},function(index){
-				var index = layer.msg('删除中，请稍候',{icon: 16,time:false,shade:0.8});
-                var strIds="";
-	            	//删除数据
-	            	for(var j=0;j<$checked.length;j++){
-	            		//for(var i=0;i<zjzlpwData.length;i++){
-							//if(zjzlpwData[i].id == $checked.eq(j).parents("tr").find(".zjzlpw_del").attr("data-id")){
-								/*zjzlpwData.splice(i,1);
-								zjzlpwList(zjzlpwData);*/
-								var temp = $checked.eq(j).parents("tr").find(".zjzlpw_del").attr("data-id");
-                                strIds =strIds + temp+",";
-                                console.log(temp);
-                                console.log(strIds);
-							//}
-						//}
-	            	}
-	            	delteOption(strIds);
-	            	$('.zjzlpw_list thead input[type="checkbox"]').prop("checked",false);
-	            	form.render();
-	                layer.close(index);
-
-	        })
-		}else{
-			layer.msg("请选择需要删除的内容");
-		}
-	})
 
 	//全选
 	form.on('checkbox(allChoose)', function(data){
@@ -153,38 +170,14 @@ layui.config({
 		form.render('checkbox');
 	})
  
-	//操作
-	$("body").on("click",".zjzlpw_edit",function(){  //编辑
-        var rolename =$(this).attr("data-roleName") ;
-        var username =$(this).attr("data-name") ;
-        var uid =$(this).attr("data-id") ;
-        var index = layui.layer.open({
-            title : "修改账号",
-            type : 2,
-            area : ['400px' , '320px'],
-            maxmin: true,
-            content : "jsp/accountAdd.jsp?roleName="+rolename+"&username="+username+"&uid="+uid,
-            success : function(layero, index){
-                setTimeout(function(){
-                },500)
-            }
-        })
 
-	})
 
 	$("body").on("click",".zjzlpw_del",function(){  //删除
 		var _this = $(this);
         layer.alert(_this.attr("data-id"));
 		layer.confirm('确定删除此信息？',{icon:3, title:'提示信息'},function(index){
-		/*	//_this.parents("tr").remove();
-			for(var i=0;i<zjzlpwData.length;i++){
-				if(zjzlpwData[i].id == _this.attr("data-id")){
-					zjzlpwData.splice(i,1);
-					zjzlpwList(zjzlpwData);
-				}
-			}*/
-            delteOption(_this.attr("data-id"));
-			layer.close(index);
+        delteOption(_this.attr("data-id"));
+		ayer.close(index);
 		});
 	})
 
@@ -201,14 +194,11 @@ layui.config({
 				for(var i=0;i<currData.length;i++){
 					dataHtml += '<tr>'
 			    	+'<td><input type="checkbox" name="checked" lay-skin="primary" lay-filter="choose"></td>'
-			        /*+'<td>'+currData[i].roleId+'</td>'*/
-					/*+'<td align="left">'+currData[i].roleId+'</td>'*/
-			    /*	+'<td><a style="color:#1E9FFF;" target="_blank" href="'+currData[i].linksUrl+'">'+currData[i].linksUrl+'</a></td>'*/
-			    	+'<td>'+currData[i].roleName+'</td>'
-			    	+'<td>'+currData[i].username+'</td>'
-			    	+'<td>'+currData[i].cjsj+'</td>'
+			    	+'<td>'+currData[i].uId+'</td>'
+			    	+'<td>'+currData[i].uAccount+'</td>'
+			    	+'<td>'+currData[i].parentId+'</td>'
+					+'<td>'+getPart(currData[i].depart)+'</td>'
 			    	+'<td>'
-					+  '<a class="layui-btn layui-btn-mini zjzlpw_edit" data-name="'+currData[i].username+'" data-roleName="'+currData[i].roleId+'"  data-id="'+currData[i].id+'"><i class="iconfont icon-edit"></i> 编辑</a>'
 					+  '<a class="layui-btn layui-btn-danger layui-btn-mini zjzlpw_del" data-id="'+currData[i].id+'"><i class="layui-icon">&#xe640;</i> 删除</a>'
 			        +'</td>'
 			    	+'</tr>';
@@ -234,10 +224,25 @@ layui.config({
 			}
 		})
 	}
+
+
+	function getPart(bz){
+		if(bz=='0'){
+			return '顶层';
+		}else if(bz=='1'){
+			return '市场A';
+		}else if(bz=='2'){
+			return '市场B';
+		}else {
+			return '未知';
+		}
+
+	}
+
 	/////删除业务
 	function  delteOption(ids){
         $.ajax({
-            url : 'delAccount.action',
+            url : 'jrc/deleteJrc.action',
             data:{
                 strIds :ids
             },

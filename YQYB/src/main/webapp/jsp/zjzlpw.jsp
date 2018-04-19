@@ -25,13 +25,22 @@ String basePath = request.getScheme() + "://"
 <body class="childrenBody">
 	<blockquote class="layui-elem-quote news_search">
 		<div class="layui-inline">
-		    <div class="layui-input-inline">
-		    	<input type="text" value="" placeholder="请输入关键字" class="layui-input search_input">
-		    </div>
-		    <a class="layui-btn search_btn">查询</a>
+			<label class="layui-form-label">市场(必选)</label>
+			<div class="layui-input-inline">
+				<select name="scId"  id="scId" lay-search  lay-filter="scFilter">
+					<option value=""></option>
+				</select>
+			</div>
+		    <a class="layui-btn search_btn">加载市场</a>
 		</div>
 		<div class="layui-inline">
-			<a class="layui-btn zjzlpwAdd_btn" style="background-color:#5FB878">添加用户</a>
+			<div class="layui-input-inline">
+				<input type="text" value="" placeholder="请输入关键字" class="layui-input search_input">
+			</div>
+			<a class="layui-btn like_btn">模糊查询</a>
+		</div>
+		<div class="layui-inline">
+			<a class="layui-btn zjzlpwAdd_btn" style="background-color:#5FB878">添加市场</a>
 		</div>
 	</blockquote>
 	<div class="layui-form zjzlpw_list">
@@ -43,8 +52,6 @@ String basePath = request.getScheme() + "://"
 				<col>
 				<col>
 				<col>
-				<col>
-				<col>
 				<col width="13%">
 		    </colgroup>
 		    <thead>
@@ -52,10 +59,8 @@ String basePath = request.getScheme() + "://"
 					<th><input type="checkbox" name="" lay-skin="primary" lay-filter="allChoose" id="allChoose"></th>
 					<th>用户ID</th>
 					<th>用户code</th>
-					<th>添加时间</th>
-					<th>用户权限</th>
-					<th>用户姓名</th>
-					<th>添加时间</th>
+					<th>上层ID</th>
+					<th>市场分布</th>
 					<th>操作</th>
 				</tr> 
 		    </thead>

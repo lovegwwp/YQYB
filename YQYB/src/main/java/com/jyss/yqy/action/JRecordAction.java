@@ -26,6 +26,11 @@ public class JRecordAction {
 		return "scjry";
 	}
 
+	@RequestMapping("/zjzlpw")
+	public String zjzlpwTz() {
+		return "zjzlpw";
+	}
+
 
 	/**
 	 * 添加市场用户      zjUid = 总监id ，uAccount = 下级的推荐码 ，pAccount = 上级的推荐码
