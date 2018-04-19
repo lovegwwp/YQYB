@@ -62,10 +62,10 @@ String basePath = request.getScheme() + "://"
 			<thead>
 			<tr>
 				<th><input type="checkbox" name="" lay-skin="primary" lay-filter="allChoose1" id="allChoose1"></th>
-				<th>总额</th>
-				<th>股券</th>
-				<th>电子券</th>
-				<th>商城消费券</th>
+				<th>应发总额</th>
+				<th>实发股券</th>
+				<th>实发电子券</th>
+				<th>实发商城消费券</th>
 			</tr>
 			</thead>
 			<tbody class="hhrljtj_content"></tbody>

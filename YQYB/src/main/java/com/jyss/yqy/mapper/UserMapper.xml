@@ -44,7 +44,7 @@
      <!-- status  -1删除 1=正常2=禁用 isAuth 1=已提交 2=审核通过3=审核不通过  statusAuth 0=审核中 1=通过 2=未通过 -->
     <select id="getUserCount" resultMap="ubResultMap">           
 	    select is_chuangke,count(id) as id ,sum(cash_score) as cash_score ,sum(shopping_score)  as shopping_score ,
-               sum(elect_score)  as elect_score,  sum(bd_score)  as bd_score, sum(borrow)  as borrow
+               sum(elect_score)  as elect_score,  sum(bd_score)  as bd_score, sum(total_pv)  as total_pv,  sum(borrow)  as borrow
 	     from u_user <!--  where is_chuangke =3  and status =1 and is_auth =2;	 -->		
          <where> 
               1 = 1

@@ -144,6 +144,7 @@ layui.config({
 						+ '<td>' + currData[i].shoppingScore + '</td>'
 						+ '<td>' + currData[i].bdScore + '</td>'
 						+ '<td>' + currData[i].electScore + '</td>'
+						+ '<td>' + currData[i].totalPv + '</td>'
 						+ '<td>' + currData[i].borrow + '</td>'
 						+ '</tr>';
 				}

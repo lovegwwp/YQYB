@@ -45,6 +45,7 @@ String basePath = request.getScheme() + "://"
 				<col>
 				<col>
 				<col>
+				<col>
 		    </colgroup>
 		    <thead>
 				<tr>
@@ -57,6 +58,7 @@ String basePath = request.getScheme() + "://"
 					<th>商城消费券总额</th>
 					<th>电子券总额</th>
 					<th>报单券总额</th>
+					<th>未发放分红权总额</th>
 					<th>借贷总额</th>
 				</tr> 
 		    </thead>
