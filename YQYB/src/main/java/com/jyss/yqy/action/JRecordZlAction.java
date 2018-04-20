@@ -31,6 +31,12 @@ public class JRecordZlAction {
         return "zlfpsc";
     }
 
+    //所有市场人员
+    @RequestMapping("/allzlpw")
+    public String allzlpwTz() {
+        return "allzlpw";
+    }
+
     /**
      * 查询代理市场
      */

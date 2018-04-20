@@ -88,9 +88,9 @@ public class JRecordAction {
 		//Page<JRecord> result = new Page<JRecord>();
 		//result.setTotal(pageInfo.getTotal());
 		//result.setRows(list);
-		Subject us = SecurityUtils.getSubject();
-		String lName = us.getPrincipal().toString();
-		auService.addLog(lName,"总监助理管理-市场用户查询");
+		//Subject us = SecurityUtils.getSubject();
+		//String lName = us.getPrincipal().toString();
+		//auService.addLog(lName,"总监助理管理-市场用户查询");
 		return list;
 	}
 
