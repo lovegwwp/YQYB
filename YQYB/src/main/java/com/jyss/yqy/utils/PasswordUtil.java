@@ -18,6 +18,15 @@ public class PasswordUtil {
 		return password;
 	}
 
+
+	public static String generateAPP(String password, String salt) {
+		Random r = new Random();
+		password = md5Hex(password + salt);
+		String pKey = "#" + "pUk3NYQ!YeG&G&N#U89qt7QXc7Az6ky%" + "#";
+		password = md5Hex(password + pKey + salt);
+		password = md5Hex(password + salt);
+		return password;
+	}
 	/**
 	 * 校验密码是否正确
 	 */

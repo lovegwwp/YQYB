@@ -238,7 +238,7 @@ public class AccountUserAction {
 				User user = new User();
 				user.setAccount(au.getName());
 				user.setSalt(CommTool.getSalt());
-				user.setPwd(PasswordUtil.generate("666666", user.getSalt()));
+				user.setPwd(PasswordUtil.generateAPP("666666", user.getSalt()));
 				user.setIsChuangke(6);
 				user.setIsTransfer(2);
 				userService.addUser(user);
