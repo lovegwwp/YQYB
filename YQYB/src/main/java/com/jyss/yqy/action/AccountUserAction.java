@@ -238,6 +238,7 @@ public class AccountUserAction {
 				User user = new User();
 				user.setAccount(au.getUsername());
 				user.setSalt(CommTool.getSalt());
+				///生成含有随机盐的密码APP
 				user.setPwd(PasswordUtil.generateAPP("666666", user.getSalt()));
 				user.setIsChuangke(6);
 				user.setIsTransfer(2);

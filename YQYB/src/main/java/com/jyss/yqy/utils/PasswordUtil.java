@@ -18,6 +18,9 @@ public class PasswordUtil {
 		return password;
 	}
 
+	/**
+	 * 生成含有随机盐的密码APP
+	 */
 
 	public static String generateAPP(String password, String salt) {
 		Random r = new Random();
