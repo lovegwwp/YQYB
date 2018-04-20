@@ -231,12 +231,12 @@ public class AccountUserAction {
 			if(au.getRoleId()==22){
 				////u_user新增记录（ischuangke istransfer不可提现不可转账）
 				//添加u_user用户   is_chuangke = 6,is_transfer = 2
-				List<UserBean> ulist = userService.getUserBy(au.getName(), "1");
+				List<UserBean> ulist = userService.getUserBy(au.getUsername(), "1");
 				if(ulist != null && ulist.size() > 0){
 					return new ResponseEntity("false", "该手机号已经注册，不可成为总监助理");
 				}
 				User user = new User();
-				user.setAccount(au.getName());
+				user.setAccount(au.getUsername());
 				user.setSalt(CommTool.getSalt());
 				user.setPwd(PasswordUtil.generate("666666", user.getSalt()));
 				user.setIsChuangke(6);
