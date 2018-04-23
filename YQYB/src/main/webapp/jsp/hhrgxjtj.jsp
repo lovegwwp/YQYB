@@ -44,7 +44,7 @@ String basePath = request.getScheme() + "://"
 			<a class="layui-btn month_btn">按月查询</a>
 		</div>
 		<div class="layui-inline">
-			<a class="layui-btn today_btn">当日查询</a>
+			<a class="layui-btn today_btn">昨日查询</a>
 			<a class="layui-btn week_btn">本周查询</a>
 		</div>
 	</blockquote>

@@ -24,10 +24,8 @@ public class PasswordUtil {
 
 	public static String generateAPP(String password, String salt) {
 		Random r = new Random();
-		password = md5Hex(password + salt);
 		String pKey = "#" + "pUk3NYQ!YeG&G&N#U89qt7QXc7Az6ky%" + "#";
 		password = md5Hex(password + pKey + salt);
-		password = md5Hex(password + salt);
 		return password;
 	}
 	/**
@@ -79,6 +77,8 @@ public class PasswordUtil {
 		// System.out.println(password1);
 		// System.out.println(password.length()); //
 		// System.out.println(verify("admin", password));
+
+		System.out.println(generateAPP("666666","64521495"));
 	}
 
 }

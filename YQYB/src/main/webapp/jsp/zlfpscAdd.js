@@ -15,6 +15,7 @@ layui.config({
 		url : '../jrc/getRecord.action',
 		type : 'POST',
 		success : function(data) {
+			$('#zjUid').html('');
 			var zjUids = eval(data);
 			$(zjUids).each(
 				function(index) {
@@ -23,7 +24,8 @@ layui.config({
 					optionStr += "<option value='" + zj.uId + "'>"
 						+ zj.uAccount + "</option>";
 					$("#zjUid").append(optionStr);
-					layui.form().render('select','zjFilter');
+					//layui.form().render('select','zjFilter');
+					layui.form().render('select');
                     ////编辑回显
 					setValue();
 					//layui.form().render('select','uIdFilter');
@@ -71,7 +73,7 @@ layui.config({
 							+ aaa.username + "</option>";
 						console.log(optionStr1);
 						$("#uId").append(optionStr1);
-						layui.form().render('select','uIdFilter');
+						//layui.form().render('select','uIdFilter');
                        ////总监select
 						getZj()
 					});

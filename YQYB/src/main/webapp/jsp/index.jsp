@@ -109,7 +109,8 @@
 				</ul>
 				<div class="layui-tab-content clildFrame">
 					<div class="layui-tab-item layui-show">
-						<iframe src="page/main.html"></iframe>
+						<%--<iframe src="page/main.html"></iframe>--%>
+						<iframe src="home.jsp"></iframe>
 					</div>
 				</div>
 			</div>

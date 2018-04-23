@@ -55,7 +55,7 @@ String basePath = request.getScheme() + "://"
 			<label class="layui-form-label">市场分布</label>
 			<div class="layui-input-inline" >
 				<select name="depart" lay-verify="required" id="depart" lay-search  lay-filter="zjFilter">
-					<option value="0">顶层</option>
+					<%--<option value="0">顶层</option>--%>
 					<option value="1">市场A</option>
 					<option value="2">市场B</option>
 				</select>

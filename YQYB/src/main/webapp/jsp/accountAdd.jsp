@@ -43,7 +43,7 @@ String basePath = request.getScheme() + "://"
 				<input type="text" class="layui-input username" lay-verify="required" placeholder="请输入用户名称">
 			</div>
 			<div class="layui-input-block">
-				<label class="layui-form-label">总监助理应填写[手机号]</label>
+				<div class="layui-form-mid layui-word-aux">总监助理应填写[手机号]</div>
 			</div>
 		</div>
 		<div class="layui-form-item">
