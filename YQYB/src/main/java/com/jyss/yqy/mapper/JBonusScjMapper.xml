@@ -187,7 +187,8 @@
 
 	<!--总收益列表-->
 	<select id="selectScjTotalList" parameterType="string" resultMap="BResultMap">
-		select a.amount,b.cashScore,c.shoppingScore,d.elecScore,a.showTime from
+		select a.amount,ifnull(b.cashScore,0.00) cashScore,ifnull(c.shoppingScore,0.00) shoppingScore,
+		ifnull(d.elecScore,0.00) elecScore,a.showTime from
 		(select ifnull(sum(pv),0.00) as amount,date_format(created, '%Y-%m-%d') as showTime
 		from j_bonus_scj where status = 1 group by date_format(created, '%Y-%m-%d')) a
 
