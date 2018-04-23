@@ -90,7 +90,7 @@
 		</div>
 	  </div>
 	  </form>
-	<p class="Itext">青海水利后台管理系统<span>(苏州聚源创世信息科技有限公司技术支持)</span></p>
+	<p class="Itext">易起云后台管理系统<span>(苏州聚源创世信息科技有限公司技术支持)</span></p>
 	<div class='success'></div>
 	<div class='authent'>
 	  <div class="loader" style="height: 80px;width: 80px;">
