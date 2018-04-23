@@ -16,12 +16,10 @@ public class GlobalExceptionResolver implements HandlerExceptionResolver {
 			Object handler,Exception e) {
 		logger.info("进入全局异常处理器....");
 		//控制台打印
-		e.printStackTrace();
+		//e.printStackTrace();
 		//向日志文件中写入异常
-		logger.error("系统发生异常",e);
-		//发邮件
-		//发短信
-		//展示错误页面
+		//logger.error("系统发生异常",e);
+		//跳转错误页面
 		ModelAndView modelAndView = new ModelAndView();
 		//modelAndView.addObject("message", "系统发生异常，请稍后重试。");
 		modelAndView.setViewName("error");
