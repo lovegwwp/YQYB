@@ -8,8 +8,6 @@
 
 
 
-
-
 <!DOCTYPE html>
 
 <html>
@@ -20,7 +18,7 @@
     <meta http-equiv="pragma" content="no-cache">
     <meta http-equiv="cache-control" content="no-cache">
     <meta http-equiv="expires" content="0"> 
-	<title>培根登录界面</title>
+	<title>易起云管理后台</title>
 	<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
     <link href="css/default.css" rel="stylesheet" type="text/css" />
 	<!--必要样式-->

@@ -21,6 +21,8 @@
 		<property name="prefix" value="/jsp/" />
 		<property name="suffix" value=".jsp" />
 	</bean>
+	<!-- 配置全局异常处理器 -->
+	<bean class="com.jyss.yqy.exception.GlobalExceptionResolver"></bean>
 
 	<!-- 注册适配器 -->
 	<bean
