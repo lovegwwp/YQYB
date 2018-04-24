@@ -80,6 +80,7 @@ String basePath = request.getScheme() + "://"
 				<col>
 				<col>
 				<col>
+				<col>
 		    </colgroup>
 		    <thead>
 				<tr>
@@ -88,6 +89,7 @@ String basePath = request.getScheme() + "://"
 					<th>充值方式</th>
 					<th>充值数额</th>
 					<th>订单号</th>
+					<th class ="imgth">财务凭证</th>
 					<th>充值时间</th>
 					<th>经手人</th>
 

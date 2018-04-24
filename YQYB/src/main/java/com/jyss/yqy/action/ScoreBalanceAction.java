@@ -108,6 +108,9 @@ public class ScoreBalanceAction {
                                             @RequestParam("beginTime") String beginTime,
                                             @RequestParam("endTime") String endTime){
         List<ScoreBalance> list = scoreBalanceService.getEntryScoreBalance(tjType,beginTime,endTime);
+        for(ScoreBalance s : list){
+            s.setDetail(Constant.httpUrl+s.getDetail());
+        }
         Subject us = SecurityUtils.getSubject();
         String lName = us.getPrincipal().toString();
         auService.addLog(lName,"财务管理-财务查询");

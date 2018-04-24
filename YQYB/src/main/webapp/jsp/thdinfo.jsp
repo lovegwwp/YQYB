@@ -31,7 +31,7 @@ String basePath = request.getScheme() + "://"
 		    <a class="layui-btn search_btn">查询</a>
 		</div>
 		<div class="layui-inline">
-			<a class="layui-btn thdinfoAdd_btn" style="background-color:#5FB878">添加用户</a>
+			<a class="layui-btn thdinfoAdd_btn" style="background-color:#5FB878">添加提货点</a>
 		</div>
 		<div class="layui-inline">
 			<a class="layui-btn layui-btn-danger batchDel">批量删除</a>

@@ -62,6 +62,10 @@ layui.config({
 
 	////日期控件/////上面///////////////////////
 
+
+
+
+
 	//加载页面数据
 	var hhrcwtjData = '';
 	var hhrcwtjLsitData = '';
@@ -73,7 +77,9 @@ layui.config({
 	///日期查询
 	$(".day_btn").click(function(){
 		$(".hhrcwtj_list").show();
+		//showHide();
 		getDayList();
+
 	});
 
 	///报单券充值
@@ -217,6 +223,7 @@ layui.config({
 	function hhrcwtjList(that) {
 		//渲染数据
 		function renderDate(data, curr) {
+			$('#czId').val()
 			var dataHtml = '';
 			if (!that) {
 				currData = hhrcwtjLsitData.concat().splice(curr * nums - nums, nums);
@@ -231,8 +238,13 @@ layui.config({
 						+ '<td>' + getSecoCate(currData[i].secoCate) + '</td>'
 						+ '<td>' + currData[i].score + '</td>'
 						+ '<td>' + currData[i].orderSn + '</td>'
+					    + '<td class ="imgth"> <img style="'+'width:90px; height:90px"'+'src="'+ currData[i].detail +'"/></td>'
 						+ '<td>' + currData[i].cjsj + '</td>'
-						+ '<td>' + currData[i].zzCode + '</td>'
+						+ '<td>' + currData[i].zzCode + '</td></tr>';
+					//if($('#czId').val()==3||$('#czId').val()==4){
+						//dataHtml += '<td> <img style="'+'width:90px; height:90px"'+'src="'+ currData[i].detail +'"/></td></tr>';
+
+					//}
 
 				}
 			} else {
@@ -240,7 +252,7 @@ layui.config({
 			}
 			return dataHtml;
 		}
-
+		showHide();
 		//分页
 		var nums = 10; //每页出现的数据量
 		if (that) {
@@ -272,6 +284,16 @@ layui.config({
 		}
 
 	}
+
+	function showHide(){
+		if($('#czId').val()==3||$('#czId').val()==4){
+			$('.imgth').show();
+		}else{
+			$('.imgth').hide();
+		}
+	}
+
+
 
 })
 

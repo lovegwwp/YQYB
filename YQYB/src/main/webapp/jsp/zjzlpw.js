@@ -131,7 +131,7 @@ layui.config({
 			return;
 		}
 		var index = layui.layer.open({
-			title : "添加市场",
+			title : "添加市场人员",
 			type : 2,
 			area : ['400px' , '420px'],
 			maxmin: true,

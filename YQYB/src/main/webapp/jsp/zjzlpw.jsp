@@ -40,7 +40,7 @@ String basePath = request.getScheme() + "://"
 			<a class="layui-btn like_btn">模糊查询</a>
 		</div>
 		<div class="layui-inline">
-			<a class="layui-btn zjzlpwAdd_btn" style="background-color:#5FB878">添加市场</a>
+			<a class="layui-btn zjzlpwAdd_btn" style="background-color:#5FB878">添加市场人员</a>
 		</div>
 	</blockquote>
 	<div class="layui-form zjzlpw_list">
