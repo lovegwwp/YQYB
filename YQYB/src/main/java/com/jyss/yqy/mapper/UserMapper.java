@@ -41,6 +41,9 @@ public interface UserMapper {
 	//通过推荐码查询推荐人信息
 	List<UserBean> getUserByBCode(@Param("bCode") String bCode);
 
+	//测试
+	List<UserBean> getUserByAccount(@Param("account") String account);
+
 
 	/**
 	 * 通过id查询用户
@@ -83,5 +86,8 @@ public interface UserMapper {
 
 	//用户注册
 	int addUser(User user);
+
+	//查询所有借贷总额
+	double selectTotalBorrow();
 
 }

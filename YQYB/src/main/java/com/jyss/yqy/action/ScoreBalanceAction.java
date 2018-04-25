@@ -45,10 +45,24 @@ public class ScoreBalanceAction {
     /**
      * 根据推荐码查询用户
      */
-    @RequestMapping("/ht/userInfo")
+    /*@RequestMapping("/ht/userInfo")
     @ResponseBody
     public UserBean selectUserBy(@RequestParam("bCode")String bCode){
         List<UserBean> list = userService.getUserByBCode(bCode);
+        if(list != null && list.size() == 1){
+            UserBean userBean = list.get(0);
+            *//*if(!userBean.getAvatar().equals("")){
+                userBean.setAvatar(Constant.httpUrl + userBean.getAvatar());
+            }*//*
+            return userBean;
+        }
+        return null;
+    }*/
+
+    @RequestMapping("/ht/userInfo")
+    @ResponseBody
+    public UserBean selectUserBy(@RequestParam("bCode")String bCode){
+        List<UserBean> list = userService.getUserByAccount(bCode);
         if(list != null && list.size() == 1){
             UserBean userBean = list.get(0);
             /*if(!userBean.getAvatar().equals("")){
@@ -58,6 +72,7 @@ public class ScoreBalanceAction {
         }
         return null;
     }
+
 
 
 
@@ -128,8 +143,11 @@ public class ScoreBalanceAction {
                                      @RequestParam("beginTime") String beginTime,
                                      @RequestParam("endTime") String endTime){
         Double b =  scoreBalanceService.selectTotalBdScore(tjType, beginTime, endTime);
+        double borrow = userService.selectTotalBorrow();
         Map<String,Double> m  =new HashMap<String,Double>();
         m.put("totald",b);
+        m.put("totalc",borrow);
+        m.put("totale",b);
         List<Map<String,Double>> ld = new ArrayList<Map<String,Double>>();
         ld.add(m);
         Subject us = SecurityUtils.getSubject();

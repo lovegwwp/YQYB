@@ -93,4 +93,18 @@ public class UserServiceImpl implements UserService {
 		return userMapper.addUser(user);
 	}
 
+
+	/**
+	 * 测试
+	 */
+	@Override
+	public List<UserBean> getUserByAccount(String account) {
+		return userMapper.getUserByAccount(account);
+	}
+
+	@Override
+	public double selectTotalBorrow() {
+		return userMapper.selectTotalBorrow();
+	}
+
 }
