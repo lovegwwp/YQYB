@@ -82,19 +82,20 @@
 
 	<!--条件查询充值记录-->
 	<select id="getEntryScoreBalance"  resultMap="sblResultMap">
-		select *,DATE_FORMAT(created_at, '%Y-%m-%d %H:%i:%s') cjsj
-		from u_entry_score_balance
+		select a.id,b.account as u_uuid,a.seco_cate,a.detail,a.type,a.score,a.order_sn,
+		a.zz_code,DATE_FORMAT(a.created_at, '%Y-%m-%d %H:%i:%s') cjsj
+		from u_entry_score_balance a left join u_user b on a.u_uuid = b.uuid
 		<where>
-			<if test="secoCate != null ">and seco_cate = #{secoCate}</if>
+			<if test="secoCate != null ">and a.seco_cate = #{secoCate}</if>
 			<if test="beginTime != null and beginTime != ''">
-				and date_format(created_at, '%Y-%m-%d') &gt;= #{beginTime}
+				and date_format(a.created_at, '%Y-%m-%d') &gt;= #{beginTime}
 			</if>
 			<if test="endTime != null and endTime != ''">
-				and date_format(created_at, '%Y-%m-%d') &lt;= #{endTime}
+				and date_format(a.created_at, '%Y-%m-%d') &lt;= #{endTime}
 			</if>
-			and category = 11 and status = 1
+			and a.category = 11 and a.status = 1
 		</where>
-		order by created_at desc
+		order by a.created_at desc
 	</select>
 
 	<!--条件查询充值总值-->

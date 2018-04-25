@@ -81,4 +81,11 @@ public interface UserService {
 	//添加app用户
 	int addUser(User user);
 
+
+
+	//测试
+	List<UserBean> getUserByAccount(@Param("account") String account);
+
+	//查询所有借贷总额
+	double selectTotalBorrow();
 }

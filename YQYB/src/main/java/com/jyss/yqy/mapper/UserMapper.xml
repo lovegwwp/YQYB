@@ -83,13 +83,23 @@
 
     <!-- 通过推荐码查询推荐人信息 -->
     <select id="getUserByBCode" resultMap="ubResultMap">
-        select a.id,a.uuid,a.nick,a.avatar,a.is_chuangke,a.b_code,a.is_transfer,a.account,
+        select a.id,a.uuid,a.nick,a.is_chuangke,a.b_code,a.is_transfer,a.account,
         b.real_name as real_name
         from u_user a left join u_user_auth b on a.uuid = b.u_uuid
         <where>
             a.is_chuangke in (2,3,4)
             <if test="bCode != null and bCode !=''"> and a.b_code = #{bCode}</if>
             and a.status = 1 and a.is_auth = 2
+        </where>
+    </select>
+
+    <!--测试-->
+    <select id="getUserByAccount" resultMap="ubResultMap">
+        select a.id,a.uuid,a.account,b.real_name
+        from u_user a left join u_user_auth b on a.uuid = b.u_uuid
+        <where>
+            <if test="account != null and account !=''"> and a.account = #{account}</if>
+            and a.status = 1
         </where>
     </select>
 
@@ -177,6 +187,12 @@
         '0','0','0','0','0','','','','','','0','0','0','0','0','0','0','0','0','','','0','0','0','0',#{isTransfer})
 
     </insert>
+
+
+    <!--查询所有借贷总额-->
+    <select id="selectTotalBorrow" resultType="double">
+        select ifnull(sum(borrow),0.0) from u_user
+    </select>
 
 
 
