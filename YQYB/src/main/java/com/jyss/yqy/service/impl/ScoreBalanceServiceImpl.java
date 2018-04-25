@@ -136,6 +136,7 @@ public class ScoreBalanceServiceImpl implements ScoreBalanceService {
                         userBean1.setId(userBean.getId());
                         userBean1.setBdScore(userBean.getBdScore() + payAmount);
                         userBean1.setBorrow(userBean.getBorrow() + payAmount);
+                        userBean1.setIsTransfer(2);
                         int count1 = userMapper.updateScore(userBean1);
                         if(count1 == 1){
                             //减总池
