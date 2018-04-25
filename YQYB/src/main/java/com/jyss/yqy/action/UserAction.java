@@ -251,4 +251,37 @@ public class UserAction {
 	}
 
 
+	/**
+	 * 查询所有合伙人信息
+	 */
+	@RequestMapping("/getUsers")
+	@ResponseBody
+	public List<UserBean> getUsers(@RequestParam("account") String account){
+		List<UserBean> users = userService.getUsers(account);
+
+		Subject us = SecurityUtils.getSubject();
+		String lName = us.getPrincipal().toString();
+		auService.addLog(lName,"合伙人管理-合伙人查询");
+		return users;
+	}
+
+
+	/**
+	 * 禁用用户
+	 */
+	@RequestMapping("/getUsers")
+	@ResponseBody
+	public ResponseEntity updateUserStatus(@RequestParam("status") String status,@RequestParam("uuid") String uuid){
+		int count = userService.updateUserStatus(status, uuid);
+		if(count == 1){
+			Subject us = SecurityUtils.getSubject();
+			String lName = us.getPrincipal().toString();
+			auService.addLog(lName,"合伙人管理-合伙人修改");
+			return new ResponseEntity("true", "操作成功！");
+		}
+		return new ResponseEntity("false", "操作失败！");
+	}
+
+
+
 }

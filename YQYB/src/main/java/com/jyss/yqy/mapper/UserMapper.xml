@@ -81,7 +81,7 @@
         </where>
     </select>
 
-    <!-- 通过推荐码查询推荐人信息 -->
+    <!-- 通过推荐码查询推荐人信息，用于充值 -->
     <select id="getUserByBCode" resultMap="ubResultMap">
         select a.id,a.uuid,a.nick,a.is_chuangke,a.b_code,a.is_transfer,a.account,
         b.real_name as real_name
@@ -93,7 +93,7 @@
         </where>
     </select>
 
-    <!--测试-->
+    <!--账户查询，用于充值-->
     <select id="getUserByAccount" resultMap="ubResultMap">
         select a.id,a.uuid,a.account,b.real_name
         from u_user a left join u_user_auth b on a.uuid = b.u_uuid
@@ -191,9 +191,25 @@
 
     <!--查询所有借贷总额-->
     <select id="selectTotalBorrow" resultType="double">
-        select ifnull(sum(borrow),0.0) from u_user
+        select ifnull(sum(borrow),0.00) from u_user
     </select>
 
+
+    <!--查询所有合伙人信息-->
+    <select id="getUsers" parameterType="string" resultMap="ubResultMap">
+        select id,uuid,account,status,is_chuangke,b_code,total_pv,cash_score,shopping_score,
+        elect_score,bd_score,total_amount,is_transfer,borrow
+        from u_user where is_chuangke in(2,3,4)
+        <where>
+            <if test="account != null and account !=''"> and account = #{account}</if>
+        </where>
+        order by id desc
+    </select>
+
+    <!--禁用用户-->
+    <update id="updateUserStatus" parameterType="string">
+        update u_user set status = #{status} where uuid = #{uuid}
+    </update>
 
 
 </mapper>

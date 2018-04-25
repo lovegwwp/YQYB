@@ -69,7 +69,7 @@ public class UserServiceImpl implements UserService {
 		return userMapper.getUserIsOnlyBy( uuid,  bCode);
 	}
 
-	//通过推荐码查询推荐人信息
+	//通过推荐码查询推荐人信息，用于充值
 	@Override
 	public List<UserBean> getUserByBCode(String bCode) {
 		return userMapper.getUserByBCode(bCode);
@@ -95,7 +95,7 @@ public class UserServiceImpl implements UserService {
 
 
 	/**
-	 * 测试
+	 * 账户查询，用于充值
 	 */
 	@Override
 	public List<UserBean> getUserByAccount(String account) {
@@ -105,6 +105,22 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public double selectTotalBorrow() {
 		return userMapper.selectTotalBorrow();
+	}
+
+	/**
+	 * 查询所有合伙人信息
+	 */
+	@Override
+	public List<UserBean> getUsers(String account) {
+		return userMapper.getUsers(account);
+	}
+
+	/**
+	 * 禁用用户
+	 */
+	@Override
+	public int updateUserStatus(String status, String uuid) {
+		return userMapper.updateUserStatus(status,uuid);
 	}
 
 }

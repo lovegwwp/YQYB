@@ -72,20 +72,25 @@ public interface UserService {
 	List<UserBean> getUserIsOnlyBy(@Param("uuid") String uuid,@Param("bCode") String bCode);
 
 
-	//通过推荐码查询推荐人信息
+	//通过推荐码查询推荐人信息，用于充值
 	List<UserBean> getUserByBCode(@Param("bCode") String bCode);
 
 	//用户账号查询
 	List<UserBean> getUserBy(@Param("account") String account,@Param("status") String status);
 
-	//添加app用户
+	//添加app用户，总监助理
 	int addUser(User user);
 
 
-
-	//测试
+	//账户查询，用于充值
 	List<UserBean> getUserByAccount(@Param("account") String account);
 
 	//查询所有借贷总额
 	double selectTotalBorrow();
+
+	//查询所有合伙人信息
+	List<UserBean> getUsers(@Param("account") String account);
+
+	//禁用用户
+	int updateUserStatus(@Param("status") String status,@Param("uuid") String uuid);
 }
