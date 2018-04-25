@@ -24,7 +24,7 @@ String basePath = request.getScheme() + "://"
 		<div class="layui-form-item">
 			<label class="layui-form-label">充值用户</label>
 			<div class="layui-input-inline" >
-				<input type="text" class="layui-input bCode" lay-verify="required" placeholder="请输入推荐码">
+				<input type="text" class="layui-input bCode" lay-verify="required" placeholder="请输入手机号">
 			    <%--	<select name="uId" lay-verify="required" id="uId" lay-search  lay-filter="userFilter">
 					<option value=""></option>
 				</select>--%>
@@ -32,9 +32,9 @@ String basePath = request.getScheme() + "://"
 			<a class="layui-btn bcode_btn">查询</a>
 		</div>
 		<div class="layui-form-item"  style="display:none">
-			<label class="layui-form-label">充值UUID</label>
+			<label class="layui-form-label">充值手机号</label>
 			<div class="layui-input-block">
-				<input type="text" class="layui-input uuid" lay-verify="required" placeholder="请输入充值UUID">
+				<input type="text" class="layui-input uuid" lay-verify="required" placeholder="请输入充值手机号">
 			</div>
 		</div>
 		<div class="layui-form-item">

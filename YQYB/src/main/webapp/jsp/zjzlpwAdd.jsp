@@ -40,15 +40,15 @@ String basePath = request.getScheme() + "://"
 			</div>
 		</div>
 		<div class="layui-form-item">
-			<label class="layui-form-label">父级code</label>
+			<label class="layui-form-label">父级推荐码</label>
 			<div class="layui-input-block">
-				<input type="text" class="layui-input pAccount" lay-verify="required" placeholder="请输入市场名称">
+				<input type="text" class="layui-input pAccount" lay-verify="required" placeholder="请输入父级推荐码">
 			</div>
 		</div>
 		<div class="layui-form-item">
-			<label class="layui-form-label">本级code</label>
+			<label class="layui-form-label">本级推荐码</label>
 			<div class="layui-input-block">
-				<input type="text" class="layui-input uAccount" lay-verify="required" placeholder="请输入市场名称">
+				<input type="text" class="layui-input uAccount" lay-verify="required" placeholder="请输入本级推荐码">
 			</div>
 		</div>
 		<div class="layui-form-item">

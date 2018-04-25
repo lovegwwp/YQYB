@@ -58,7 +58,7 @@ String basePath = request.getScheme() + "://"
 				<tr>
 					<th><input type="checkbox" name="" lay-skin="primary" lay-filter="allChoose" id="allChoose"></th>
 					<th>用户ID</th>
-					<th>用户code</th>
+					<th>用户推荐码</th>
 					<th>上层ID</th>
 					<th>市场分布</th>
 					<th>操作</th>
