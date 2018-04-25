@@ -297,6 +297,9 @@ public class AccountUserAction {
 		List<AccountUser>  aalist = new ArrayList<AccountUser>();
 		///删除前要判断此权限是否有关联用户，若关联，要先删除
 		for(long id :ids){
+			if(id==22){
+				return new ResponseEntity("false", "总监助理角色不可删除！");
+			}
 		    aalist = auService.getPermissionAndName(null,id+"");
 			if (aalist!=null&&aalist.size()>0){
 				return new ResponseEntity("false", "该权限已分配账号，请删除账号在进行操作！");
