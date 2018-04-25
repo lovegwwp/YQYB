@@ -36,7 +36,7 @@ String basePath = request.getScheme() + "://"
 			</div>
 		</div>
 		<div class="layui-form-item">
-			<label class="layui-form-label">总监code</label>
+			<label class="layui-form-label">总监推荐码</label>
 			<div class="layui-input-inline" >
 				<select name="zjUid" lay-verify="required" id="zjUid" lay-search  lay-filter="zjFilter">
 					<option value=""></option>

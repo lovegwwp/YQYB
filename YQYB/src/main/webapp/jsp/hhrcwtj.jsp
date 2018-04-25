@@ -78,14 +78,14 @@ String basePath = request.getScheme() + "://"
 				<col>
 				<col>
 				<col>
-				<col>
+				<col class ="imgth" >
 				<col>
 				<col>
 		    </colgroup>
 		    <thead>
 				<tr>
 					<th><input type="checkbox" name="" lay-skin="primary" lay-filter="allChoose" id="allChoose"></th>
-					<th>用户UUID</th>
+					<th>充值账号</th>
 					<th>充值方式</th>
 					<th>充值数额</th>
 					<th>订单号</th>

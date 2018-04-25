@@ -198,7 +198,7 @@ layui.config({
 						+ '</tr>';
 				}
 			} else {
-				dataHtml = '<tr><td colspan="7">暂无数据</td></tr>';
+				dataHtml = '<tr><td colspan="8">暂无数据</td></tr>';
 			}
 			return dataHtml;
 		}
@@ -252,7 +252,7 @@ layui.config({
 			}
 			return dataHtml;
 		}
-		showHide();
+
 		//分页
 		var nums = 10; //每页出现的数据量
 		if (that) {
@@ -267,6 +267,8 @@ layui.config({
 				form.render();
 			}
 		})
+
+		showHide();
 	}
 
 	////1支付宝，2微信，3线下充值，4借贷充值'
