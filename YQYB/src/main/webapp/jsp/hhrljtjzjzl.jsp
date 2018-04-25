@@ -54,7 +54,7 @@ String basePath = request.getScheme() + "://"
 			<a class="layui-btn month_btn">按月查询</a>
 		</div>
 		<div class="layui-inline">
-			<a class="layui-btn today_btn">当日查询</a>
+			<a class="layui-btn today_btn">昨日业绩查询</a>
 			<a class="layui-btn week_btn">本周查询</a>
 		</div>
 	</blockquote>
@@ -79,14 +79,14 @@ String basePath = request.getScheme() + "://"
 				<tr>
 					<th><input type="checkbox" name="" lay-skin="primary" lay-filter="allChoose" id="allChoose"></th>
 					<th>用户ID</th>
-					<th>用户code</th>
+					<th>用户推荐码</th>
 					<th>用户收益</th>
-					<th>A市场用户ID</th>
-					<th>A市场用户code</th>
-					<th>A市场用户业绩</th>
-					<th>B市场用户ID</th>
-					<th>B市场用户code</th>
-					<th>B市场用户业绩</th>
+					<th>市场A用户ID</th>
+					<th>市场A用户推荐码</th>
+					<th>市场A用户业绩</th>
+					<th>市场B用户ID</th>
+					<th>市场B用户推荐码</th>
+					<th>市场B用户业绩</th>
 				</tr> 
 		    </thead>
 		    <tbody class="hhrljtjzjzllist_content"></tbody>

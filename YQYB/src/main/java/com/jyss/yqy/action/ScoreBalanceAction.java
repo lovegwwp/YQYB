@@ -135,7 +135,7 @@ public class ScoreBalanceAction {
 
 
     /**
-     * 条件查询充值总值        tjType: 1支付宝，2微信，3财务充值
+     * 条件查询充值总值        tjType: 1支付宝，2微信，3财务充值，4=借贷
      */
     @RequestMapping("/ht/total")
     @ResponseBody

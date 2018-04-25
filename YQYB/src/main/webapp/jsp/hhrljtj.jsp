@@ -94,12 +94,12 @@ String basePath = request.getScheme() + "://"
 					<th>用户ID</th>
 					<th>用户推荐码</th>
 					<th>用户收益</th>
-					<th>A市场用户ID</th>
-					<th>A市场用户推荐码</th>
-					<th>A市场用户业绩</th>
-					<th>B市场用户ID</th>
-					<th>B市场用户推荐码</th>
-					<th>B市场用户业绩</th>
+					<th>市场A用户ID</th>
+					<th>市场A用户推荐码</th>
+					<th>市场A用户业绩</th>
+					<th>市场B用户ID</th>
+					<th>市场B用户推荐码</th>
+					<th>市场B用户业绩</th>
 				</tr> 
 		    </thead>
 		    <tbody class="hhrljtjlist_content"></tbody>
