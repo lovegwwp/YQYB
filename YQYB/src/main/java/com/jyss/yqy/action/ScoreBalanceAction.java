@@ -147,7 +147,7 @@ public class ScoreBalanceAction {
         Map<String,Double> m  =new HashMap<String,Double>();
         m.put("totald",b);
         m.put("totalc",borrow);
-        m.put("totale",b);
+        m.put("totale",b - borrow);
         List<Map<String,Double>> ld = new ArrayList<Map<String,Double>>();
         ld.add(m);
         Subject us = SecurityUtils.getSubject();
