@@ -22,6 +22,7 @@ public class UserBean {
 	private Float bdScore;// 报单券
 	private Float electScore;// 电子券
 	private Float borrow;// 购物积分
+	private Float totalAmount;///首次消费额
 	private Float shoppingScore;// 股券（现金积分）
 	private String provinceId;//
 	private String province;//
@@ -32,6 +33,14 @@ public class UserBean {
 	private Float totalPv;    //剩余返还pv
 	private Integer isTransfer;
 
+
+	public Float getTotalAmount() {
+		return totalAmount;
+	}
+
+	public void setTotalAmount(Float totalAmount) {
+		this.totalAmount = totalAmount;
+	}
 
 	public Float getBdScore() {
 		return bdScore;

@@ -40,7 +40,10 @@ public class ScoreBalanceAction {
     public String hhrcwtjTz() {
         return "hhrcwtj";
     }
-
+    @RequestMapping("/hhrcwjdtj")
+    public String hhrcwjdtjTz() {
+        return "hhrcwjdtj";
+    }
 
     /**
      * 根据推荐码查询用户

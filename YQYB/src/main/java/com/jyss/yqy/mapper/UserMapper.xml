@@ -36,6 +36,7 @@
         <result property="electScore" column="elect_score"  />
         <result property="borrow" column="borrow"  />
         <result property="totalPv" column="total_pv"  />
+        <result property="totalAmount" column="total_amount"  />
         <result property="isTransfer" column="is_transfer"  />
     </resultMap>
              
@@ -199,9 +200,10 @@
     <select id="getUsers" parameterType="string" resultMap="ubResultMap">
         select id,uuid,account,status,is_chuangke,b_code,total_pv,cash_score,shopping_score,
         elect_score,bd_score,total_amount,is_transfer,borrow
-        from u_user where is_chuangke in(2,3,4)
+        from u_user
         <where>
-            <if test="account != null and account !=''"> and account = #{account}</if>
+            is_chuangke in(2,3,4)
+            <if test="account != null and account !=''"> and account like concat('%',#{account},'%')</if>
         </where>
         order by id desc
     </select>

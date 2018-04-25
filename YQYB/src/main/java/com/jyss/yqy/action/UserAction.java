@@ -53,6 +53,12 @@ public class UserAction {
 		return "hhrsh";
 	}
 
+	////合伙人详情
+	@RequestMapping("/hhrinfo")
+	public String hhrinfoTz() {
+		return "hhrinfo";
+	}
+
 	// 代理人统计列表is_chuangke==1=成为代言人 2=一级代理人 3=二级代理人 4=三级代理人 5=经理人（虚拟）6=市场总监助理  -->
 	@RequestMapping("/hhrtjCx")
 	@ResponseBody
@@ -269,7 +275,7 @@ public class UserAction {
 	/**
 	 * 禁用用户
 	 */
-	@RequestMapping("/getUsers")
+	@RequestMapping("/jyUsersByUuid")
 	@ResponseBody
 	public ResponseEntity updateUserStatus(@RequestParam("status") String status,@RequestParam("uuid") String uuid){
 		int count = userService.updateUserStatus(status, uuid);
