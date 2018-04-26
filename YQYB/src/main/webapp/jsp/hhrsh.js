@@ -117,31 +117,32 @@ layui.config({
 	})
 
 	$("body").on("click",".hhr_jj",function(){  //禁用
+		///0审核中，1=通过2=拒绝
 		var _this = $(this);
 		console.log(_this[0]+"======");
 		console.log(_this.attr("data-status")+"=========");
-		if(_this.attr("data-status")!='0'){
-			layer.alert("状态异常!");
+		if(_this.attr("data-status")=='1'){
+			layer.alert("该合伙人已通过审核!");
+			return false;
+		}else if(_this.attr("data-status")=='2'){
+			layer.alert("该合伙人已被拒绝过审!");
 			return false;
 		}
 		// layer.alert(_this.attr("data-id"));
 		layer.confirm('确定拒绝吗？',{icon:3, title:'提示信息'},function(index){
-			/*	//_this.parents("tr").remove();
-			 for(var i=0;i<thdinfoData.length;i++){
-			 if(thdinfoData[i].id == _this.attr("data-id")){
-			 thdinfoData.splice(i,1);
-			 thdinfoList(thdinfoData);
-			 }
-			 }*/
 			ZtOption2(_this.attr("data-id"),'dlrRefuse.action');
 			layer.close(index);
 		});
 	})
 
-	$("body").on("click",".hhr_tg",function(){  ///通过
+	///通过
+	$("body").on("click",".hhr_tg",function(){  ///0审核中，1=通过2=拒绝
 		var _this = $(this);
-		if(_this.attr("data-status")!='0'){
-			layer.alert("状态异常!");
+		if(_this.attr("data-status")=='1'){
+			layer.alert("该合伙人已通过审核!");
+			return false;
+		}else if(_this.attr("data-status")=='2'){
+			layer.alert("该合伙人已被拒绝过审!");
 			return false;
 		}
 		console.log(_this.attr("data-id"));

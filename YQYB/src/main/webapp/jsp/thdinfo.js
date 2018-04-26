@@ -202,7 +202,7 @@ layui.config({
         console.log(_this[0]+"======");
         console.log(_this.attr("data-status")+"=========");
         if(_this.attr("data-status")=='0'){
-            layer.alert("已禁用!");
+            layer.alert("已为禁用状态!");
             return false;
         }
        // layer.alert(_this.attr("data-id"));
@@ -222,7 +222,7 @@ layui.config({
     $("body").on("click",".thd_hf",function(){  ///恢复
         var _this = $(this);
         if(_this.attr("data-status")=='1'){
-            layer.alert("已使用!");
+            layer.alert("已为使用状态!");
             return false;
         }
        // layer.alert(_this.attr("data-id"));

@@ -119,7 +119,7 @@ layui.config({
 		console.log(_this[0]+"======");
 		console.log(_this.attr("data-status")+"=========");
 		if(_this.attr("data-status")!='1'){
-			layer.alert("状态异常!");
+			layer.alert("该合伙人已为禁用状态!!");
 			return false;
 		}
 		layer.confirm('确定禁用用户吗？',{icon:3, title:'提示信息'},function(index){
@@ -132,7 +132,7 @@ layui.config({
 	$("body").on("click",".hhr_hfuse",function(){  ///通过
 		var _this = $(this);
 		if(_this.attr("data-status")!='2'){
-			layer.alert("状态异常!");
+			layer.alert("该合伙人已为正常使用状态!");
 			return false;
 		}
 		console.log(_this.attr("data-id"));
@@ -251,18 +251,6 @@ layui.config({
 			return '中级';
 		}else if(bz=='4'){
 			return '高级';
-		}else {
-			return '未知';
-		}
-
-	}
-	function getIsSh(bz){
-		if(bz=='0'){
-			return '审核中';
-		}else if(bz=='1'){
-			return '通过';
-		}else if(bz=='2'){
-			return '拒绝';
 		}else {
 			return '未知';
 		}

@@ -80,14 +80,14 @@ public class ScoreBalanceServiceImpl implements ScoreBalanceService {
                             xtcl.setBz_value(syMoney);
                             xtclMapper.updateCl(xtcl);
 
-                            return new ResponseEntity("true","购买成功！");
+                            return new ResponseEntity("true","充值成功！");
                         }
                     }
-                    return new ResponseEntity("false","购买失败！");
+                    return new ResponseEntity("false","充值失败！");
                 }
                 return new ResponseEntity("false","用户不存在！");
             }
-            return new ResponseEntity("false","无剩余报单券可购买！");
+            return new ResponseEntity("false","无剩余报单券可充值！");
         }
         return new ResponseEntity("false","请输入充值金额！");
 
@@ -148,14 +148,14 @@ public class ScoreBalanceServiceImpl implements ScoreBalanceService {
                             xtcl.setBz_value(syMoney);
                             xtclMapper.updateCl(xtcl);
 
-                            return new ResponseEntity("true","购买成功！");
+                            return new ResponseEntity("true","充值成功！");
                         }
                     }
-                    return new ResponseEntity("false","购买失败！");
+                    return new ResponseEntity("false","充值失败！");
                 }
                 return new ResponseEntity("false","用户不存在！");
             }
-            return new ResponseEntity("false","无剩余报单券可购买！");
+            return new ResponseEntity("false","无剩余报单券可充值！");
         }
         return new ResponseEntity("false","请输入充值金额！");
 

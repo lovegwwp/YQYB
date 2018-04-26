@@ -87,13 +87,13 @@ String basePath = request.getScheme() + "://"
 					<th><input type="checkbox" name="" lay-skin="primary" lay-filter="allChoose" id="allChoose"></th>
 					<th>充值账号</th>
 					<th>充值方式</th>
-					<th>充值数额</th>
-					<th>订单号</th>
+					<th>充值金额</th>
+					<th>充值单号</th>
 					<th class ="imgth">财务凭证</th>
 					<th>充值时间</th>
 					<th>经手人</th>
 
-				</tr> 
+				</tr>
 		    </thead>
 		    <tbody class="hhrcwtjlist_content"></tbody>
 		</table>
